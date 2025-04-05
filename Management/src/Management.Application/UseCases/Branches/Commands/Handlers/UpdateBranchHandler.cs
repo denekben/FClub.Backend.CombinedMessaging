@@ -24,12 +24,12 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
 
         public async Task<BranchDto?> Handle(UpdateBranch command, CancellationToken cancellationToken)
         {
-            var (branchId, name, country, city, street, houseNumber, serviceNames) = command;
+            var (branchId, name, maxOccupancy, country, city, street, houseNumber, serviceNames) = command;
 
             var branch = await _branchRepository.GetAsync(branchId, BranchIncludes.ServiceBranches | BranchIncludes.Services)
                 ?? throw new NotFoundException($"Cannot find {branchId}");
 
-            branch.UpdateDetails(name, country, city, street, houseNumber);
+            branch.UpdateDetails(name, maxOccupancy, country, city, street, houseNumber);
 
             var serviceNamesToDelete = branch.ServiceBranches.Select(sb => sb.Service.Name).Except(serviceNames).ToList();
             var serviceNamesToAdd = serviceNames.Except(branch.ServiceBranches.Select(sb => sb.Service.Name)).ToList();

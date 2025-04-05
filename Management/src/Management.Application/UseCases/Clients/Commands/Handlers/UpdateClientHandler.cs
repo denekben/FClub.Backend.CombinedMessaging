@@ -25,7 +25,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
         public async Task<ClientDto?> Handle(UpdateClient command, CancellationToken cancellationToken)
         {
-            var (id, firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId) = command;
+            var (id, firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId) = command;
 
             var userId = _contextService.GetCurrentUserId()
                 ?? throw new BadRequestException("Invalid authorization header");
@@ -40,7 +40,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
             var updatingClient = await _clientRepository.GetAsync(id)
                 ?? throw new NotFoundException($"Cannot find client {id}");
 
-            updatingClient.UpdateDetails(id, firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId);
+            updatingClient.UpdateDetails(id, firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
 
             await _clientRepository.UpdateAsync(updatingClient);
             await _repository.SaveChangesAsync();

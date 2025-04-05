@@ -7,28 +7,35 @@ namespace AccessControl.Domain.Entities
         public Guid Id { get; init; }
         public Guid ClientId { get; set; }
         public Client Client { get; set; }
-        public string Text { get; set; }
+        public Guid TurnstileId { get; set; }
+        public Turnstile Turnstile { get; set; }
+        public string ClientFullName { get; set; }
+        public string BranchName { get; set; }
+        public string? ServiceName { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
 
         private EntryLog() { }
 
-        private EntryLog(Guid clientId, string text)
+        private EntryLog(Guid clientId, Guid turnstileId, string clientFullName, string branchName, string serviceName)
         {
             Id = Guid.NewGuid();
             ClientId = clientId;
-            Text = text;
+            TurnstileId = turnstileId;
+            ClientFullName = clientFullName;
+            BranchName = branchName;
+            ServiceName = serviceName;
             CreatedDate = DateTime.UtcNow;
         }
 
-        public static EntryLog Create(Guid clientId, string text)
+        public static EntryLog Create(Guid clientId, Guid turnstileId, string clientFullName, string branchName, string serviceName)
         {
+            if (turnstileId == Guid.Empty)
+                throw new DomainException($"Invalid argument for EntryLog[turnstileId]. Entered value: {turnstileId}");
             if (clientId == Guid.Empty)
                 throw new DomainException($"Invalid argument for EntryLog[clientId]. Entered value: {clientId}");
-            if (string.IsNullOrWhiteSpace(text))
-                throw new DomainException($"Invalid argument for EntryLog[text]. Entered value: {text}");
 
-            return new(clientId, text);
+            return new(clientId, turnstileId, clientFullName, branchName, serviceName);
         }
     }
 }

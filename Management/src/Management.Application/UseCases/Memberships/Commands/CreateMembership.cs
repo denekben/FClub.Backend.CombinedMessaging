@@ -5,7 +5,9 @@ namespace Management.Application.UseCases.Memberships.Commands
 {
     public sealed record CreateMembership(
         Guid TariffId,
+        uint MonthQuantity,
         DateTime ExpiresDate,
-        Guid ClientId
+        Guid ClientId,
+        Guid BranchId
     ) : IRequest<MembershipDto?>;
 }

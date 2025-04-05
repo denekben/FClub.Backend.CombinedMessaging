@@ -1,6 +1,7 @@
 ﻿using Management.Domain.Entities;
 using Management.Domain.Entities.Pivots;
 using Microsoft.EntityFrameworkCore;
+using DomainService = Management.Domain.Entities.Service;
 
 namespace Management.Infrastructure.Data
 {
@@ -15,7 +16,7 @@ namespace Management.Infrastructure.Data
         public DbSet<ServiceBranch> ServiceBranchs { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Service> Services { get; set; }
+        public DbSet<DomainService> Services { get; set; }
         public DbSet<UserLog> UserLogs { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
@@ -35,7 +36,7 @@ namespace Management.Infrastructure.Data
             modelBuilder.ApplyConfiguration<ServiceBranch>(configuration);
             modelBuilder.ApplyConfiguration<Branch>(configuration);
             modelBuilder.ApplyConfiguration<Client>(configuration);
-            modelBuilder.ApplyConfiguration<Service>(configuration);
+            modelBuilder.ApplyConfiguration<DomainService>(configuration);
             modelBuilder.ApplyConfiguration<UserLog>(configuration);
 
             base.OnModelCreating(modelBuilder);

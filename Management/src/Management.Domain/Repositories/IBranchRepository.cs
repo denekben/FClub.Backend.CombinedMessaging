@@ -14,6 +14,7 @@ namespace Management.Domain.Repositories
     [Flags]
     public enum BranchIncludes
     {
-        ServiceBranches = 1
+        ServiceBranches = 1,
+        Services = 2
     }
 }

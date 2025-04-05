@@ -6,6 +6,7 @@ namespace Management.Domain.Entities
     {
         public Guid Id { get; init; }
         public string Name { get; set; }
+        public List<Client> Clients { get; set; } = [];
 
         public DateTime CreatedDate { get; init; }
         public DateTime? UpdatedDate { get; set; }

@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management.Shared", "Manage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FClub.Backend.Common", "FClub.Backend.Common\FClub.Backend.Common.csproj", "{D25F6AA1-EF72-418D-8CF7-C5FD0CB50FD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Shared", "AccessControl\src\AccessControl.Shared\AccessControl.Shared.csproj", "{6780AB41-8EBE-4A3A-8119-0B1F2DF139A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{D25F6AA1-EF72-418D-8CF7-C5FD0CB50FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D25F6AA1-EF72-418D-8CF7-C5FD0CB50FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D25F6AA1-EF72-418D-8CF7-C5FD0CB50FD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6780AB41-8EBE-4A3A-8119-0B1F2DF139A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6780AB41-8EBE-4A3A-8119-0B1F2DF139A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6780AB41-8EBE-4A3A-8119-0B1F2DF139A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6780AB41-8EBE-4A3A-8119-0B1F2DF139A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +162,7 @@ Global
 		{BBBFF43F-5C2A-47E2-9691-9863028A22A7} = {28189F1D-A45A-4BF9-B81F-CB0FA38FAA53}
 		{86ED5C58-56DF-41E2-B92F-A0B0BCA8BEA8} = {28189F1D-A45A-4BF9-B81F-CB0FA38FAA53}
 		{A154AFA4-4F1B-4F62-831E-88C29817467E} = {0FDA52EB-CA35-4854-9ABE-C1E8311DC95E}
+		{6780AB41-8EBE-4A3A-8119-0B1F2DF139A7} = {2A42A5F4-AFC8-4BE6-A516-9628DC4B018C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {070C468E-7097-477B-BEAC-481FDDFCA189}

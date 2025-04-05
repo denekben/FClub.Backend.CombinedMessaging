@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Management.Shared.DTOs;
+using MediatR;
 
 namespace Management.Application.UseCases.SocialGroups.Commands
 {

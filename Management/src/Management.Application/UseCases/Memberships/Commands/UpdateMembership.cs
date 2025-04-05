@@ -7,6 +7,7 @@ namespace Management.Application.UseCases.Memberships.Commands
         Guid MembershipId,
         Guid TariffId,
         DateTime ExpiresDate,
-        Guid ClientId
+        Guid ClientId,
+        Guid BranchId
     ) : IRequest<MembershipDto?>;
 }

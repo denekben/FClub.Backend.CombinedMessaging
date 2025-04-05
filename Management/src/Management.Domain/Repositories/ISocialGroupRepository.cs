@@ -2,7 +2,7 @@
 
 namespace Management.Domain.Repositories
 {
-    public interface ISocialGroupHandler
+    public interface ISocialGroupRepository
     {
         Task<SocialGroup?> GetAsync(Guid id);
         Task AddAsync(SocialGroup socialGroup);

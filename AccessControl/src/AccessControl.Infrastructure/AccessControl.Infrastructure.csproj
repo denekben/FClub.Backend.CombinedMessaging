@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AccessControl.Application\AccessControl.Application.csproj" />
     <ProjectReference Include="..\AccessControl.Domain\AccessControl.Domain.csproj" />
   </ItemGroup>
 

@@ -18,9 +18,9 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
         public async Task<ClientDto?> Handle(CreateClient command, CancellationToken cancellationToken)
         {
-            var (firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId) = command;
+            var (firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId) = command;
 
-            var client = Client.Create(firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId);
+            var client = Client.Create(firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
 
             await _clientRepository.AddAsync(client);
             await _repository.SaveChangesAsync();

@@ -1,5 +1,4 @@
-﻿using FClub.Backend.Common.Exceptions;
-using Management.Domain.Entities;
+﻿using Management.Domain.Entities;
 using Management.Domain.Entities.Pivots;
 using Management.Domain.Repositories;
 using Management.Shared.DTOs;
@@ -23,16 +22,19 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
 
         public async Task<BranchDto?> Handle(CreateBranch command, CancellationToken cancellationToken)
         {
-            var (name, country, city, street, houseNumber, servicesIds) = command;
+            var (name, maxOccupancy, country, city, street, houseNumber, serviceNames) = command;
 
-            var branch = Branch.Create(name, country, city, street, houseNumber);
+            var branch = Branch.Create(name, maxOccupancy, country, city, street, houseNumber);
 
-            if (!await _serviceRepository.AllExists(servicesIds))
-                throw new NotFoundException($"Cannot find services");
-
-            foreach (var serviceId in servicesIds)
+            foreach (var serviceName in serviceNames)
             {
-                branch.ServiceBranches.Add(ServiceBranch.Create(serviceId, branch.Id));
+                var service = await _serviceRepository.GetByNameAsync(serviceName);
+                if (service == null)
+                {
+                    service = Service.Create(serviceName);
+                    await _serviceRepository.AddAsync(service);
+                }
+                branch.ServiceBranches.Add(ServiceBranch.Create(service.Id, branch.Id));
             }
 
             await _branchRepository.AddAsync(branch);

@@ -11,7 +11,8 @@ namespace AccessControl.Infrastructure.Data
         IEntityTypeConfiguration<Branch>, IEntityTypeConfiguration<Client>,
         IEntityTypeConfiguration<EntryLog>, IEntityTypeConfiguration<Membership>,
         IEntityTypeConfiguration<Service>, IEntityTypeConfiguration<Tariff>,
-        IEntityTypeConfiguration<Turnstile>
+        IEntityTypeConfiguration<Turnstile>, IEntityTypeConfiguration<StatisticNote>,
+        IEntityTypeConfiguration<UserLog>
     {
         public void Configure(EntityTypeBuilder<Membership> builder)
         {
@@ -131,6 +132,12 @@ namespace AccessControl.Infrastructure.Data
                 .HasForeignKey(el => el.ClientId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder
+                .HasOne(el => el.Turnstile)
+                .WithMany(t => t.Logs)
+                .HasForeignKey(el => el.TurnstileId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.ToTable("UserLogs");
         }
 
@@ -149,6 +156,20 @@ namespace AccessControl.Infrastructure.Data
                 .HasForeignKey(t => t.ServiceId);
 
             builder.ToTable("Turnstiles");
+        }
+
+        public void Configure(EntityTypeBuilder<StatisticNote> builder)
+        {
+            builder.HasKey(sn => sn.Id);
+
+            builder.ToTable("StatisticNotes");
+        }
+
+        public void Configure(EntityTypeBuilder<UserLog> builder)
+        {
+            builder.HasKey(ul => ul.Id);
+
+            builder.ToTable("UserLogs");
         }
     }
 }

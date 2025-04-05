@@ -12,7 +12,8 @@ namespace Management.Infrastructure.Data
         IEntityTypeConfiguration<ServiceTariff>, IEntityTypeConfiguration<Role>,
         IEntityTypeConfiguration<Tariff>, IEntityTypeConfiguration<ServiceBranch>,
         IEntityTypeConfiguration<Branch>, IEntityTypeConfiguration<Client>,
-        IEntityTypeConfiguration<DomainService>, IEntityTypeConfiguration<UserLog>
+        IEntityTypeConfiguration<DomainService>, IEntityTypeConfiguration<UserLog>,
+        IEntityTypeConfiguration<StatisticNote>
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
@@ -50,6 +51,12 @@ namespace Management.Infrastructure.Data
                 .WithOne(c => c.Membership)
                 .HasForeignKey<Membership>(m => m.ClientId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(m => m.Branch)
+                .WithMany(b => b.Memberships)
+                .HasForeignKey(m => m.BranchId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.ToTable("Memberships");
         }
@@ -163,6 +170,18 @@ namespace Management.Infrastructure.Data
                 .HasForeignKey<Client>(c => c.MembershipId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            builder
+                .HasOne(c => c.SocialGroup)
+                .WithMany(sg => sg.Clients)
+                .HasForeignKey(c => c.SocialGroupId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder
+                .HasOne(c => c.SocialGroup)
+                .WithMany(sg => sg.Clients)
+                .HasForeignKey(c => c.SocialGroupId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             builder.ToTable("Clients");
         }
 
@@ -178,6 +197,13 @@ namespace Management.Infrastructure.Data
             builder.HasKey(ul => ul.Id);
 
             builder.ToTable("UserLogs");
+        }
+
+        public void Configure(EntityTypeBuilder<StatisticNote> builder)
+        {
+            builder.HasKey(sn => sn.Id);
+
+            builder.ToTable("StatisticNotes");
         }
     }
 }

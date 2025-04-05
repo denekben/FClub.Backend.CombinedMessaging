@@ -17,13 +17,15 @@ namespace Management.Domain.Entities
         public bool AllowNotifications { get; set; }
         public Guid? MembershipId { get; set; }
         public Membership? Membership { get; set; }
+        public Guid? SocialGroupId { get; set; }
+        public SocialGroup SocialGroup { get; set; }
 
         public DateTime CreatedDate { get; init; }
         public DateTime? UpdatedDate { get; set; }
 
         private Client() { }
 
-        private Client(FullName fullName, string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId)
+        private Client(FullName fullName, string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId, Guid? socialGroupId)
         {
             Id = Guid.NewGuid();
             FullName = fullName;
@@ -32,10 +34,11 @@ namespace Management.Domain.Entities
             AllowEntry = allowEntry;
             AllowNotifications = allowNotifications;
             MembershipId = membershipId;
+            SocialGroupId = socialGroupId;
             CreatedDate = DateTime.UtcNow;
         }
 
-        private Client(Guid id, FullName fullName, string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId)
+        private Client(Guid id, FullName fullName, string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId, Guid? socialGroupId)
         {
             Id = id;
             FullName = fullName;
@@ -44,11 +47,12 @@ namespace Management.Domain.Entities
             AllowEntry = allowEntry;
             AllowNotifications = allowNotifications;
             MembershipId = membershipId;
+            SocialGroupId = socialGroupId;
             CreatedDate = DateTime.UtcNow;
         }
 
         public static Client Create(string firstName, string secondName, string? patronymic,
-            string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId)
+            string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId, Guid? socialGroupId)
         {
             var fullName = FullName.Create(firstName, secondName, patronymic);
 
@@ -58,12 +62,14 @@ namespace Management.Domain.Entities
                 throw new DomainException($"Invalid value for Client[email]. Entered value {email}");
             if (membershipId == Guid.Empty)
                 throw new DomainException($"Invalid value for Client[membershipId]. Entered value {membershipId}");
+            if (socialGroupId == Guid.Empty)
+                throw new DomainException($"Invalid value for Client[socialGroupId]. Entered value {socialGroupId}");
 
-            return new(fullName, phone, email, allowEntry, allowNotifications, membershipId);
+            return new(fullName, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
         }
 
         public static Client Create(Guid id, string firstName, string secondName, string? patronymic,
-            string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId)
+            string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId, Guid? socialGroupId)
         {
             if (id == Guid.Empty)
                 throw new DomainException($"Invalid value for Client[id]. Entered value {id}");
@@ -76,12 +82,14 @@ namespace Management.Domain.Entities
                 throw new DomainException($"Invalid value for Client[email]. Entered value {email}");
             if (membershipId == Guid.Empty)
                 throw new DomainException($"Invalid value for Client[membershipId]. Entered value {membershipId}");
+            if (socialGroupId == Guid.Empty)
+                throw new DomainException($"Invalid value for Client[socialGroupId]. Entered value {socialGroupId}");
 
-            return new(id, fullName, phone, email, allowEntry, allowNotifications, membershipId);
+            return new(id, fullName, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
         }
 
         public void UpdateDetails(Guid id, string firstName, string secondName, string? patronymic,
-            string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId)
+            string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId, Guid? socialGroupId)
         {
             if (id == Guid.Empty)
                 throw new DomainException($"Invalid value for Client[id]. Entered value {id}");
@@ -94,6 +102,8 @@ namespace Management.Domain.Entities
                 throw new DomainException($"Invalid value for Client[email]. Entered value {email}");
             if (membershipId == Guid.Empty)
                 throw new DomainException($"Invalid value for Client[membershipId]. Entered value {membershipId}");
+            if (socialGroupId == Guid.Empty)
+                throw new DomainException($"Invalid value for Client[socialGroupId]. Entered value {socialGroupId}");
 
             FullName = fullName;
             Phone = phone;
@@ -101,6 +111,7 @@ namespace Management.Domain.Entities
             AllowEntry = allowEntry;
             AllowNotifications = allowNotifications;
             MembershipId = membershipId;
+            SocialGroupId = SocialGroupId;
         }
     }
 }

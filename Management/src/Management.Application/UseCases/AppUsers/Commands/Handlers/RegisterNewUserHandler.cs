@@ -50,7 +50,7 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
             var accessToken = _tokenService.GenerateAccessToken(user.Id, firstName, secondName, patronymic, email, role.Name);
 
             await _userRepository.AddAsync(user);
-            await _clientRepository.AddAsync(Client.Create(user.Id, firstName, secondName, patronymic, phone, email, true, false, null));
+            await _clientRepository.AddAsync(Client.Create(user.Id, firstName, secondName, patronymic, phone, email, true, false, null, null));
 
             await _repository.SaveChangesAsync();
 

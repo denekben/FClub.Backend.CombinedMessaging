@@ -4,8 +4,11 @@ namespace Management.Domain.Entities
 {
     public sealed class UserLog
     {
+        private const string _serviceName = "Management";
+
         public Guid Id { get; init; }
         public Guid AppUserId { get; set; }
+        public string ServiceName { get; init; }
         public AppUser AppUser { get; set; }
         public string Text { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -17,6 +20,7 @@ namespace Management.Domain.Entities
         {
             Id = Guid.NewGuid();
             AppUserId = appUserId;
+            ServiceName = _serviceName;
             Text = text;
             CreatedDate = DateTime.UtcNow;
         }

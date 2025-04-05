@@ -46,7 +46,7 @@ namespace Management.Domain.Entities
                 throw new DomainException($"Invalid argument for Tariff[name]. Entered value: {name}");
             if (priceForNMonths == null || !priceForNMonths.Any() || priceForNMonths.Any(x => x.Key < 0 || x.Value < 0))
                 throw new DomainException($"Invalid argument for Tariff[priceForNMonths]. Entered value: {priceForNMonths}");
-            if (discountForSocialGroup?.Any(x => x.Key == default || x.Value < 0) == true)
+            if (discountForSocialGroup?.Any(x => x.Key == default || x.Value < 0 || x.Value > 100) == true)
                 throw new DomainException($"Invalid argument for Tariff[discountForSocialGroup]. Entered value: {discountForSocialGroup}");
 
             Name = name;

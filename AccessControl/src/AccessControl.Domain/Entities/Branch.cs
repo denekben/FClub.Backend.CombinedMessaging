@@ -9,6 +9,7 @@ namespace AccessControll.Domain.Entities
     {
         public Guid Id { get; init; }
         public string? Name { get; set; }
+        public uint MaxOccupancy { get; set; }
         public Address Address { get; set; }
         public List<ServiceBranch> ServiceBranches { get; set; } = [];
         public List<Turnstile> Turnstiles { get; set; } = [];
@@ -18,21 +19,22 @@ namespace AccessControll.Domain.Entities
 
         private Branch() { }
 
-        private Branch(Guid id, string? name, Address address)
+        private Branch(Guid id, string? name, uint maxOccupancy, Address address)
         {
             Id = id;
             Name = name;
+            MaxOccupancy = maxOccupancy;
             Address = address;
             CreatedDate = DateTime.UtcNow;
         }
 
-        public static Branch Create(Guid id, string? name, string? country, string? city, string? street, string? houseNumber)
+        public static Branch Create(Guid id, string? name, uint maxOccupancy, string? country, string? city, string? street, string? houseNumber)
         {
             if (id == Guid.Empty)
                 throw new DomainException($"Invalid value for Branch[id]. Entered value {id}");
             var address = Address.Create(country, city, street, houseNumber);
 
-            return new(id, name, address);
+            return new(id, name, maxOccupancy, address);
         }
     }
 }
