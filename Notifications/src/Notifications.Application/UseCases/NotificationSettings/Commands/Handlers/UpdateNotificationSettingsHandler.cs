@@ -27,7 +27,7 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands.Handl
                 tariffNotificationId,
                 allowBranchfNotifications,
                 branchNotificationId
-                ) = command;
+            ) = command;
 
             var settings = await _settingsRepository.GetAsync(id)
                 ?? throw new NotFoundException($"Cannot find notification settings {id}");
@@ -39,7 +39,8 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands.Handl
                 allowTariffNotifications,
                 tariffNotificationId,
                 allowBranchfNotifications,
-                branchNotificationId);
+                branchNotificationId
+            );
 
             await _settingsRepository.UpdateAsync(settings);
             await _repository.SaveChangesAsync();
