@@ -2,5 +2,5 @@
 
 namespace Notifications.Application.UseCases.Notifications.Commands
 {
-    public sealed record DeleteNotification : IRequest;
+    public sealed record DeleteNotification(Guid Id) : IRequest;
 }

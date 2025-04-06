@@ -2,6 +2,7 @@
 using Management.Domain.Entities;
 using Management.Domain.Repositories;
 using MediatR;
+using static Management.Domain.Entities.StatisticNote;
 
 namespace Management.Application.UseCases.Memberships.Commands.Handlers
 {

@@ -2,5 +2,5 @@
 
 namespace Notifications.Application.UseCases.Notifications.Commands
 {
-    public sealed record SendNotification : IRequest;
+    public sealed record SendNotification(Guid NotificationId) : IRequest;
 }

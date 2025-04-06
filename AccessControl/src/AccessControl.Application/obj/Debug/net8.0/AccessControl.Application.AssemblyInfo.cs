@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AccessControl.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4852c3fb52d2e269731b563f405b552c3a060325")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+91a1e20ed637a136864e01b0463ddc2a6c96f97d")]
 [assembly: System.Reflection.AssemblyProductAttribute("AccessControl.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AccessControl.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -4,7 +4,7 @@ namespace Management.Infrastructure.Data
 {
     public static class Seed
     {
-        public static List<Role> Roles = [];
+        public static List<Role> Roles { get; } = [];
 
         static Seed()
         {

@@ -1,4 +1,5 @@
-﻿using AccessControl.Domain.Entities;
+﻿using AccessControl.Application.Services;
+using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
 using FClub.Backend.Common.Exceptions;
 using MediatR;
@@ -7,6 +8,7 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
 {
     public sealed class GoThroughHandler : IRequestHandler<GoThrough>
     {
+        private readonly INotificationService _notifications;
         private readonly ITurnstileRepository _turnstileRepository;
         private readonly IEntryLogRepository _entryLogRepository;
         private readonly IStatisticNoteRepository _statisticNoteRepository;
@@ -15,13 +17,14 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
 
         public GoThroughHandler(ITurnstileRepository turnstileRepository,
             IEntryLogRepository entryLogRepository, IStatisticNoteRepository statisticNoteRepository,
-            IClientRepository clientRepository, IRepository repository)
+            IClientRepository clientRepository, IRepository repository, INotificationService notifications)
         {
             _turnstileRepository = turnstileRepository;
             _entryLogRepository = entryLogRepository;
             _statisticNoteRepository = statisticNoteRepository;
             _clientRepository = clientRepository;
             _repository = repository;
+            _notifications = notifications;
         }
 
         public async Task Handle(GoThrough command, CancellationToken cancellationToken)
@@ -51,7 +54,8 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
                 if (turnstile.EnteredClientsQuantity >= turnstile.Branch.MaxOccupancy)
                     throw new BadRequestException($"Branch {turnstile.BranchId} has reached occupancy limit");
 
-                await _statisticNoteRepository.AddAsync(StatisticNote.Create());
+                await _statisticNoteRepository.AddAsync(StatisticNote.Create(turnstile.BranchId));
+                await _notifications.ClientEntered(turnstile.BranchId);
             }
 
             await _entryLogRepository.AddAsync(

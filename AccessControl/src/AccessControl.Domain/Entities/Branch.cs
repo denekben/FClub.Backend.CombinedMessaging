@@ -13,6 +13,7 @@ namespace AccessControll.Domain.Entities
         public Address Address { get; set; }
         public List<ServiceBranch> ServiceBranches { get; set; } = [];
         public List<Turnstile> Turnstiles { get; set; } = [];
+        public List<StatisticNote> StatisticNotes { get; set; } = [];
 
         public DateTime CreatedDate { get; init; }
         public DateTime? UpdatedDate { get; set; }

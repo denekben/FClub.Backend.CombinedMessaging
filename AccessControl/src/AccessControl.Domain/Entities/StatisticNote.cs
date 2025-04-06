@@ -1,37 +1,43 @@
-﻿using FClub.Backend.Common.Exceptions;
+﻿using AccessControll.Domain.Entities;
+using FClub.Backend.Common.Exceptions;
 
 namespace AccessControl.Domain.Entities
 {
     public sealed class StatisticNote
     {
         public Guid Id { get; init; }
+        public Guid BranchId { get; set; }
+        public Branch Branch { get; set; }
         public DateTime CreatedDate { get; init; }
-        public uint EntrtiesQuantity { get; set; }
+        public uint EntriesQuantity { get; set; }
 
         private StatisticNote() { }
 
-        private StatisticNote(uint entrtiesQuantity)
+        private StatisticNote(Guid branchId, uint entriesQuantity)
         {
             Id = Guid.NewGuid();
             var today = DateTime.Today;
             CreatedDate = new DateTime(today.Year, today.Month, today.Day, today.Hour, 0, 0);
-            EntrtiesQuantity = entrtiesQuantity;
+            BranchId = branchId;
+            EntriesQuantity = entriesQuantity;
         }
 
-        public static StatisticNote Create(uint entrtiesQuantity = 1)
+        public static StatisticNote Create(Guid branchId, uint entriesQuantity = 1)
         {
-            if (entrtiesQuantity <= 0)
-                throw new DomainException($"Invalid argument for StatisticNote[entrtiesQuantity]. Entered value: {entrtiesQuantity}");
+            if (branchId == Guid.Empty)
+                throw new DomainException($"Invalid argument for StatisticNote[branchId]. Entered value: {branchId}");
+            if (entriesQuantity <= 0)
+                throw new DomainException($"Invalid argument for StatisticNote[entriesQuantity]. Entered value: {entriesQuantity}");
 
-            return new(entrtiesQuantity);
+            return new(branchId, entriesQuantity);
         }
 
-        public void UpdateDetails(uint entrtiesQuantity = 1)
+        public void UpdateDetails(uint entriesQuantity = 1)
         {
-            if (entrtiesQuantity <= 0)
-                throw new DomainException($"Invalid argument for StatisticNote[entrtiesQuantity]. Entered value: {entrtiesQuantity}");
+            if (entriesQuantity <= 0)
+                throw new DomainException($"Invalid argument for StatisticNote[entriesQuantity]. Entered value: {entriesQuantity}");
 
-            EntrtiesQuantity += entrtiesQuantity;
+            EntriesQuantity += entriesQuantity;
         }
     }
 }

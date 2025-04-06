@@ -162,6 +162,12 @@ namespace AccessControl.Infrastructure.Data
         {
             builder.HasKey(sn => sn.Id);
 
+            builder
+                .HasOne(sn => sn.Branch)
+                .WithMany(b => b.StatisticNotes)
+                .HasForeignKey(sn => sn.BranchId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             builder.ToTable("StatisticNotes");
         }
 

@@ -7,6 +7,8 @@ namespace Notifications.Domain.Entities
         public Guid Id { get; init; }
         public string Title { get; set; }
         public string Text { get; set; }
+        public List<NotificationLog> NotificationLogs { get; set; }
+        public NotificationSettings NotificationSettings { get; set; }
 
         public DateTime CreatedDate { get; init; }
         public DateTime? UpdatedDate { get; set; }
@@ -29,6 +31,17 @@ namespace Notifications.Domain.Entities
                 throw new DomainException($"Invalid value for Notification[text]. Entered value {text}");
 
             return new(title, text);
+        }
+
+        public void UpdateDetails(string title, string text)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                throw new DomainException($"Invalid value for Notification[title]. Entered value {title}");
+            if (string.IsNullOrEmpty(text))
+                throw new DomainException($"Invalid value for Notification[text]. Entered value {text}");
+
+            Title = title;
+            Text = text;
         }
     }
 }
