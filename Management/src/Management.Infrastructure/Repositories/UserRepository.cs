@@ -25,17 +25,7 @@ namespace Management.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<AppUser?> GetUserByEmailAsync(string email)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<AppUser?> GetUserByEmailAsync(string email, UserIncludes includes)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> IsBlockedAsync(Guid id)
         {
             throw new NotImplementedException();
         }

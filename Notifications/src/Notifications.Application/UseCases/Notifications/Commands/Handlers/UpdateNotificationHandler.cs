@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using Notifications.Domain.DTOs;
+using Notifications.Domain.DTOs.Mappers;
 using Notifications.Domain.Repositories;
-using Notifications.Shared.DTOs;
 
 namespace Notifications.Application.UseCases.Notifications.Commands.Handlers
 {

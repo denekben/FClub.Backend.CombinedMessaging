@@ -1,7 +1,8 @@
-﻿using Management.Domain.Entities;
+﻿using Management.Domain.DTOs;
+using Management.Domain.DTOs.Mappers;
+using Management.Domain.Entities;
 using Management.Domain.Entities.Pivots;
 using Management.Domain.Repositories;
-using Management.Shared.DTOs;
 using MediatR;
 
 namespace Management.Application.UseCases.Branches.Commands.Handlers
@@ -26,6 +27,7 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
 
             var branch = Branch.Create(name, maxOccupancy, country, city, street, houseNumber);
 
+            var services = new List<Service>();
             foreach (var serviceName in serviceNames)
             {
                 var service = await _serviceRepository.GetByNameAsync(serviceName);
@@ -34,13 +36,14 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
                     service = Service.Create(serviceName);
                     await _serviceRepository.AddAsync(service);
                 }
+                services.Add(service);
                 branch.ServiceBranches.Add(ServiceBranch.Create(service.Id, branch.Id));
             }
 
             await _branchRepository.AddAsync(branch);
             await _repository.SaveChangesAsync();
 
-            return branch.AsDto();
+            return branch.AsDto(services);
         }
     }
 }

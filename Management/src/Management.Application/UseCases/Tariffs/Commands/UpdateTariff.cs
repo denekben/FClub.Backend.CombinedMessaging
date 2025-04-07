@@ -1,4 +1,4 @@
-﻿using Management.Shared.DTOs;
+﻿using Management.Domain.DTOs;
 using MediatR;
 
 namespace Management.Application.UseCases.Tariffs.Commands

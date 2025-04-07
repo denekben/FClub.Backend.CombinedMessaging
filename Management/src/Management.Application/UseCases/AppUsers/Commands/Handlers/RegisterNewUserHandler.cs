@@ -1,9 +1,9 @@
 ﻿using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Services;
 using Management.Application.Services;
+using Management.Domain.DTOs;
 using Management.Domain.Entities;
 using Management.Domain.Repositories;
-using Management.Shared.DTOs;
 using MediatR;
 
 namespace Management.Application.UseCases.AppUsers.Commands.Handlers

@@ -5,8 +5,8 @@ namespace Management.Domain.Repositories
     public interface IMembershipRepository
     {
         Task AddAsync(Membership membership);
-        Task<Membership?> GetAsync(Guid id);
         Task<Membership?> GetAsync(Guid id, MembershipIncludes includes);
+        Task<Membership?> GetAsync(Guid id);
         Task DeleteAsync(Guid id);
         Task UpdateAsync(Membership membership);
     }

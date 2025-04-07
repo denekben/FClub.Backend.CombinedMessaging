@@ -9,16 +9,6 @@ namespace Management.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> AllExistsAsync(List<Guid> id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> AllExistsByNameAsync(List<string> serviceNames)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
@@ -30,11 +20,6 @@ namespace Management.Infrastructure.Repositories
         }
 
         public Task DeleteOneBranchServicesByNameAsync(List<string> servicesName, Guid branchId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> ExistsAsync(Guid id)
         {
             throw new NotImplementedException();
         }

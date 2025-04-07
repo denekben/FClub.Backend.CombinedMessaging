@@ -15,12 +15,12 @@ namespace Management.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Membership?> GetAsync(Guid id)
+        public Task<Membership?> GetAsync(Guid id, MembershipIncludes includes)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Membership?> GetAsync(Guid id, MembershipIncludes includes)
+        public Task<Membership?> GetAsync(Guid id)
         {
             throw new NotImplementedException();
         }

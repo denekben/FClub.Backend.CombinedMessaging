@@ -9,15 +9,5 @@ namespace Management.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
-
-        public Task<StatisticNote?> GetLatestNoteAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(StatisticNote stat)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

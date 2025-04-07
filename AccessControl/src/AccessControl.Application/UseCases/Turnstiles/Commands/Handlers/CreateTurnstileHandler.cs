@@ -1,6 +1,7 @@
-﻿using AccessControl.Domain.Entities;
+﻿using AccessControl.Domain.DTOs;
+using AccessControl.Domain.DTOs.Mappers;
+using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
-using AccessControl.Shared.DTOs;
 using FClub.Backend.Common.Exceptions;
 using MediatR;
 

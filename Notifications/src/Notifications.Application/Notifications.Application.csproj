@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\FClub.Backend.Common\FClub.Backend.Common.csproj" />
     <ProjectReference Include="..\Notifications.Domain\Notifications.Domain.csproj" />
-    <ProjectReference Include="..\Notifications.Shared\Notifications.Shared.csproj" />
   </ItemGroup>
 
 </Project>

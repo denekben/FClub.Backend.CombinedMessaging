@@ -1062,16 +1062,6 @@
         "runtime": {
           "bin/placeholder/Notifications.Domain.dll": {}
         }
-      },
-      "Notifications.Shared/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "compile": {
-          "bin/placeholder/Notifications.Shared.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Notifications.Shared.dll": {}
-        }
       }
     }
   },
@@ -2690,19 +2680,13 @@
       "type": "project",
       "path": "../Notifications.Domain/Notifications.Domain.csproj",
       "msbuildProject": "../Notifications.Domain/Notifications.Domain.csproj"
-    },
-    "Notifications.Shared/1.0.0": {
-      "type": "project",
-      "path": "../Notifications.Shared/Notifications.Shared.csproj",
-      "msbuildProject": "../Notifications.Shared/Notifications.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "FClub.Backend.Common >= 1.0.0",
       "MediatR >= 12.5.0",
-      "Notifications.Domain >= 1.0.0",
-      "Notifications.Shared >= 1.0.0"
+      "Notifications.Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2743,9 +2727,6 @@
             },
             "C:\\Users\\Kurbanaev\\Desktop\\FClub\\FClub\\Notifications\\src\\Notifications.Domain\\Notifications.Domain.csproj": {
               "projectPath": "C:\\Users\\Kurbanaev\\Desktop\\FClub\\FClub\\Notifications\\src\\Notifications.Domain\\Notifications.Domain.csproj"
-            },
-            "C:\\Users\\Kurbanaev\\Desktop\\FClub\\FClub\\Notifications\\src\\Notifications.Shared\\Notifications.Shared.csproj": {
-              "projectPath": "C:\\Users\\Kurbanaev\\Desktop\\FClub\\FClub\\Notifications\\src\\Notifications.Shared\\Notifications.Shared.csproj"
             }
           }
         }

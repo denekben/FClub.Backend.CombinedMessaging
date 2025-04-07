@@ -2,7 +2,7 @@
 using FClub.Backend.Common.Services;
 using Management.Application.Services;
 using Management.Domain.Repositories;
-using Management.Shared.DTOs;
+using Management.Domain.DTOs;
 using MediatR;
 
 namespace Management.Application.UseCases.AppUsers.Commands.Handlers

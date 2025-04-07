@@ -76,10 +76,14 @@ namespace Notifications.Domain.Entities
             if (attendanceNotificationPeriod <= 0)
                 throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationPeriod]. Entered value {attendanceNotificationPeriod}");
 
-            return new NotificationSettings(
-                allowAttendanceNotifications, attendanceNotificationPeriod, attendanceNotificationId,
-                allowTariffNotifications, tariffNotificationId,
-                allowBranchfNotifications, branchNotificationId);
+
+            AllowAttendanceNotifications = allowAttendanceNotifications;
+            AttendanceNotificationPeriod = attendanceNotificationPeriod;
+            AttendanceNotificationId = attendanceNotificationId;
+            AllowTariffNotifications = allowTariffNotifications;
+            TariffNotificationId = tariffNotificationId;
+            AllowBranchfNotifications = allowBranchfNotifications;
+            BranchNotificationId = branchNotificationId;
         }
     }
 }

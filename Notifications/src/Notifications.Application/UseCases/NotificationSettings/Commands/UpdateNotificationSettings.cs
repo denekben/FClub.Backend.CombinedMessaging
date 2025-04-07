@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Notifications.Shared.DTOs;
+using Notifications.Domain.DTOs;
 
 namespace Notifications.Application.UseCases.NotificationSettings.Commands
 {

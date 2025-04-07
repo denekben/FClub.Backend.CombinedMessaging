@@ -1062,16 +1062,6 @@
         "runtime": {
           "bin/placeholder/Management.Domain.dll": {}
         }
-      },
-      "Management.Shared/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "compile": {
-          "bin/placeholder/Management.Shared.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Management.Shared.dll": {}
-        }
       }
     }
   },
@@ -2690,18 +2680,12 @@
       "type": "project",
       "path": "../Management.Domain/Management.Domain.csproj",
       "msbuildProject": "../Management.Domain/Management.Domain.csproj"
-    },
-    "Management.Shared/1.0.0": {
-      "type": "project",
-      "path": "../Management.Shared/Management.Shared/Management.Shared.csproj",
-      "msbuildProject": "../Management.Shared/Management.Shared/Management.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "FClub.Backend.Common >= 1.0.0",
       "Management.Domain >= 1.0.0",
-      "Management.Shared >= 1.0.0",
       "MediatR >= 12.5.0",
       "Microsoft.Extensions.Logging.Abstractions >= 9.0.3"
     ]
@@ -2744,9 +2728,6 @@
             },
             "C:\\Users\\Kurbanaev\\Desktop\\FClub\\FClub\\Management\\src\\Management.Domain\\Management.Domain.csproj": {
               "projectPath": "C:\\Users\\Kurbanaev\\Desktop\\FClub\\FClub\\Management\\src\\Management.Domain\\Management.Domain.csproj"
-            },
-            "C:\\Users\\Kurbanaev\\Desktop\\FClub\\FClub\\Management\\src\\Management.Shared\\Management.Shared\\Management.Shared.csproj": {
-              "projectPath": "C:\\Users\\Kurbanaev\\Desktop\\FClub\\FClub\\Management\\src\\Management.Shared\\Management.Shared\\Management.Shared.csproj"
             }
           }
         }

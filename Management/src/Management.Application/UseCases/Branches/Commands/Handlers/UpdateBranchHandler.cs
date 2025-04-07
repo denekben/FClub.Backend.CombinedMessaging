@@ -1,8 +1,9 @@
 ﻿using FClub.Backend.Common.Exceptions;
+using Management.Domain.DTOs;
+using Management.Domain.DTOs.Mappers;
 using Management.Domain.Entities;
 using Management.Domain.Entities.Pivots;
 using Management.Domain.Repositories;
-using Management.Shared.DTOs;
 using MediatR;
 
 namespace Management.Application.UseCases.Branches.Commands.Handlers
@@ -62,7 +63,7 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
             await _branchRepository.UpdateAsync(branch);
             await _repository.SaveChangesAsync();
 
-            return branch.AsDto();
+            return branch.AsDto(branch.ServiceBranches.Select(sb => sb.Service).ToList());
         }
     }
 }
