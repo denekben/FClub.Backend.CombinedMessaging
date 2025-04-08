@@ -1,5 +1,6 @@
 ﻿using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Services;
+using Management.Application.Services;
 using Management.Domain.DTOs;
 using Management.Domain.DTOs.Mappers;
 using Management.Domain.Entities;
@@ -10,6 +11,8 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 {
     public sealed class UpdateClientHandler : IRequestHandler<UpdateClient, ClientDto?>
     {
+        private readonly IHttpAccessControlClient _accessControlClient;
+        private readonly IHttpNotificationsClient _notificationsClient;
         private readonly IClientRepository _clientRepository;
         private readonly IUserRepository _userRepository;
         private readonly IHttpContextService _contextService;
@@ -20,7 +23,8 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
         public UpdateClientHandler(
             IClientRepository clientRepository, IUserRepository userRepository,
             IRepository repository, IHttpContextService contextService,
-            ISocialGroupRepository socialGroupRepository, IMembershipRepository membershipRepository)
+            ISocialGroupRepository socialGroupRepository, IMembershipRepository membershipRepository,
+            IHttpNotificationsClient notificationsClient, IHttpAccessControlClient accessControlClient)
         {
             _clientRepository = clientRepository;
             _userRepository = userRepository;
@@ -28,6 +32,8 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
             _contextService = contextService;
             _socialGroupRepository = socialGroupRepository;
             _membershipRepository = membershipRepository;
+            _notificationsClient = notificationsClient;
+            _accessControlClient = accessControlClient;
         }
 
         public async Task<ClientDto?> Handle(UpdateClient command, CancellationToken cancellationToken)
@@ -61,9 +67,41 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
             var updatingClient = await _clientRepository.GetAsync(id)
                 ?? throw new NotFoundException($"Cannot find client {id}");
 
-            updatingClient.UpdateDetails(id, firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
+            if (updatingClient.Email != email && await _clientRepository.ExistsByEmailAsync(email))
+                throw new BadRequestException($"Client with email {email} already exists");
+
+            updatingClient.UpdateDetails(firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
 
             await _clientRepository.UpdateAsync(updatingClient);
+
+            await _accessControlClient.UpdateClient(
+                new(
+                    updatingClient.Id,
+                    updatingClient.FullName.FirstName,
+                    updatingClient.FullName.SecondName,
+                    updatingClient.FullName.Patronymic,
+                    updatingClient.Phone,
+                    updatingClient.Email,
+                    updatingClient.AllowEntry,
+                    membership == null ? null : new(
+                        membership.Id,
+                        membership.TariffId,
+                        membership.ExpiresDate,
+                        membership.ClientId,
+                        membership.BranchId))
+            );
+
+            await _notificationsClient.UpdateClient(
+                new(
+                    updatingClient.Id,
+                    updatingClient.FullName.FirstName,
+                    updatingClient.FullName.SecondName,
+                    updatingClient.FullName.Patronymic,
+                    updatingClient.Phone,
+                    updatingClient.Email,
+                    updatingClient.AllowNotifications)
+            );
+
             await _repository.SaveChangesAsync();
 
             return updatingClient.AsDto(membership, socialGroup);

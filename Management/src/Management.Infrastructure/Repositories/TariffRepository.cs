@@ -20,6 +20,11 @@ namespace Management.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<Tariff?> GetAsync(Guid id, TariffIncludes includes)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task UpdateAsync(Tariff tariff)
         {
             throw new NotImplementedException();

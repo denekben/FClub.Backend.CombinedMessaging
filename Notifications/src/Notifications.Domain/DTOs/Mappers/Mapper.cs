@@ -24,6 +24,7 @@ namespace Notifications.Domain.DTOs.Mappers
             return new(
                 settings.AllowAttendanceNotifications,
                 settings.AttendanceNotificationPeriod,
+                settings.AttendanceNotificationReSendPeriod,
                 attendanceNotification?.AsDto(),
                 settings.AllowTariffNotifications,
                 tariffNotification?.AsDto(),

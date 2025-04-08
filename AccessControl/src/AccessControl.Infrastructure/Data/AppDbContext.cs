@@ -21,8 +21,10 @@ namespace AccessControl.Infrastructure.Data
             modelBuilder.ApplyConfiguration<EntryLog>(configuration);
             modelBuilder.ApplyConfiguration<Membership>(configuration);
             modelBuilder.ApplyConfiguration<Service>(configuration);
+            modelBuilder.ApplyConfiguration<StatisticNote>(configuration);
             modelBuilder.ApplyConfiguration<Tariff>(configuration);
             modelBuilder.ApplyConfiguration<Turnstile>(configuration);
+            modelBuilder.ApplyConfiguration<UserLog>(configuration);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -18,7 +18,7 @@ namespace Management.Domain.DTOs.Mappers
                 branch.Name,
                 branch.MaxOccupancy,
                 branch.Address.AsDto(),
-                serviceDtos,
+                serviceDtos ?? [],
                 branch.CreatedDate,
                 branch.UpdatedDate);
         }
@@ -83,6 +83,23 @@ namespace Management.Domain.DTOs.Mappers
                 tariff.PriceForNMonths,
                 tariff.DiscountForSocialGroup,
                 tariff.AllowMultiBranches,
+                [],
+                tariff.CreatedDate,
+                tariff.UpdatedDate
+            );
+        }
+
+        public static TariffDto AsDto(this Tariff tariff, List<Service>? services)
+        {
+            var serviceDtos = services?.Select(s => s.AsDto()).ToList();
+
+            return new(
+                tariff.Id,
+                tariff.Name,
+                tariff.PriceForNMonths,
+                tariff.DiscountForSocialGroup,
+                tariff.AllowMultiBranches,
+                serviceDtos ?? [],
                 tariff.CreatedDate,
                 tariff.UpdatedDate
             );

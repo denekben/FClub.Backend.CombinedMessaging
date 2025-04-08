@@ -1,5 +1,6 @@
 ﻿using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Services;
+using Management.Application.Services;
 using Management.Domain.Entities;
 using Management.Domain.Repositories;
 using MediatR;
@@ -8,6 +9,8 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 {
     public sealed class DeleteClientHandler : IRequestHandler<DeleteClient>
     {
+        private readonly IHttpAccessControlClient _accessControlClient;
+        private readonly IHttpNotificationsClient _notificationsClient;
         private readonly IClientRepository _clientRepository;
         private readonly IUserRepository _userRepository;
         private readonly IRepository _repository;
@@ -15,12 +18,16 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
         public DeleteClientHandler(
             IClientRepository clientRepository,
-            IRepository repository, IUserRepository userRepository, IHttpContextService contextService)
+            IRepository repository, IUserRepository userRepository,
+            IHttpContextService contextService, IHttpAccessControlClient accessControlClient,
+            IHttpNotificationsClient notificationsClient)
         {
             _clientRepository = clientRepository;
             _repository = repository;
             _userRepository = userRepository;
             _contextService = contextService;
+            _accessControlClient = accessControlClient;
+            _notificationsClient = notificationsClient;
         }
 
         public async Task Handle(DeleteClient command, CancellationToken cancellationToken)
@@ -36,6 +43,15 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
                 throw new BadRequestException("Only admin can delete admin client");
 
             await _clientRepository.DeleteAsync(command.Id);
+
+            await _accessControlClient.DeleteClient(
+                new(command.Id)
+            );
+
+            await _notificationsClient.DeleteClient(
+                new(command.Id)
+            );
+
             await _repository.SaveChangesAsync();
         }
     }

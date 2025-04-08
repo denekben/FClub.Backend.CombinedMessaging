@@ -7,6 +7,7 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands
         Guid Id,
         bool AllowAttendanceNotifications,
         uint AttendanceNotificationPeriod,
+        uint AttendanceNotificationReSendPeriod,
         Guid? AttendanceNotificationId,
         bool AllowTariffNotifications,
         Guid? TariffNotificationId,

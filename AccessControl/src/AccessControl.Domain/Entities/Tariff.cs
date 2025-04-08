@@ -33,5 +33,14 @@ namespace AccessControl.Domain.Entities
 
             return new(id, name, allowMultiBranches);
         }
+
+        public void UpdateDetails(string name, bool allowMultiBranches)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new DomainException($"Invalid argument for Tariff[name]. Entered value: {name}");
+
+            Name = name;
+            AllowMultiBranches = allowMultiBranches;
+        }
     }
 }

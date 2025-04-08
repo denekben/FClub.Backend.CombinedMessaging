@@ -50,5 +50,23 @@ namespace AccessControl.Domain.Entities
 
             return new(id, fullName, phone, email, allowEntry, isStaff, membershipId);
         }
+
+        public void UpdateDetails(string firstName, string secondName, string? patronymic,
+            string? phone, string email, bool allowEntry, bool isStaff, Guid? membershipId)
+        {
+            if (phone != null && !_phonePattern.IsMatch(phone))
+                throw new DomainException($"Invalid value for Client[phone]. Entered value {phone}");
+            if (string.IsNullOrWhiteSpace(email) || !_emailPattern.IsMatch(email))
+                throw new DomainException($"Invalid value for Client[email]. Entered value {email}");
+            if (membershipId == Guid.Empty)
+                throw new DomainException($"Invalid value for Client[membershipId]. Entered value {membershipId}");
+            var fullName = FullName.Create(firstName, secondName, patronymic);
+
+            FullName = fullName;
+            Phone = phone;
+            Email = email;
+            AllowEntry = allowEntry;
+            MembershipId = membershipId;
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands.Handl
             var (id,
                 allowAttendanceNotifications,
                 attendanceNotificationPeriod,
+                attendanceNotificationReSendPeriod,
                 attendanceNotificationId,
                 allowTariffNotifications,
                 tariffNotificationId,
@@ -58,9 +59,10 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands.Handl
                     ?? throw new NotFoundException($"Cannot find notification {branchNotificationId}");
             }
 
-            settings.UpdateDetails(id,
+            settings.UpdateDetails(
                 allowAttendanceNotifications,
                 attendanceNotificationPeriod,
+                attendanceNotificationReSendPeriod,
                 attendanceNotificationId,
                 allowTariffNotifications,
                 tariffNotificationId,

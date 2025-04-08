@@ -42,10 +42,8 @@ namespace Management.Domain.Entities
             return new(tariffId, expiresDate, clientId, branchId);
         }
 
-        public void UpdateDetails(Guid id, Guid tariffId, DateTime expiresDate, Guid clientId, Guid branchId)
+        public void UpdateDetails(Guid tariffId, DateTime expiresDate, Guid clientId, Guid branchId)
         {
-            if (id == Guid.Empty)
-                throw new DomainException($"Invalid value for Membership[id]. Entered value {id}");
             if (tariffId == Guid.Empty)
                 throw new DomainException($"Invalid value for Membership[tariffId]. Entered value {tariffId}");
             if (clientId == Guid.Empty)

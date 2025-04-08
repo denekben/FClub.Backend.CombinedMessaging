@@ -42,5 +42,23 @@ namespace AccessControl.Domain.Entities
 
             return new(id, tariffId, expiresDate, clientId, branchId);
         }
+
+        public void UpdateDetails(Guid tariffId, DateTime expiresDate, Guid clientId, Guid branchId)
+        {
+            if (tariffId == Guid.Empty)
+                throw new DomainException($"Invalid value for Membership[tariffId]. Entered value {tariffId}");
+            if (clientId == Guid.Empty)
+                throw new DomainException($"Invalid value for Membership[clientId]. Entered value {clientId}");
+            if (branchId == Guid.Empty)
+                throw new DomainException($"Invalid value for Membership[branchId]. Entered value {branchId}");
+            if (expiresDate <= DateTime.UtcNow)
+                throw new DomainException($"Invalid value for Membership[expiresDate]. Entered value {expiresDate}");
+
+            TariffId = tariffId;
+            ExpiresDate = expiresDate;
+            ClientId = clientId;
+            BranchId = branchId;
+        }
+
     }
 }

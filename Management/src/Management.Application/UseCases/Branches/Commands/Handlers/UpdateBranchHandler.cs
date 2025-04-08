@@ -1,26 +1,31 @@
 ﻿using FClub.Backend.Common.Exceptions;
+using Management.Application.Services;
 using Management.Domain.DTOs;
 using Management.Domain.DTOs.Mappers;
 using Management.Domain.Entities;
 using Management.Domain.Entities.Pivots;
 using Management.Domain.Repositories;
 using MediatR;
+using AccessControlServiceBranchDto = Management.Shared.IntegrationUseCases.AccessControl.DTOs.ServiceBranchDto;
+using AccessControlServiceDto = Management.Shared.IntegrationUseCases.AccessControl.DTOs.ServiceDto;
 
 namespace Management.Application.UseCases.Branches.Commands.Handlers
 {
     public sealed class UpdateBranchHandler : IRequestHandler<UpdateBranch, BranchDto?>
     {
+        private readonly IHttpAccessControlClient _accessControlClient;
         private readonly IBranchRepository _branchRepository;
         private readonly IServiceRepository _serviceRepository;
         private readonly IRepository _repository;
 
         public UpdateBranchHandler(
-            IBranchRepository branchRepository, IServiceRepository serviceRepository, IRepository repository
-        )
+            IBranchRepository branchRepository, IServiceRepository serviceRepository, IRepository repository,
+            IHttpAccessControlClient accessControlClient)
         {
             _branchRepository = branchRepository;
             _serviceRepository = serviceRepository;
             _repository = repository;
+            _accessControlClient = accessControlClient;
         }
 
         public async Task<BranchDto?> Handle(UpdateBranch command, CancellationToken cancellationToken)
@@ -46,7 +51,7 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
                 branch.ServiceBranches.Add(ServiceBranch.Create(service.Id, branch.Id));
             }
 
-            await _serviceRepository.DeleteOneBranchServicesByNameAsync(serviceNamesToDelete, branch.Id);
+            await _serviceRepository.DeleteOneBranchAndZeroTariffsServicesByNameAsync(serviceNamesToDelete, branch.Id);
             foreach (var serviceName in serviceNamesToDelete)
             {
                 var service = await _serviceRepository.GetByNameAsync(serviceName);
@@ -61,9 +66,24 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
             }
 
             await _branchRepository.UpdateAsync(branch);
+
+            var services = branch.ServiceBranches.Select(sb => sb.Service);
+            await _accessControlClient.UpdateBranch(
+                new(
+                    branch.Id,
+                    branch.Name,
+                    branch.MaxOccupancy,
+                    branch.Address.Country,
+                    branch.Address.City,
+                    branch.Address.Street,
+                    branch.Address.HouseNumber,
+                    branch.ServiceBranches.Select(sb => new AccessControlServiceBranchDto(sb.Id, sb.ServiceId, sb.BranchId)).ToList(),
+                    services.Select(s => new AccessControlServiceDto(s.Id, s.Name)).ToList())
+            );
+
             await _repository.SaveChangesAsync();
 
-            return branch.AsDto(branch.ServiceBranches.Select(sb => sb.Service).ToList());
+            return branch.AsDto(services.ToList());
         }
     }
 }

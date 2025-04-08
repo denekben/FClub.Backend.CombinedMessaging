@@ -7,6 +7,7 @@ namespace Management.Application.UseCases.Tariffs.Commands
         string Name,
         Dictionary<int, int> PriceForNMonths,
         Dictionary<Guid, int>? DiscountForSocialGroup,
-        bool AllowMultiBranches
+        bool AllowMultiBranches,
+        List<string> serviceNames
     ) : IRequest<TariffDto?>;
 }

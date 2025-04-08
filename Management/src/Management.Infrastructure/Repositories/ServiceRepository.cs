@@ -14,12 +14,22 @@ namespace Management.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task DeleteOneBranchServicesAsync(List<Guid> serviceIds)
+        public Task DeleteOneBranchAndZeroTariffsServicesAsync(List<Guid> serviceIds)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteOneBranchServicesByNameAsync(List<string> servicesName, Guid branchId)
+        public Task DeleteOneBranchAndZeroTariffsServicesByNameAsync(List<string> servicesName, Guid branchId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteOneTariffAndZeroBranchesServicesAsync(List<Guid> serviceIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteOneTariffAndZeroBranchesServicesByNameAsync(List<string> servicesName, Guid tariffId)
         {
             throw new NotImplementedException();
         }

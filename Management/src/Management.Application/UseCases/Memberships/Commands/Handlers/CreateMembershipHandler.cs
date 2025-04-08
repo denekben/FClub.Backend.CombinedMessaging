@@ -1,4 +1,5 @@
 ﻿using FClub.Backend.Common.Exceptions;
+using Management.Application.Services;
 using Management.Domain.DTOs;
 using Management.Domain.DTOs.Mappers;
 using Management.Domain.Entities;
@@ -9,6 +10,7 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
 {
     public sealed class CreateMembershipHandler : IRequestHandler<CreateMembership, MembershipDto?>
     {
+        private IHttpAccessControlClient _accessControlClient;
         private IRepository _repository;
         private IMembershipRepository _membershipRepository;
         private IStatisticRepository _statisticRepository;
@@ -19,7 +21,7 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
         public CreateMembershipHandler(
             IRepository repository, IMembershipRepository membershipRepository,
             IClientRepository clientRepository, ITariffRepository tariffRepository, IStatisticRepository statisticRepository,
-            IBranchRepository branchRepository)
+            IBranchRepository branchRepository, IHttpAccessControlClient accessControlClient)
         {
             _repository = repository;
             _membershipRepository = membershipRepository;
@@ -27,6 +29,7 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
             _tariffRepository = tariffRepository;
             _statisticRepository = statisticRepository;
             _branchRepository = branchRepository;
+            _accessControlClient = accessControlClient;
         }
 
         public async Task<MembershipDto?> Handle(CreateMembership command, CancellationToken cancellationToken)
@@ -54,6 +57,16 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
             await _statisticRepository.AddAsync(StatisticNote.Create(membership.TotalCost));
 
             await _membershipRepository.AddAsync(membership);
+
+            await _accessControlClient.CreateMembership(
+                new(
+                    membership.Id,
+                    membership.TariffId,
+                    membership.ExpiresDate,
+                    membership.ClientId,
+                    membership.BranchId)
+            );
+
             await _repository.SaveChangesAsync();
 
             return membership.AsDto();

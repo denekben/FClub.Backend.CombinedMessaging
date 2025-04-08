@@ -88,12 +88,9 @@ namespace Management.Domain.Entities
             return new(id, fullName, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
         }
 
-        public void UpdateDetails(Guid id, string firstName, string secondName, string? patronymic,
+        public void UpdateDetails(string firstName, string secondName, string? patronymic,
             string? phone, string email, bool allowEntry, bool allowNotifications, Guid? membershipId, Guid? socialGroupId)
         {
-            if (id == Guid.Empty)
-                throw new DomainException($"Invalid value for Client[id]. Entered value {id}");
-
             var fullName = FullName.Create(firstName, secondName, patronymic);
 
             if (phone != null && !_phonePattern.IsMatch(phone))

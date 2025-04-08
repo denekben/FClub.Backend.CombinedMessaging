@@ -1,24 +1,30 @@
-﻿using Management.Domain.DTOs;
+﻿using Management.Application.Services;
+using Management.Domain.DTOs;
 using Management.Domain.DTOs.Mappers;
 using Management.Domain.Entities;
 using Management.Domain.Entities.Pivots;
 using Management.Domain.Repositories;
 using MediatR;
+using AccessControlServiceBranchDto = Management.Shared.IntegrationUseCases.AccessControl.DTOs.ServiceBranchDto;
+using AccessControlServiceDto = Management.Shared.IntegrationUseCases.AccessControl.DTOs.ServiceDto;
 
 namespace Management.Application.UseCases.Branches.Commands.Handlers
 {
     public sealed class CreateBranchHandler : IRequestHandler<CreateBranch, BranchDto?>
     {
+        private readonly IHttpAccessControlClient _accessControlClient;
         private readonly IServiceRepository _serviceRepository;
         private readonly IBranchRepository _branchRepository;
         private readonly IRepository _repository;
 
         public CreateBranchHandler(
-            IServiceRepository serviceRepository, IBranchRepository branchRepository, IRepository repository)
+            IServiceRepository serviceRepository, IBranchRepository branchRepository,
+            IRepository repository, IHttpAccessControlClient accessControlClient)
         {
             _serviceRepository = serviceRepository;
             _branchRepository = branchRepository;
             _repository = repository;
+            _accessControlClient = accessControlClient;
         }
 
         public async Task<BranchDto?> Handle(CreateBranch command, CancellationToken cancellationToken)
@@ -41,6 +47,20 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
             }
 
             await _branchRepository.AddAsync(branch);
+
+            await _accessControlClient.CreateBranch(
+                new(
+                    branch.Id,
+                    branch.Name,
+                    branch.MaxOccupancy,
+                    branch.Address.Country,
+                    branch.Address.City,
+                    branch.Address.Street,
+                    branch.Address.HouseNumber,
+                    branch.ServiceBranches.Select(sb => new AccessControlServiceBranchDto(sb.Id, sb.ServiceId, sb.BranchId)).ToList(),
+                    services.Select(s => new AccessControlServiceDto(s.Id, s.Name)).ToList())
+            );
+
             await _repository.SaveChangesAsync();
 
             return branch.AsDto(services);

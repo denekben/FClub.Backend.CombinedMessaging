@@ -1,0 +1,32 @@
+﻿using AccessControl.Domain.Repositories;
+using AccessControl.Shared.Logging;
+using FClub.Backend.Common.Exceptions;
+using MediatR;
+
+namespace AccessControl.Application.IntegrationUseCases.Branches.Handlers
+{
+    [SkipLogging]
+    public sealed class DeleteBranchHandler : IRequestHandler<DeleteBranch>
+    {
+        private readonly IRepository _repository;
+        private readonly IBranchRepository _branchRepository;
+        private readonly IServiceRepository _serviceRepository;
+
+        public DeleteBranchHandler(IRepository repository, IBranchRepository branchRepository,
+            IServiceRepository serviceRepository)
+        {
+            _repository = repository;
+            _branchRepository = branchRepository;
+            _serviceRepository = serviceRepository;
+        }
+
+        public async Task Handle(DeleteBranch command, CancellationToken cancellationToken)
+        {
+            var services = await _serviceRepository.GetByBranchId(command.Id)
+                ?? throw new NotFoundException($"Cannot find services by branch {command.Id}");
+            await _serviceRepository.DeleteOneBranchAndZeroTariffsServicesAsync(services?.Select(s => s.Id).ToList() ?? []);
+            await _branchRepository.DeleteAsync(command.Id);
+            await _repository.SaveChangesAsync();
+        }
+    }
+}

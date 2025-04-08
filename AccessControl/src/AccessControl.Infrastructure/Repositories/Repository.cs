@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AccessControl.Domain.Repositories;
 
 namespace AccessControl.Infrastructure.Repositories
 {
-    class Repository
+    public class Repository : IRepository
     {
+        public Task SaveChangesAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

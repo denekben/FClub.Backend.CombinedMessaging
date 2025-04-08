@@ -10,6 +10,7 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
 {
     public sealed class RegisterNewUserHandler : IRequestHandler<RegisterNewUser, TokensDto?>
     {
+        private readonly IHttpAccessControlClient _accessControlClient;
         private readonly ITokenService _tokenService;
         private readonly IPasswordService _passwordService;
         private readonly IUserRepository _userRepository;
@@ -20,7 +21,8 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
         public RegisterNewUserHandler(
             ITokenService tokenService,
             IPasswordService passwordService, IRoleRepository roleRepository, IRepository repository,
-            IUserRepository userRepository, IClientRepository clientRepository)
+            IUserRepository userRepository, IClientRepository clientRepository,
+            IHttpAccessControlClient accessControlClient)
         {
             _tokenService = tokenService;
             _passwordService = passwordService;
@@ -28,6 +30,7 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
             _repository = repository;
             _userRepository = userRepository;
             _clientRepository = clientRepository;
+            _accessControlClient = accessControlClient;
         }
 
         public async Task<TokensDto?> Handle(RegisterNewUser command, CancellationToken cancellationToken)
@@ -51,6 +54,17 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
 
             await _userRepository.AddAsync(user);
             await _clientRepository.AddAsync(Client.Create(user.Id, firstName, secondName, patronymic, phone, email, true, false, null, null));
+
+            await _accessControlClient.RegisterNewUser(
+                new(
+                    user.Id,
+                    user.FullName.FirstName,
+                    user.FullName.SecondName,
+                    user.FullName.Patronymic,
+                    user.Phone,
+                    user.Email,
+                    user.AllowEntry)
+            );
 
             await _repository.SaveChangesAsync();
 

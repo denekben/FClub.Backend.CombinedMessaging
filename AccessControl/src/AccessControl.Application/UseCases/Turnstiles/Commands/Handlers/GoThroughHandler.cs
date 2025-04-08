@@ -8,7 +8,8 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
 {
     public sealed class GoThroughHandler : IRequestHandler<GoThrough>
     {
-        private readonly INotificationService _notifications;
+        private readonly IHttpNotificationsClient _notificationsClient;
+        private readonly IWSNotificationService _notifications;
         private readonly ITurnstileRepository _turnstileRepository;
         private readonly IEntryLogRepository _entryLogRepository;
         private readonly IStatisticNoteRepository _statisticNoteRepository;
@@ -17,7 +18,8 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
 
         public GoThroughHandler(ITurnstileRepository turnstileRepository,
             IEntryLogRepository entryLogRepository, IStatisticNoteRepository statisticNoteRepository,
-            IClientRepository clientRepository, IRepository repository, INotificationService notifications)
+            IClientRepository clientRepository, IRepository repository, IWSNotificationService notifications,
+            IHttpNotificationsClient notificationClient)
         {
             _turnstileRepository = turnstileRepository;
             _entryLogRepository = entryLogRepository;
@@ -25,6 +27,7 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
             _clientRepository = clientRepository;
             _repository = repository;
             _notifications = notifications;
+            _notificationsClient = notificationClient;
         }
 
         public async Task Handle(GoThrough command, CancellationToken cancellationToken)
@@ -66,6 +69,10 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
                     turnstile.Branch.Name ?? string.Empty,
                     turnstile.Service.Name
             ));
+
+            await _notificationsClient.GoThrough(
+                new(clientId)
+            );
 
             await _repository.SaveChangesAsync();
         }

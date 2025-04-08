@@ -4,7 +4,10 @@ namespace AccessControl.Domain.Repositories
 {
     public interface IBranchRepository
     {
+        Task UpdateAsync(Branch branch);
         Task<Branch?> GetAsync(Guid id, BranchIncludes includes);
+        Task AddAsync(Branch branch);
+        Task DeleteAsync(Guid id);
     }
 
     [Flags]

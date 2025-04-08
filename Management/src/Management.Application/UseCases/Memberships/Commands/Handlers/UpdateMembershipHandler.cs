@@ -1,4 +1,5 @@
 ﻿using FClub.Backend.Common.Exceptions;
+using Management.Application.Services;
 using Management.Domain.DTOs;
 using Management.Domain.DTOs.Mappers;
 using Management.Domain.Entities;
@@ -9,6 +10,7 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
 {
     public sealed class UpdateMembershipHandler : IRequestHandler<UpdateMembership, MembershipDto?>
     {
+        private IHttpAccessControlClient _accessControlClient;
         private readonly IRepository _repository;
         private readonly IMembershipRepository _membershipRepository;
         private readonly IStatisticRepository _statisticRepository;
@@ -17,13 +19,15 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
 
         public UpdateMembershipHandler(
             IRepository repository, IMembershipRepository membershipRepository,
-            IStatisticRepository statisticRepository, IClientRepository clientRepository, IBranchRepository branchRepository)
+            IStatisticRepository statisticRepository, IClientRepository clientRepository,
+            IBranchRepository branchRepository, IHttpAccessControlClient accessControlClient)
         {
             _repository = repository;
             _membershipRepository = membershipRepository;
             _statisticRepository = statisticRepository;
             _clientRepository = clientRepository;
             _branchRepository = branchRepository;
+            _accessControlClient = accessControlClient;
         }
 
         public async Task<MembershipDto?> Handle(UpdateMembership command, CancellationToken cancellationToken)
@@ -40,11 +44,21 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
                 ?? throw new NotFoundException($"Cannot find branch {branchId}");
 
             membership.SetCost();
-            membership.UpdateDetails(membershipId, tariffId, expiresDate, clientId, branchId);
+            membership.UpdateDetails(tariffId, expiresDate, clientId, branchId);
 
             await _statisticRepository.AddAsync(StatisticNote.Create(membership.TotalCost));
 
             await _membershipRepository.UpdateAsync(membership);
+
+            await _accessControlClient.CreateMembership(
+                new(
+                    membership.Id,
+                    membership.TariffId,
+                    membership.ExpiresDate,
+                    membership.ClientId,
+                    membership.BranchId)
+            );
+
             await _repository.SaveChangesAsync();
 
             return membership.AsDto();

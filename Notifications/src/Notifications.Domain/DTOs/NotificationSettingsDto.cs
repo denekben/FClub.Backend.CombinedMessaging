@@ -4,6 +4,7 @@
     (
         bool AllowAttendanceNotifications,
         uint AttendanceNotificationPeriod,
+        uint AttendanceNotificationReSendPeriod,
         NotificationDto? AttendanceNotification,
         bool AllowTariffNotifications,
         NotificationDto? TariffNotification,

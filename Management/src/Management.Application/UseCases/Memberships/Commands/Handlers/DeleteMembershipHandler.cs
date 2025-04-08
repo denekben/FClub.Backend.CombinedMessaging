@@ -1,4 +1,5 @@
 ﻿using FClub.Backend.Common.Exceptions;
+using Management.Application.Services;
 using Management.Domain.Entities;
 using Management.Domain.Repositories;
 using MediatR;
@@ -8,16 +9,19 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
 {
     public sealed class DeleteMembershipHandler : IRequestHandler<DeleteMembership>
     {
+        private readonly IHttpAccessControlClient _accessControlClient;
         private readonly IRepository _repository;
         private readonly IMembershipRepository _membershipRepository;
         private readonly IStatisticRepository _statisticRepository;
 
         public DeleteMembershipHandler(
-            IRepository repository, IMembershipRepository membershipRepository, IStatisticRepository statisticRepository)
+            IRepository repository, IMembershipRepository membershipRepository,
+            IStatisticRepository statisticRepository, IHttpAccessControlClient accessControlClient)
         {
             _repository = repository;
             _membershipRepository = membershipRepository;
             _statisticRepository = statisticRepository;
+            _accessControlClient = accessControlClient;
         }
 
         public async Task Handle(DeleteMembership command, CancellationToken cancellationToken)
@@ -29,6 +33,11 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
             await _statisticRepository.AddAsync(StatisticNote.Create(-1 * membership.TotalCost, OperationType.Deletion));
 
             await _membershipRepository.DeleteAsync(command.MembershipId);
+
+            await _accessControlClient.DeleteMembership(
+                new(membership.Id)
+            );
+
             await _repository.SaveChangesAsync();
         }
     }

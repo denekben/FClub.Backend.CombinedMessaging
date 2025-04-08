@@ -25,7 +25,7 @@ namespace Notifications.Infrastructure.Data
             BranchNotification = branchNotification;
 
             NotificationSettings = NotificationSettings.Create(
-                true, 7, attendanceNotification.Id, true, tariffNotification.Id, true, branchNotification.Id);
+                true, 7, 7, attendanceNotification.Id, true, tariffNotification.Id, true, branchNotification.Id);
         }
     }
 }

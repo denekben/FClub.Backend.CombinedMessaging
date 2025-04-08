@@ -38,6 +38,7 @@ namespace Management.Infrastructure.Data
             modelBuilder.ApplyConfiguration<Client>(configuration);
             modelBuilder.ApplyConfiguration<DomainService>(configuration);
             modelBuilder.ApplyConfiguration<UserLog>(configuration);
+            modelBuilder.ApplyConfiguration<StatisticNote>(configuration);
 
             base.OnModelCreating(modelBuilder);
         }

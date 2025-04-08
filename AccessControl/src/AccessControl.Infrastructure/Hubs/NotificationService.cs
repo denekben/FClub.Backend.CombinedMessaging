@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace AccessControl.Infrastructure.Hubs
 {
-    public sealed class NotificationService : INotificationService
+    public sealed class NotificationService : IWSNotificationService
     {
         private readonly IHubContext<AccessControlServiceHub> _hubContext;
 

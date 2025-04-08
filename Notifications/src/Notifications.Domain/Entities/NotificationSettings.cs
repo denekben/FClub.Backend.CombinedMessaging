@@ -8,6 +8,7 @@ namespace Notifications.Domain.Entities
 
         public bool AllowAttendanceNotifications { get; set; }
         public uint AttendanceNotificationPeriod { get; set; }
+        public uint AttendanceNotificationReSendPeriod { get; set; }
         public Guid? AttendanceNotificationId { get; set; }
         public Notification? AttendanceNotification { get; set; }
 
@@ -22,7 +23,8 @@ namespace Notifications.Domain.Entities
         private NotificationSettings() { }
 
         private NotificationSettings(
-            bool allowAttendanceNotifications, uint attendanceNotificationPeriod, Guid? attendanceNotificationId,
+            bool allowAttendanceNotifications, uint attendanceNotificationPeriod,
+            uint attendanceNotificationReSendPeriod, Guid? attendanceNotificationId,
             bool allowTariffNotifications, Guid? tariffNotificationId,
             bool allowBranchfNotifications, Guid? branchNotificationId)
         {
@@ -30,6 +32,7 @@ namespace Notifications.Domain.Entities
 
             AllowAttendanceNotifications = allowAttendanceNotifications;
             AttendanceNotificationPeriod = attendanceNotificationPeriod;
+            AttendanceNotificationReSendPeriod = attendanceNotificationReSendPeriod;
             AttendanceNotificationId = attendanceNotificationId;
 
             AllowTariffNotifications = allowTariffNotifications;
@@ -40,7 +43,8 @@ namespace Notifications.Domain.Entities
         }
 
         public static NotificationSettings Create(
-            bool allowAttendanceNotifications, uint attendanceNotificationPeriod, Guid? attendanceNotificationId,
+            bool allowAttendanceNotifications, uint attendanceNotificationPeriod,
+            uint attendanceNotificationReSendPeriod, Guid? attendanceNotificationId,
             bool allowTariffNotifications, Guid? tariffNotificationId,
             bool allowBranchfNotifications, Guid? branchNotificationId)
         {
@@ -52,21 +56,22 @@ namespace Notifications.Domain.Entities
                 throw new DomainException($"Invalid value for NotificationSettings[branchNotificationId]. Entered value {branchNotificationId}");
             if (attendanceNotificationPeriod <= 0)
                 throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationPeriod]. Entered value {attendanceNotificationPeriod}");
+            if (attendanceNotificationReSendPeriod <= 0)
+                throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationPeriod]. Entered value {attendanceNotificationReSendPeriod}");
 
             return new NotificationSettings(
-                allowAttendanceNotifications, attendanceNotificationPeriod, attendanceNotificationId,
+                allowAttendanceNotifications, attendanceNotificationPeriod,
+                attendanceNotificationReSendPeriod, attendanceNotificationId,
                 allowTariffNotifications, tariffNotificationId,
                 allowBranchfNotifications, branchNotificationId);
         }
 
         public void UpdateDetails(
-            Guid id,
-            bool allowAttendanceNotifications, uint attendanceNotificationPeriod, Guid? attendanceNotificationId,
+            bool allowAttendanceNotifications, uint attendanceNotificationPeriod,
+            uint attendanceNotificationReSendPeriod, Guid? attendanceNotificationId,
             bool allowTariffNotifications, Guid? tariffNotificationId,
             bool allowBranchfNotifications, Guid? branchNotificationId)
         {
-            if (id == Guid.Empty)
-                throw new DomainException($"Invalid value for NotificationSettings[id]. Entered value {id}");
             if (allowAttendanceNotifications && attendanceNotificationId == null)
                 throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationId]. Entered value {attendanceNotificationId}");
             if (allowTariffNotifications && tariffNotificationId == null)
@@ -75,13 +80,18 @@ namespace Notifications.Domain.Entities
                 throw new DomainException($"Invalid value for NotificationSettings[branchNotificationId]. Entered value {branchNotificationId}");
             if (attendanceNotificationPeriod <= 0)
                 throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationPeriod]. Entered value {attendanceNotificationPeriod}");
+            if (attendanceNotificationReSendPeriod <= 0)
+                throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationPeriod]. Entered value {attendanceNotificationReSendPeriod}");
 
 
             AllowAttendanceNotifications = allowAttendanceNotifications;
             AttendanceNotificationPeriod = attendanceNotificationPeriod;
+            AttendanceNotificationReSendPeriod = attendanceNotificationReSendPeriod;
             AttendanceNotificationId = attendanceNotificationId;
+
             AllowTariffNotifications = allowTariffNotifications;
             TariffNotificationId = tariffNotificationId;
+
             AllowBranchfNotifications = allowBranchfNotifications;
             BranchNotificationId = branchNotificationId;
         }

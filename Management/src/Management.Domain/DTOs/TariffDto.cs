@@ -6,6 +6,7 @@
         Dictionary<int, int> PriceForNMonths,
         Dictionary<Guid, int>? DiscountForSocialGroup,
         bool AllowMultiBranches,
+        List<ServiceDto> Services,
         DateTime CreatedDate,
         DateTime? UpdatedDate
     );

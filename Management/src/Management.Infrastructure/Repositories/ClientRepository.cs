@@ -15,6 +15,11 @@ namespace Management.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<bool> ExistsByEmailAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Client?> GetAsync(Guid id)
         {
             throw new NotImplementedException();
@@ -24,7 +29,6 @@ namespace Management.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
-
         public Task UpdateAsync(Client client)
         {
             throw new NotImplementedException();

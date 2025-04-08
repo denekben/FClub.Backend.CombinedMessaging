@@ -7,7 +7,7 @@ namespace Management.Domain.DTOs
         string? Name,
         uint MaxOccupancy,
         AddressDto Address,
-        List<ServiceDto>? Services,
+        List<ServiceDto> Services,
         DateTime CreatedDate,
         DateTime? UpdatedDate
     );
