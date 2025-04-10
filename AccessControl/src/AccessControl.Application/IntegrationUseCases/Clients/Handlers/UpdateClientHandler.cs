@@ -40,7 +40,6 @@ namespace AccessControl.Application.UseCases.Clients.Commands.Handlers
                 else
                 {
                     existingMembership.UpdateDetails(membership.TariffId, membership.ExpiresDate, membership.ClientId, membership.BranchId);
-                    await _membershipRepository.UpdateAsync(existingMembership);
                 }
             }
             else
@@ -51,7 +50,6 @@ namespace AccessControl.Application.UseCases.Clients.Commands.Handlers
                 }
             }
 
-            await _clientRepository.UpdateAsync(updatingClient);
             await _repository.SaveChangesAsync();
         }
     }

@@ -1,13 +1,21 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
+using AccessControl.Infrastructure.Data;
 
 namespace AccessControl.Infrastructure.Repositories
 {
     public class UserLogRepository : IUserLogRepository
     {
-        public Task AddAsync(UserLog log)
+        private readonly AppDbContext _context;
+
+        public UserLogRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task AddAsync(UserLog log)
+        {
+            await _context.UserLogs.AddAsync(log);
         }
     }
 }

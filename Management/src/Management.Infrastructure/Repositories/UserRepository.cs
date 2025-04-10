@@ -1,38 +1,52 @@
 ﻿using Management.Domain.Entities;
 using Management.Domain.Repositories;
+using Management.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Management.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public Task AddAsync(AppUser user)
+        private readonly AppDbContext _context;
+
+        public UserRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<bool> ExistsByEmailAsync(string email)
+        public async Task AddAsync(AppUser user)
         {
-            throw new NotImplementedException();
+            await _context.AppUsers.AddAsync(user);
         }
 
-        public Task<AppUser?> GetAsync(Guid id)
+        public async Task<bool> ExistsByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _context.AppUsers.AnyAsync(u => u.Email == email);
         }
 
-        public Task<AppUser?> GetAsync(Guid id, UserIncludes includes)
+        public async Task<AppUser?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.AppUsers.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public Task<AppUser?> GetUserByEmailAsync(string email, UserIncludes includes)
+        public async Task<AppUser?> GetAsync(Guid id, UserIncludes includes)
         {
-            throw new NotImplementedException();
+            var query = _context.AppUsers.Where(u => u.Id == id);
+
+            if (includes.HasFlag(UserIncludes.Role))
+                query = query.Include(u => u.Role);
+
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Task UpdateAsync(AppUser user)
+        public async Task<AppUser?> GetUserByEmailAsync(string email, UserIncludes includes)
         {
-            throw new NotImplementedException();
+            var query = _context.AppUsers.Where(u => u.Email == email);
+
+            if (includes.HasFlag(UserIncludes.Role))
+                query = query.Include(u => u.Role);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

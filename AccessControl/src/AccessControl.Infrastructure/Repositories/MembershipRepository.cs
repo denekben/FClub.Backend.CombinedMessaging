@@ -1,28 +1,32 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
+using AccessControl.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Repositories
 {
     public class MembershipRepository : IMembershipRepository
     {
-        public Task AddAsync(Membership membership)
+        private readonly AppDbContext _context;
+
+        public MembershipRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Membership membership)
         {
-            throw new NotImplementedException();
+            await _context.Memberships.AddAsync(membership);
         }
 
-        public Task<Membership?> GetAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Memberships.Where(m => m.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task UpdateAsync(Membership membership)
+        public async Task<Membership?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Memberships.FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }

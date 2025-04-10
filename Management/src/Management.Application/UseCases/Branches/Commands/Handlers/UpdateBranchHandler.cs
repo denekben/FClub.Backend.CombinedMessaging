@@ -32,7 +32,7 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
         {
             var (branchId, name, maxOccupancy, country, city, street, houseNumber, serviceNames) = command;
 
-            var branch = await _branchRepository.GetAsync(branchId, BranchIncludes.ServiceBranches | BranchIncludes.Services)
+            var branch = await _branchRepository.GetAsync(branchId, BranchIncludes.Services)
                 ?? throw new NotFoundException($"Cannot find {branchId}");
 
             branch.UpdateDetails(name, maxOccupancy, country, city, street, houseNumber);
@@ -51,7 +51,6 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
                 branch.ServiceBranches.Add(ServiceBranch.Create(service.Id, branch.Id));
             }
 
-            await _serviceRepository.DeleteOneBranchAndZeroTariffsServicesByNameAsync(serviceNamesToDelete, branch.Id);
             foreach (var serviceName in serviceNamesToDelete)
             {
                 var service = await _serviceRepository.GetByNameAsync(serviceName);
@@ -64,8 +63,6 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
                     }
                 }
             }
-
-            await _branchRepository.UpdateAsync(branch);
 
             var services = branch.ServiceBranches.Select(sb => sb.Service);
             await _accessControlClient.UpdateBranch(

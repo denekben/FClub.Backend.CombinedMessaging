@@ -18,6 +18,7 @@ namespace Management.Infrastructure.Data
         public DbSet<Client> Clients { get; set; }
         public DbSet<DomainService> Services { get; set; }
         public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<StatisticNote> StatisticNotes { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 

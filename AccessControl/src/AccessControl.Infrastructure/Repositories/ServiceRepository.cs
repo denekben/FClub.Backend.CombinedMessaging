@@ -1,58 +1,56 @@
 ﻿using AccessControl.Domain.Repositories;
+using AccessControl.Infrastructure.Data;
 using AccessControll.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Repositories
 {
     public class ServiceRepository : IServiceRepository
     {
-        public Task AddAsync(Service service)
+        private readonly AppDbContext _context;
+
+        public ServiceRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Service service)
         {
-            throw new NotImplementedException();
+            await _context.Services.AddAsync(service);
         }
 
-        public Task DeleteOneBranchAndZeroTariffsServicesAsync(List<Guid> serviceIds)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Services.Where(s => s.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task DeleteOneBranchAndZeroTariffsServicesByNameAsync(List<string> servicesName, Guid branchId)
+        public async Task<Service?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Services.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public Task DeleteOneTariffAndZeroBranchesServicesAsync(List<Guid> serviceIds)
+        public async Task<List<Service>?> GetByBranchId(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.ServiceBranches
+                .Where(sb => sb.BranchId == id)
+                .Join(
+                    _context.Services,
+                    sb => sb.ServiceId,
+                    s => s.Id,
+                    (sb, s) => s)
+                .ToListAsync();
         }
 
-        public Task DeleteOneTariffAndZeroBranchesServicesByNameAsync(List<string> servicesName, Guid tariffId)
+        public async Task<List<Service>?> GetByTariffId(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Service?> GetAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Service>?> GetByBranchId(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Service>?> GetByTariffId(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Service service)
-        {
-            throw new NotImplementedException();
+            return await _context.ServiceTariffs
+                .Where(st => st.TariffId == id)
+                .Join(
+                    _context.Services,
+                    st => st.ServiceId,
+                    s => s.Id,
+                    (st, s) => s)
+                .ToListAsync();
         }
     }
 }

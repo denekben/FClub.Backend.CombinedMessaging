@@ -21,7 +21,6 @@ namespace Notifications.Application.IntegrationUseCases.Turnstiles.Handlers
             var client = await _clientRepository.GetAsync(command.ClientId)
                 ?? throw new NotFoundException($"Cannot find client {command.ClientId}");
             client.LastEntry = DateTime.UtcNow;
-            await _clientRepository.UpdateAsync(client);
             await _repository.SaveChangesAsync();
         }
     }

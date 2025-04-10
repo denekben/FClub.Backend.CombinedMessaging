@@ -38,11 +38,6 @@ namespace AccessControl.Application.IntegrationUseCases.Branches.Handlers
                 .Where(sb => !newServiceIds.Contains(sb.ServiceId))
                 .ToList();
 
-            foreach (var sb in serviceBranchesToRemove)
-            {
-                branch.ServiceBranches.Remove(sb);
-            }
-
             var serviceBranchesToAdd = serviceBranches
                 .Where(sb => !existingServiceIds.Contains(sb.ServiceId))
                 .ToList();
@@ -60,7 +55,11 @@ namespace AccessControl.Application.IntegrationUseCases.Branches.Handlers
                 branch.ServiceBranches.Add(ServiceBranch.Create(sbDto.Id, sbDto.ServiceId, sbDto.BranchId));
             }
 
-            await _branchRepository.UpdateAsync(branch);
+            foreach (var sb in serviceBranchesToRemove)
+            {
+                branch.ServiceBranches.Remove(sb);
+            }
+
             await _repository.SaveChangesAsync();
         }
     }

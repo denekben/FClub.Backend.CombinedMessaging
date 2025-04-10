@@ -72,8 +72,6 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
             updatingClient.UpdateDetails(firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
 
-            await _clientRepository.UpdateAsync(updatingClient);
-
             await _accessControlClient.UpdateClient(
                 new(
                     updatingClient.Id,

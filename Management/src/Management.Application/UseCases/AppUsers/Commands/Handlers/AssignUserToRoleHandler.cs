@@ -41,7 +41,6 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
 
             user.RoleId = roleId;
 
-            await _userRepository.UpdateAsync(user);
             await _repository.SaveChangesAsync();
         }
     }

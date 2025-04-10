@@ -6,7 +6,6 @@ namespace Management.Domain.Repositories
     {
         Task AddAsync(Client client);
         Task DeleteAsync(Guid id);
-        Task UpdateAsync(Client client);
         Task<Client?> GetAsync(Guid id);
         Task<Client?> GetAsync(Guid id, ClientIncludes includes);
         Task<bool> ExistsByEmailAsync(string email);

@@ -6,7 +6,6 @@ namespace Notifications.Domain.Repositories
     {
         Task<Notification?> GetAsync(Guid id);
         Task AddAsync(Notification notification);
-        Task UpdateAsync(Notification notification);
         Task DeleteAsync(Guid id);
     }
 }

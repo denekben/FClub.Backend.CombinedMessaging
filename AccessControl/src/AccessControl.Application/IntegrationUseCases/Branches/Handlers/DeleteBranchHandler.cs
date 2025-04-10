@@ -24,7 +24,6 @@ namespace AccessControl.Application.IntegrationUseCases.Branches.Handlers
         {
             var services = await _serviceRepository.GetByBranchId(command.Id)
                 ?? throw new NotFoundException($"Cannot find services by branch {command.Id}");
-            await _serviceRepository.DeleteOneBranchAndZeroTariffsServicesAsync(services?.Select(s => s.Id).ToList() ?? []);
             await _branchRepository.DeleteAsync(command.Id);
             await _repository.SaveChangesAsync();
         }

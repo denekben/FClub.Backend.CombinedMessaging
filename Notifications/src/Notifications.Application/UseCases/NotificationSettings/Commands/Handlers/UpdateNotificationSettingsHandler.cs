@@ -70,7 +70,6 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands.Handl
                 branchNotificationId
             );
 
-            await _settingsRepository.UpdateAsync(settings);
             await _repository.SaveChangesAsync();
 
             return settings.AsDto(attendanceNotification, tariffNotification, branchNotification);

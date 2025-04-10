@@ -23,7 +23,6 @@ namespace AccessControl.Application.IntegrationUseCases.Memberships.Handlers
             var updatingMembership = await _membershipRepository.GetAsync(id)
                 ?? throw new NotFoundException($"Cannot find membership {id}");
             updatingMembership.UpdateDetails(tariffId, expiresDate, clientId, branchId);
-            await _membershipRepository.UpdateAsync(updatingMembership);
             await _repository.SaveChangesAsync();
         }
     }

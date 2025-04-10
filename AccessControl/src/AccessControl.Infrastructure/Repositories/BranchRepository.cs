@@ -1,28 +1,36 @@
 ﻿using AccessControl.Domain.Repositories;
+using AccessControl.Infrastructure.Data;
 using AccessControll.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Repositories
 {
     public class BranchRepository : IBranchRepository
     {
-        public Task AddAsync(Branch branch)
+        private readonly AppDbContext _context;
+
+        public BranchRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Branch branch)
         {
-            throw new NotImplementedException();
+            await _context.Branches.AddAsync(branch);
         }
 
-        public Task<Branch?> GetAsync(Guid id, BranchIncludes includes)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Branches.Where(b => b.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task UpdateAsync(Branch branch)
+        public async Task<Branch?> GetAsync(Guid id, BranchIncludes includes)
         {
-            throw new NotImplementedException();
+            var query = _context.Branches.Where(b => b.Id == id);
+            if (includes.HasFlag(BranchIncludes.ServicesBranches))
+                query = query.Include(b => b.ServiceBranches);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

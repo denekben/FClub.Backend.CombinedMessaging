@@ -24,7 +24,6 @@ namespace Notifications.Application.UseCases.Notifications.Commands.Handlers
                 ?? throw new DirectoryNotFoundException($"Cannot find notification {id}");
 
             notification.UpdateDetails(title, text);
-            await _notificationRepository.UpdateAsync(notification);
             await _repository.SaveChangesAsync();
 
             return notification.AsDto();

@@ -36,7 +36,7 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
             var turnstile = await _turnstileRepository.GetAsync(turnstileId, TurnistileIncludes.Branches | TurnistileIncludes.Services)
                 ?? throw new NotFoundException($"Cannot find turnstile {turnstileId}");
 
-            var client = await _clientRepository.GetAsync(clientId, ClientIncludes.Membership | ClientIncludes.Tariff | ClientIncludes.ServiceTariff)
+            var client = await _clientRepository.GetAsync(clientId, ClientIncludes.ServiceTariff)
                 ?? throw new NotFoundException($"Cannot find client {clientId}");
 
             if (!client.AllowEntry)

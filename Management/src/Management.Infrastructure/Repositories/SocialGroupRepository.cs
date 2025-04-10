@@ -1,28 +1,32 @@
 ﻿using Management.Domain.Entities;
 using Management.Domain.Repositories;
+using Management.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Management.Infrastructure.Repositories
 {
     public class SocialGroupRepository : ISocialGroupRepository
     {
-        public Task AddAsync(SocialGroup socialGroup)
+        private readonly AppDbContext _context;
+
+        public SocialGroupRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(SocialGroup socialGroup)
         {
-            throw new NotImplementedException();
+            await _context.SocialGroups.AddAsync(socialGroup);
         }
 
-        public Task<SocialGroup?> GetAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.SocialGroups.Where(sg => sg.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task UpdateAsync(SocialGroup socialGroup)
+        public async Task<SocialGroup?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.SocialGroups.FirstOrDefaultAsync(sg => sg.Id == id);
         }
     }
 }

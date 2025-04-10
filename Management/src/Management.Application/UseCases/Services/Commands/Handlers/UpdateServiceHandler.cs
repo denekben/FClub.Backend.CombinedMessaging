@@ -27,7 +27,6 @@ namespace Management.Application.UseCases.Services.Commands.Handlers
                 ?? throw new NotFoundException($"Cannot find service {command.Id}");
 
             service.UpdateDetails(command.Name);
-            await _serviceRepository.UpdateAsync(service);
 
             await _accessControlClient.UpdateService(
                 new(service.Id, service.Name)

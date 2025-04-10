@@ -1,13 +1,21 @@
 ﻿using Notifications.Domain.Entities;
 using Notifications.Domain.Repositories;
+using Notifications.Infrastructure.Data;
 
 namespace Notifications.Infrastructure.Repositories
 {
     public class UserLogRepository : IUserLogRepository
     {
-        public Task AddAsync(UserLog log)
+        private readonly AppDbContext _context;
+
+        public UserLogRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task AddAsync(UserLog log)
+        {
+            await _context.UserLogs.AddAsync(log);
         }
     }
 }

@@ -28,8 +28,6 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
 
             var serviceIds = tariff.ServiceTariffs.Select(sb => sb.ServiceId).ToList();
 
-            await _serviceRepository.DeleteOneTariffAndZeroBranchesServicesAsync(serviceIds);
-
             await _tariffRepository.DeleteAsync(command.Id);
 
             await _accessControlClient.DeleteTariff(

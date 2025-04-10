@@ -1,18 +1,27 @@
 ﻿using Management.Domain.Entities;
 using Management.Domain.Repositories;
+using Management.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Management.Infrastructure.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
-        public Task<Role?> GetAsync(Guid id)
+        private readonly AppDbContext _context;
+
+        public RoleRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Role?> GetByNameAsync(string name)
+        public async Task<Role?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
+        }
+
+        public async Task<Role?> GetByNameAsync(string name)
+        {
+            return await _context.Roles.FirstOrDefaultAsync(r => r.Name == name);
         }
     }
 }

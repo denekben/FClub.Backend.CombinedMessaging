@@ -1,8 +1,8 @@
 ﻿using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Services;
 using Management.Application.Services;
-using Management.Domain.Repositories;
 using Management.Domain.DTOs;
+using Management.Domain.Repositories;
 using MediatR;
 
 namespace Management.Application.UseCases.AppUsers.Commands.Handlers
@@ -41,7 +41,6 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpires = refreshTokenExpiresDate;
 
-            await _userRepository.UpdateAsync(user);
             await _repository.SaveChangesAsync();
 
             return new(accessToken, refreshToken);

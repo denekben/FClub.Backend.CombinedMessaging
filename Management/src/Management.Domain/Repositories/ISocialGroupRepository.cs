@@ -7,6 +7,5 @@ namespace Management.Domain.Repositories
         Task<SocialGroup?> GetAsync(Guid id);
         Task AddAsync(SocialGroup socialGroup);
         Task DeleteAsync(Guid id);
-        Task UpdateAsync(SocialGroup socialGroup);
     }
 }

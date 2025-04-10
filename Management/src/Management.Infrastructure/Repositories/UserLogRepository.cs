@@ -1,13 +1,21 @@
 ﻿using Management.Domain.Entities;
 using Management.Domain.Repositories;
+using Management.Infrastructure.Data;
 
 namespace Management.Infrastructure.Repositories
 {
     public class UserLogRepository : IUserLogRepository
     {
-        public Task AddAsync(UserLog log)
+        private readonly AppDbContext _context;
+
+        public UserLogRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task AddAsync(UserLog log)
+        {
+            await _context.UserLogs.AddAsync(log);
         }
     }
 }

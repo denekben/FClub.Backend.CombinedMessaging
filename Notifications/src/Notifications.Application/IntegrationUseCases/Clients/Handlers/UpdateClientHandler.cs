@@ -23,7 +23,6 @@ namespace Notifications.Application.IntegrationUseCases.Clients.Handlers
 
             updatingClient.UpdateDetails(firstName, secondName, patronymic, phone, email, allowNotifications, lastEntry, lastNotification);
 
-            await _clientRepository.UpdateAsync(updatingClient);
             await _repository.SaveChangesAsync();
         }
     }

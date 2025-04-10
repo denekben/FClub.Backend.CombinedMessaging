@@ -15,7 +15,7 @@ namespace AccessControl.Infrastructure.Hubs
 
         public async Task ClientEntered(Guid branchId, uint entriesQuantity = 1)
         {
-            var json = JsonSerializer.Serialize(new { BranchId = branchId, EntriesQuantity = entriesQuantity })
+            var json = JsonSerializer.Serialize(new { BranchId = branchId, EntriesQuantity = entriesQuantity });
             await _hubContext.Clients.All.SendAsync(json);
         }
     }

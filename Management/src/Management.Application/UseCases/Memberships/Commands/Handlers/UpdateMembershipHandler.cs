@@ -48,8 +48,6 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
 
             await _statisticRepository.AddAsync(StatisticNote.Create(membership.TotalCost));
 
-            await _membershipRepository.UpdateAsync(membership);
-
             await _accessControlClient.CreateMembership(
                 new(
                     membership.Id,

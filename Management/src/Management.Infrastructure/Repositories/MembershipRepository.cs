@@ -1,33 +1,44 @@
 ﻿using Management.Domain.Entities;
 using Management.Domain.Repositories;
+using Management.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Management.Infrastructure.Repositories
 {
     public class MembershipRepository : IMembershipRepository
     {
-        public Task AddAsync(Membership membership)
+        private readonly AppDbContext _context;
+
+        public MembershipRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Membership membership)
         {
-            throw new NotImplementedException();
+            await _context.Memberships.AddAsync(membership);
         }
 
-        public Task<Membership?> GetAsync(Guid id, MembershipIncludes includes)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Memberships.Where(m => m.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task<Membership?> GetAsync(Guid id)
+        public async Task<Membership?> GetAsync(Guid id, MembershipIncludes includes)
         {
-            throw new NotImplementedException();
+            var query = _context.Memberships.Where(m => m.Id == id);
+
+            if (includes.HasFlag(MembershipIncludes.Client))
+                query = query.Include(m => m.Client);
+            if (includes.HasFlag(MembershipIncludes.Tariff))
+                query = query.Include(m => m.Tariff);
+
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Task UpdateAsync(Membership membership)
+        public async Task<Membership?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Memberships.FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }

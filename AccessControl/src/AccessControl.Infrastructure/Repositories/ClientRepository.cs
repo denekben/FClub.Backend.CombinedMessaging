@@ -1,33 +1,64 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
+using AccessControl.Infrastructure.Data;
+using FClub.Backend.Common.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Repositories
 {
     public class ClientRepository : IClientRepository
     {
-        public Task AddAsync(Client client)
+        private readonly AppDbContext _context;
+
+        public ClientRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Client client)
         {
-            throw new NotImplementedException();
+            await _context.Clients.AddAsync(client);
         }
 
-        public Task<Client> GetAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Clients.Where(c => c.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task<Client> GetAsync(Guid id, ClientIncludes includes)
+        public async Task<Client?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Clients.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public Task UpdateAsync(Client client)
+        public Task<Client?> GetAsync(Guid id, ClientIncludes includes)
         {
-            throw new NotImplementedException();
+            var query = _context.Clients.Where(c => c.Id == id);
+
+            query = query.Include(c => c.Membership);
+
+            if (query.Select(c => c.Membership) != null)
+            {
+                if (includes.HasFlag(ClientIncludes.ServiceTariff))
+                {
+                    query = query.Include(c => c.Membership)
+                                    .ThenInclude(m => m.Tariff)
+                                    .ThenInclude(t => t.ServiceTariffs);
+                }
+                else if (includes.HasFlag(ClientIncludes.Tariff))
+                {
+                    query = query.Include(c => c.Membership)
+                                    .ThenInclude(m => m.Tariff);
+                }
+            }
+            else
+            {
+                if (includes.HasFlag(ClientIncludes.ServiceTariff))
+                    throw new BadRequestException("Cannot include ServiceTariff: Membership is null");
+                if (includes.HasFlag(ClientIncludes.Tariff))
+                    throw new BadRequestException("Cannot include Tariff: Membership is null");
+            }
+
+            return query.FirstOrDefaultAsync();
         }
     }
 }

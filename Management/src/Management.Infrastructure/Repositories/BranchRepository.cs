@@ -1,33 +1,46 @@
 ﻿using Management.Domain.Entities;
 using Management.Domain.Repositories;
+using Management.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Management.Infrastructure.Repositories
 {
     public class BranchRepository : IBranchRepository
     {
-        public Task AddAsync(Branch branch)
+        private readonly AppDbContext _context;
+
+        public BranchRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Branch branch)
         {
-            throw new NotImplementedException();
+            await _context.Branches.AddAsync(branch);
         }
 
-        public Task<Branch?> GetAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Branches.Where(b => b.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task<Branch?> GetAsync(Guid id, BranchIncludes includes)
+        public async Task<Branch?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Branches.FirstOrDefaultAsync(b => b.Id == id);
         }
 
-        public Task UpdateAsync(Branch branch)
+        public async Task<Branch?> GetAsync(Guid id, BranchIncludes includes)
         {
-            throw new NotImplementedException();
+            var query = _context.Branches.Where(b => b.Id == id);
+
+            if (includes.HasFlag(BranchIncludes.ServiceBranches))
+                query = query.Include(b => b.ServiceBranches);
+            if (includes.HasFlag(BranchIncludes.Services))
+                query = query
+                    .Include(b => b.ServiceBranches)
+                    .ThenInclude(sb => sb.Service);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

@@ -24,7 +24,6 @@ namespace AccessControl.Application.IntegrationUseCases.Tariffs.Handler
         {
             var services = await _serviceRepository.GetByTariffId(command.Id)
                 ?? throw new NotFoundException($"Cannot find services by tariff {command.Id}");
-            await _serviceRepository.DeleteOneTariffAndZeroBranchesServicesAsync(services?.Select(s => s.Id).ToList() ?? []);
             await _tariffRepository.DeleteAsync(command.Id);
             await _repository.SaveChangesAsync();
         }

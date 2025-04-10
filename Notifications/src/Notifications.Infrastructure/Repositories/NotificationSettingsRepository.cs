@@ -1,18 +1,22 @@
-﻿using Notifications.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Notifications.Domain.Entities;
 using Notifications.Domain.Repositories;
+using Notifications.Infrastructure.Data;
 
 namespace Notifications.Infrastructure.Repositories
 {
     public class NotificationSettingsRepository : INotificationSettingsRepository
     {
-        public Task<NotificationSettings> GetAsync(Guid id)
+        private readonly AppDbContext _context;
+
+        public NotificationSettingsRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task UpdateAsync(NotificationSettings notificationSettings)
+        public async Task<NotificationSettings?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.NotificationSettings.FirstOrDefaultAsync(ns => ns.Id == id);
         }
     }
 }

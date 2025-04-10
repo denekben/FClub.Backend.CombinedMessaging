@@ -1,33 +1,44 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
+using AccessControl.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Repositories
 {
     public class TurnstileRepository : ITurnstileRepository
     {
-        public Task AddAsync(Turnstile turnstile)
+        private readonly AppDbContext _context;
+
+        public TurnstileRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Turnstile turnstile)
         {
-            throw new NotImplementedException();
+            await _context.Turnstiles.AddAsync(turnstile);
         }
 
-        public Task<Turnstile?> GetAsync(Guid id, TurnistileIncludes includes)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Turnstiles.Where(t => t.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task<Turnstile?> GetAsync(Guid id)
+        public async Task<Turnstile?> GetAsync(Guid id, TurnistileIncludes includes)
         {
-            throw new NotImplementedException();
+            var query = _context.Turnstiles.Where(t => t.Id == id);
+
+            if (includes.HasFlag(TurnistileIncludes.Branches))
+                query = query.Include(t => t.Branch);
+            if (includes.HasFlag(TurnistileIncludes.Services))
+                query = query.Include(t => t.Service);
+
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Task UpdateAsync(Turnstile turnstile)
+        public async Task<Turnstile?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Turnstiles.FirstOrDefaultAsync(t => t.Id == id);
         }
     }
 }

@@ -1,28 +1,37 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
+using AccessControl.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Repositories
 {
     public class TariffRepository : ITariffRepository
     {
-        public Task AddAsync(Tariff tariff)
+        private readonly AppDbContext _context;
+
+        public TariffRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Tariff tariff)
         {
-            throw new NotImplementedException();
+            await _context.Tariffs.AddAsync(tariff);
         }
 
-        public Task<Tariff?> GetAsync(Guid id, TariffIncludes includes)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Tariffs.Where(t => t.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task UpdateAsync(Tariff tariff)
+        public async Task<Tariff?> GetAsync(Guid id, TariffIncludes includes)
         {
-            throw new NotImplementedException();
+            var query = _context.Tariffs.Where(t => t.Id == id);
+
+            if (includes.HasFlag(TariffIncludes.ServicesTariffs))
+                query = query.Include(t => t.ServiceTariffs);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

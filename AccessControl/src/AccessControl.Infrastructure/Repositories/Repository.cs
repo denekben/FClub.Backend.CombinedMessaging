@@ -1,12 +1,20 @@
 ﻿using AccessControl.Domain.Repositories;
+using AccessControl.Infrastructure.Data;
 
 namespace AccessControl.Infrastructure.Repositories
 {
     public class Repository : IRepository
     {
-        public Task SaveChangesAsync()
+        private readonly AppDbContext _context;
+
+        public Repository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

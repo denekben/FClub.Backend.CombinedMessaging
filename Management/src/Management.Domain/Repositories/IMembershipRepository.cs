@@ -8,7 +8,6 @@ namespace Management.Domain.Repositories
         Task<Membership?> GetAsync(Guid id, MembershipIncludes includes);
         Task<Membership?> GetAsync(Guid id);
         Task DeleteAsync(Guid id);
-        Task UpdateAsync(Membership membership);
     }
 
     [Flags]

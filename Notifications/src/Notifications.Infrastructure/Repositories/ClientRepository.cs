@@ -1,28 +1,32 @@
-﻿using Notifications.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Notifications.Domain.Entities;
 using Notifications.Domain.Repositories;
+using Notifications.Infrastructure.Data;
 
 namespace Notifications.Infrastructure.Repositories
 {
     public class ClientRepository : IClientRepository
     {
-        public Task AddAsync(Client client)
+        private readonly AppDbContext _context;
+
+        public ClientRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Client client)
         {
-            throw new NotImplementedException();
+            await _context.Clients.AddAsync(client);
         }
 
-        public Task<Client?> GetAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Clients.Where(c => c.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task UpdateAsync(Client client)
+        public async Task<Client?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Clients.FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

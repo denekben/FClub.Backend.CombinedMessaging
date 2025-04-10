@@ -25,7 +25,6 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
                 ?? throw new NotFoundException($"Cannot find turnstile {id}");
 
             turnstile.UpdateDetails(name, branchId, serviceId, isMain);
-            await _turnstileRepository.UpdateAsync(turnstile);
             await _repository.SaveChangesAsync();
 
             return turnstile.AsDto();

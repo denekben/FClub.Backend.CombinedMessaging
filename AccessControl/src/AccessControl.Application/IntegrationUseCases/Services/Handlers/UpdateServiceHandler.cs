@@ -22,7 +22,6 @@ namespace AccessControl.Application.IntegrationUseCases.Services.Handlers
             var (id, name) = command;
             var service = await _serviceRepository.GetAsync(id)
                 ?? throw new NotFoundException($"Cannot find service {id}");
-            await _serviceRepository.UpdateAsync(service);
             await _repository.SaveChangesAsync();
         }
     }

@@ -38,11 +38,6 @@ namespace AccessControl.Application.IntegrationUseCases.Tariffs.Handler
                 .Where(sb => !newServiceIds.Contains(sb.ServiceId))
                 .ToList();
 
-            foreach (var sb in serviceTariffsToRemove)
-            {
-                tariff.ServiceTariffs.Remove(sb);
-            }
-
             var serviceTariffsToAdd = serviceTariffs
                 .Where(sb => !existingServiceIds.Contains(sb.ServiceId))
                 .ToList();
@@ -60,7 +55,11 @@ namespace AccessControl.Application.IntegrationUseCases.Tariffs.Handler
                 tariff.ServiceTariffs.Add(ServiceTariff.Create(stDto.Id, stDto.ServiceId, stDto.TariffId));
             }
 
-            await _tariffRepository.UpdateAsync(tariff);
+            foreach (var sb in serviceTariffsToRemove)
+            {
+                tariff.ServiceTariffs.Remove(sb);
+            }
+
             await _repository.SaveChangesAsync();
         }
     }

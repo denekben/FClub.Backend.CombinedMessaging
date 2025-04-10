@@ -23,7 +23,6 @@ namespace Management.Application.UseCases.SocialGroups.Commands.Handlers
                 ?? throw new NotFoundException($"Cannot find social group {command.Id}");
 
             socialGroup.UpdateDetails(command.Name);
-            await _socialGroupRepository.UpdateAsync(socialGroup);
             await _repository.SaveChangesAsync();
 
             return socialGroup.AsDto();

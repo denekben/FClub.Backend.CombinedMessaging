@@ -7,7 +7,6 @@ namespace Management.Domain.Repositories
         Task<bool> ExistsByEmailAsync(string email);
         Task<AppUser?> GetUserByEmailAsync(string email, UserIncludes includes);
         Task AddAsync(AppUser user);
-        Task UpdateAsync(AppUser user);
         Task<AppUser?> GetAsync(Guid id);
         Task<AppUser?> GetAsync(Guid id, UserIncludes includes);
     }

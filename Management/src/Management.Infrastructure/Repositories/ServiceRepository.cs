@@ -1,52 +1,36 @@
 ﻿using Management.Domain.Repositories;
+using Management.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Management.Infrastructure.Repositories
 {
     public class ServiceRepository : IServiceRepository
     {
-        public Task AddAsync(Domain.Entities.Service service)
+        private readonly AppDbContext _context;
+
+        public ServiceRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Domain.Entities.Service service)
         {
-            throw new NotImplementedException();
+            await _context.Services.AddAsync(service);
         }
 
-        public Task DeleteOneBranchAndZeroTariffsServicesAsync(List<Guid> serviceIds)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Services.Where(s => s.Id == id).ExecuteDeleteAsync();
         }
 
-        public Task DeleteOneBranchAndZeroTariffsServicesByNameAsync(List<string> servicesName, Guid branchId)
+        public async Task<Domain.Entities.Service?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Services.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public Task DeleteOneTariffAndZeroBranchesServicesAsync(List<Guid> serviceIds)
+        public async Task<Domain.Entities.Service?> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteOneTariffAndZeroBranchesServicesByNameAsync(List<string> servicesName, Guid tariffId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Domain.Entities.Service?> GetAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Domain.Entities.Service?> GetByNameAsync(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Domain.Entities.Service service)
-        {
-            throw new NotImplementedException();
+            return await _context.Services.FirstOrDefaultAsync(s => s.Name == name);
         }
     }
 }

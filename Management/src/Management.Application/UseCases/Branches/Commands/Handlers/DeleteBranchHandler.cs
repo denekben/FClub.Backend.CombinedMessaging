@@ -29,8 +29,6 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
 
             var serviceIds = branch.ServiceBranches.Select(sb => sb.ServiceId).ToList();
 
-            await _serviceRepository.DeleteOneBranchAndZeroTariffsServicesAsync(serviceIds);
-
             await _branchRepository.DeleteAsync(branch.Id);
 
             await _accessControlClient.DeleteBranch(

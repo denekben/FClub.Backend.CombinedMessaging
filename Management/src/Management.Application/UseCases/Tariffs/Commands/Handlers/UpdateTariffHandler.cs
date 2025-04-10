@@ -31,7 +31,7 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
         {
             var (id, name, priceForNMonths, discountForSocialGroup, allowMultiBranches, serviceNames) = command;
 
-            var tariff = await _tariffRepository.GetAsync(id, TariffIncludes.ServiceTariffs | TariffIncludes.Services)
+            var tariff = await _tariffRepository.GetAsync(id, TariffIncludes.Services)
                 ?? throw new NotFoundException($"Cannot find tariff {command.Id}");
 
             tariff.UpdateDetails(name, priceForNMonths, discountForSocialGroup, allowMultiBranches);
@@ -52,7 +52,6 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
                 tariff.ServiceTariffs.Add(ServiceTariff.Create(service.Id, tariff.Id));
             }
 
-            await _serviceRepository.DeleteOneTariffAndZeroBranchesServicesByNameAsync(serviceNamesToDelete, tariff.Id);
             foreach (var serviceName in serviceNamesToDelete)
             {
                 var service = await _serviceRepository.GetByNameAsync(serviceName);
@@ -66,8 +65,6 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
                     }
                 }
             }
-
-            await _tariffRepository.UpdateAsync(tariff);
 
             await _accessControlClient.UpdateTariff(
                 new(
