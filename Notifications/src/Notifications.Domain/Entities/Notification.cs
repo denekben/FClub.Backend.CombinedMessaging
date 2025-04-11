@@ -7,7 +7,6 @@ namespace Notifications.Domain.Entities
         public Guid Id { get; init; }
         public string Title { get; set; }
         public string Text { get; set; }
-        public List<NotificationLog> NotificationLogs { get; set; }
         public NotificationSettings NotificationSettings { get; set; }
 
         public DateTime CreatedDate { get; init; }

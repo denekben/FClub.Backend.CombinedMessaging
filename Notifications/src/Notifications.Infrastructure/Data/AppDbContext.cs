@@ -7,7 +7,6 @@ namespace Notifications.Infrastructure.Data
     {
         public DbSet<Client> Clients { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<NotificationLog> NotificationLogs { get; set; }
         public DbSet<NotificationSettings> NotificationSettings { get; set; }
         public DbSet<UserLog> UserLogs { get; set; }
 
@@ -21,7 +20,6 @@ namespace Notifications.Infrastructure.Data
 
             modelBuilder.ApplyConfiguration<Client>(configuration);
             modelBuilder.ApplyConfiguration<Notification>(configuration);
-            modelBuilder.ApplyConfiguration<NotificationLog>(configuration);
             modelBuilder.ApplyConfiguration<NotificationSettings>(configuration);
             modelBuilder.ApplyConfiguration<UserLog>(configuration);
 

@@ -34,16 +34,6 @@ namespace Notifications.Domain.DTOs.Mappers
 
         }
 
-        public static NotificationLogDto AsDto(this NotificationLog log)
-        {
-            return new(
-                log.Id,
-                log.NotificationId,
-                log.NotificationTitle,
-                log.NotificationText
-            );
-        }
-
         public static UserLogDto AsDto(this UserLog log)
         {
             return new(

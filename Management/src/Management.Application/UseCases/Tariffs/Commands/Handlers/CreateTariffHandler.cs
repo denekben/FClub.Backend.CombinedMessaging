@@ -13,22 +13,25 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
     public sealed class CreateTariffHandler : IRequestHandler<CreateTariff, TariffDto?>
     {
         private readonly IHttpAccessControlClient _accessControlClient;
+        private readonly IHttpNotificationsClient _notificationsClient;
         private readonly ITariffRepository _tariffRepository;
         private readonly IServiceRepository _serviceRepository;
         private readonly IRepository _repository;
 
         public CreateTariffHandler(ITariffRepository tariffRepository, IRepository repository,
-            IHttpAccessControlClient accessControlClient, IServiceRepository serviceRepository)
+            IHttpAccessControlClient accessControlClient, IServiceRepository serviceRepository,
+            IHttpNotificationsClient notificationsClient)
         {
             _tariffRepository = tariffRepository;
             _repository = repository;
             _accessControlClient = accessControlClient;
             _serviceRepository = serviceRepository;
+            _notificationsClient = notificationsClient;
         }
 
         public async Task<TariffDto?> Handle(CreateTariff command, CancellationToken cancellationToken)
         {
-            var (name, priceForNMonths, discountForSocialGroup, allowMultiBranches, serviceNames) = command;
+            var (sendNotification, name, priceForNMonths, discountForSocialGroup, allowMultiBranches, serviceNames) = command;
 
             var tariff = Tariff.Create(name, priceForNMonths, discountForSocialGroup, allowMultiBranches);
 
@@ -55,6 +58,13 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
                     tariff.ServiceTariffs.Select(st => new AccessControlServiceTariffDto(st.Id, st.ServiceId, st.TariffId)).ToList(),
                     services.Select(s => new AccessControlServiceDto(s.Id, s.Name)).ToList())
             );
+
+            if (sendNotification)
+            {
+                await _notificationsClient.CreateTariff(
+                    new(tariff.Name, tariff.PriceForNMonths, tariff.DiscountForSocialGroup, tariff.AllowMultiBranches, serviceNames)
+                );
+            }
 
             await _repository.SaveChangesAsync();
 

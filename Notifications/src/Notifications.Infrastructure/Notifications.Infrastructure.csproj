@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Notifications.Domain\Notifications.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NotificationService\" />
-  </ItemGroup>
-
 </Project>

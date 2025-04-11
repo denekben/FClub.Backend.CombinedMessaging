@@ -17,7 +17,7 @@ namespace Management.Infrastructure.Services
         public HttpAccessControlClient([FromKeyedServices("AccessControl")] IHttpClientService httpClient)
         {
             _httpClient = httpClient;
-            _basePath = "/api";
+            _basePath = "/api/access-control";
         }
 
         public async Task CreateBranch(CreateBranch command)

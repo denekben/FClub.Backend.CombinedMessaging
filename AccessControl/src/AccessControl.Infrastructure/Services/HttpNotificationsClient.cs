@@ -13,7 +13,7 @@ namespace AccessControl.Infrastructure.Services
         public HttpNotificationsClient([FromKeyedServices("Notifications")] IHttpClientService httpClient)
         {
             _httpClient = httpClient;
-            _basePath = "/api";
+            _basePath = "/api/notifications";
         }
 
         public async Task GoThrough(GoThrough command)

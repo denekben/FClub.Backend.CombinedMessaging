@@ -28,5 +28,38 @@ namespace Notifications.Infrastructure.Repositories
         {
             return await _context.Notifications.FirstOrDefaultAsync(n => n.Id == id);
         }
+
+        public async Task<Notification?> GetAttendanceNotificationAsync()
+        {
+            return await _context.NotificationSettings.AsNoTracking()
+                .Join(
+                    _context.Notifications,
+                    ns => ns.AttendanceNotificationId,
+                    n => n.Id,
+                    (ns, n) => n)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<Notification?> GetBranchNotificationAsync()
+        {
+            return await _context.NotificationSettings.AsNoTracking()
+                .Join(
+                    _context.Notifications,
+                    ns => ns.BranchNotificationId,
+                    n => n.Id,
+                    (ns, n) => n)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<Notification?> GetTariffNotificationAsync()
+        {
+            return await _context.NotificationSettings.AsNoTracking()
+                .Join(
+                    _context.Notifications,
+                    ns => ns.TariffNotificationId,
+                    n => n.Id,
+                    (ns, n) => n)
+                .FirstOrDefaultAsync();
+        }
     }
 }

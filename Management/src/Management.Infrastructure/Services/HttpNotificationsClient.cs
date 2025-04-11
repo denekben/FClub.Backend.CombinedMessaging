@@ -13,7 +13,7 @@ namespace Management.Infrastructure.Services
         public HttpNotificationsClient([FromKeyedServices("Notifications")] IHttpClientService httpClient)
         {
             _httpClient = httpClient;
-            _basePath = "/api";
+            _basePath = "/api/notifications";
         }
 
         public async Task CreateClient(CreateClient command)
@@ -29,6 +29,16 @@ namespace Management.Infrastructure.Services
         public async Task UpdateClient(UpdateClient command)
         {
             await _httpClient.SendResponse($"{_basePath}/clients", command, RequestType.Put);
+        }
+
+        public async Task CreateBranch(Shared.IntegrationUseCases.Notifications.Branches.CreateBranch command)
+        {
+            await _httpClient.SendResponse($"{_basePath}/branches", command, RequestType.Post);
+        }
+
+        public async Task CreateTariff(Shared.IntegrationUseCases.Notifications.Tariffs.CreateTariff command)
+        {
+            await _httpClient.SendResponse($"{_basePath}/tariffs", command, RequestType.Post);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
 {
     public sealed class CreateBranchHandler : IRequestHandler<CreateBranch, BranchDto?>
     {
+        private readonly IHttpNotificationsClient _notificationClient;
         private readonly IHttpAccessControlClient _accessControlClient;
         private readonly IServiceRepository _serviceRepository;
         private readonly IBranchRepository _branchRepository;
@@ -19,17 +20,19 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
 
         public CreateBranchHandler(
             IServiceRepository serviceRepository, IBranchRepository branchRepository,
-            IRepository repository, IHttpAccessControlClient accessControlClient)
+            IRepository repository, IHttpAccessControlClient accessControlClient,
+            IHttpNotificationsClient notificationClient)
         {
             _serviceRepository = serviceRepository;
             _branchRepository = branchRepository;
             _repository = repository;
             _accessControlClient = accessControlClient;
+            _notificationClient = notificationClient;
         }
 
         public async Task<BranchDto?> Handle(CreateBranch command, CancellationToken cancellationToken)
         {
-            var (name, maxOccupancy, country, city, street, houseNumber, serviceNames) = command;
+            var (sendNotification, name, maxOccupancy, country, city, street, houseNumber, serviceNames) = command;
 
             var branch = Branch.Create(name, maxOccupancy, country, city, street, houseNumber);
 
@@ -60,6 +63,20 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
                     branch.ServiceBranches.Select(sb => new AccessControlServiceBranchDto(sb.Id, sb.ServiceId, sb.BranchId)).ToList(),
                     services.Select(s => new AccessControlServiceDto(s.Id, s.Name)).ToList())
             );
+
+            if (sendNotification)
+            {
+                await _notificationClient.CreateBranch(
+                    new(
+                    branch.Name,
+                    branch.Address.Country,
+                    branch.Address.City,
+                    branch.Address.Street,
+                    branch.Address.HouseNumber,
+                    serviceNames)
+                );
+            }
+
 
             await _repository.SaveChangesAsync();
 

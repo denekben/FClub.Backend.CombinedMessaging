@@ -7,5 +7,8 @@ namespace Notifications.Domain.Repositories
         Task<Notification?> GetAsync(Guid id);
         Task AddAsync(Notification notification);
         Task DeleteAsync(Guid id);
+        Task<Notification?> GetBranchNotificationAsync();
+        Task<Notification?> GetTariffNotificationAsync();
+        Task<Notification?> GetAttendanceNotificationAsync();
     }
 }

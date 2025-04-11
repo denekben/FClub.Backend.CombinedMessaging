@@ -6,7 +6,7 @@ namespace Notifications.Infrastructure.Data
 {
     public sealed class NotificationsConfiguration :
         IEntityTypeConfiguration<Client>, IEntityTypeConfiguration<Notification>,
-        IEntityTypeConfiguration<NotificationLog>, IEntityTypeConfiguration<NotificationSettings>,
+        IEntityTypeConfiguration<NotificationSettings>,
         IEntityTypeConfiguration<UserLog>
     {
         public void Configure(EntityTypeBuilder<Client> builder)
@@ -21,19 +21,6 @@ namespace Notifications.Infrastructure.Data
             builder.HasKey(c => c.Id);
 
             builder.ToTable("Notifications");
-        }
-
-        public void Configure(EntityTypeBuilder<NotificationLog> builder)
-        {
-            builder.HasKey(c => c.Id);
-
-            builder
-                .HasOne(nl => nl.Notification)
-                .WithMany(n => n.NotificationLogs)
-                .HasForeignKey(nl => nl.NotificationId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.ToTable("NotificationLogs");
         }
 
         public void Configure(EntityTypeBuilder<NotificationSettings> builder)
