@@ -70,7 +70,7 @@ namespace Notifications.Infrastructure.BackgroundService
                 if (clients.Any())
                 {
                     sendTasks = clients.Select(async c =>
-                        await sender.SendEmailAsync(c.Email, "Вас давно с нами не было!",
+                        await sender.SendEmailAsync(c.Email, settings.AttendanceEmailSubject,
                             EmailParser.Parse(notification.Text, c)));
 
                     await Task.WhenAll(sendTasks);

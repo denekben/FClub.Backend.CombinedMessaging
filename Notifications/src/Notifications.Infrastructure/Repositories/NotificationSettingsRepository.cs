@@ -18,5 +18,10 @@ namespace Notifications.Infrastructure.Repositories
         {
             return await _context.NotificationSettings.FirstOrDefaultAsync(ns => ns.Id == id);
         }
+
+        public async Task<NotificationSettings?> GetAsync()
+        {
+            return await _context.NotificationSettings.FirstOrDefaultAsync();
+        }
     }
 }
