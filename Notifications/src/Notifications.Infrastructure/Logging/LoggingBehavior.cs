@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json;
 
-namespace Management.Infrastructure.Logging
+namespace Notifications.Infrastructure.Logging
 {
     public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

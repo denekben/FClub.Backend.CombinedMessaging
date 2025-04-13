@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AccessControl.Application\AccessControl.Application.csproj" />
+    <ProjectReference Include="..\AccessControl.Infrastructure\AccessControl.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

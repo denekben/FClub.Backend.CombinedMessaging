@@ -1,15 +1,31 @@
+using AccessControl.Infrastructure;
+using AccessControl.WebUI.Policies;
+using FClub.Backend.Common.Middleware;
+using FClub.Backend.Common.Swagger;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//------------------------// Custom //------------------------//
+builder.Services.AddInfrastructureLayer(builder.Configuration);
+builder.Services.AddPolicies();
+builder.Services.AddCustomErrorHandling();
+builder.Services.AddCustomSwagger(options =>
+{
+    builder.Configuration.GetSection("Swagger").Bind(options);
+});
+//------------------------------------------------------------//
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//------------------------// Custom //------------------------//
+app.UseInfrastructure(builder.Configuration);
+app.UseCustomErrorHandling();
+//------------------------------------------------------------//
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
