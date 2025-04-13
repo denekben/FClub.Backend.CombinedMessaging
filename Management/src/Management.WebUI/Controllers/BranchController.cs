@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Management.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "IsNotBlocked")]
     [Route("api/management/branches")]
     public class BranchController : ControllerBase
     {
@@ -20,6 +20,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<BranchDto?>> CreateBranch([FromBody] CreateBranch command)
         {
             var result = await _sender.Send(command);
@@ -30,6 +31,7 @@ namespace Management.WebUI.Controllers
 
         [HttpDelete]
         [Route("{branchId:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteBranch([FromRoute] DeleteBranch command)
         {
             await _sender.Send(command);
@@ -37,6 +39,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<BranchDto?>> UpdateBranch([FromBody] UpdateBranch command)
         {
             var result = await _sender.Send(command);
@@ -47,6 +50,7 @@ namespace Management.WebUI.Controllers
 
         [HttpGet]
         [Route("{branchId:guid}")]
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<ActionResult<List<BranchDto>?>> GetBranch([FromRoute] Guid branchId)
         {
             var result = await _sender.Send(new GetBranch(branchId));
@@ -56,6 +60,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<ActionResult<List<BranchDto>?>> GetBranches([FromQuery] GetBranches query)
         {
             var result = await _sender.Send(query);

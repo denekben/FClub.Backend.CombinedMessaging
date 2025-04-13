@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Management.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
     [Route("api/management/clients")]
     public class ClientController : ControllerBase
     {

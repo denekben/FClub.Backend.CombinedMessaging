@@ -3,6 +3,7 @@ using Management.Shared.IntegrationUseCases.AccessControl.Clients;
 using Management.Shared.IntegrationUseCases.AccessControl.Memberships;
 using Management.Shared.IntegrationUseCases.AccessControl.Services;
 using Management.Shared.IntegrationUseCases.AccessControl.Tariffs;
+using Management.Shared.IntegrationUseCases.AccessControl.Users;
 
 namespace Management.Application.Services
 {
@@ -16,6 +17,9 @@ namespace Management.Application.Services
         Task DeleteClient(DeleteClient command);
         Task RegisterNewUser(RegisterNewUser command);
         Task UpdateClient(UpdateClient command);
+
+        Task BlockUser(BlockUser command);
+        Task UnblockUser(UnblockUser command);
 
         Task CreateMembership(CreateMembership command);
         Task DeleteMembership(DeleteMembership command);

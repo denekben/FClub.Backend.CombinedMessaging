@@ -9,6 +9,7 @@ namespace Notifications.Infrastructure.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationSettings> NotificationSettings { get; set; }
         public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<AppUser> Users { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -22,6 +23,7 @@ namespace Notifications.Infrastructure.Data
             modelBuilder.ApplyConfiguration<Notification>(configuration);
             modelBuilder.ApplyConfiguration<NotificationSettings>(configuration);
             modelBuilder.ApplyConfiguration<UserLog>(configuration);
+            modelBuilder.ApplyConfiguration<AppUser>(configuration);
 
             base.OnModelCreating(modelBuilder);
         }

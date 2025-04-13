@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Management.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
     [Route("api/management/statistic-notes")]
     public class StatisticNoteController : ControllerBase
     {

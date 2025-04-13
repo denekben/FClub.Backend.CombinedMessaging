@@ -7,7 +7,7 @@ using Notifications.Domain.DTOs;
 namespace Notifications.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
     [Route("api/notifications/users")]
     public class UserController : ControllerBase
     {

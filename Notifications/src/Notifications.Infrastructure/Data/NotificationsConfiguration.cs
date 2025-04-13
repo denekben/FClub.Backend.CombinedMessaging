@@ -7,7 +7,7 @@ namespace Notifications.Infrastructure.Data
     public sealed class NotificationsConfiguration :
         IEntityTypeConfiguration<Client>, IEntityTypeConfiguration<Notification>,
         IEntityTypeConfiguration<NotificationSettings>,
-        IEntityTypeConfiguration<UserLog>
+        IEntityTypeConfiguration<UserLog>, IEntityTypeConfiguration<AppUser>
     {
         public void Configure(EntityTypeBuilder<Client> builder)
         {
@@ -53,6 +53,13 @@ namespace Notifications.Infrastructure.Data
             builder.HasKey(c => c.Id);
 
             builder.ToTable("UserLogs");
+        }
+
+        public void Configure(EntityTypeBuilder<AppUser> builder)
+        {
+            builder.HasKey(u => u.Id);
+
+            builder.ToTable("AppUsers");
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Management.WebUI.Controllers
 {
     [ApiController]
     [Authorize]
+    [Authorize(Policy = "IsNotBlocked")]
     [Route("api/management/services")]
     public class ServiceController : ControllerBase
     {
@@ -20,6 +21,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ServiceDto?>> CreateService([FromBody] CreateService command)
         {
             var result = await _sender.Send(command);
@@ -30,6 +32,7 @@ namespace Management.WebUI.Controllers
 
         [HttpDelete]
         [Route("{serviceId:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteService([FromRoute] DeleteService command)
         {
             await _sender.Send(command);
@@ -37,6 +40,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ServiceDto?>> UpdateService([FromBody] UpdateService command)
         {
             var result = await _sender.Send(command);
@@ -46,6 +50,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<ActionResult<List<ServiceDto>?>> GetServices([FromQuery] GetServices query)
         {
             var result = await _sender.Send(query);

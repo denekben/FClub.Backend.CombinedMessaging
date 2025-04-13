@@ -9,6 +9,7 @@ namespace Management.Domain.Repositories
         Task AddAsync(AppUser user);
         Task<AppUser?> GetAsync(Guid id);
         Task<AppUser?> GetAsync(Guid id, UserIncludes includes);
+        Task<bool?> IsBlocked(Guid id);
     }
 
     [Flags]

@@ -8,8 +8,7 @@ using Notifications.Domain.DTOs;
 namespace Notifications.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
-    [Route("api/notifications/notification-settings")]
+    [Authorize(Policy = "IsNotBlocked")]
     public class NotificationSettingsController : ControllerBase
     {
         private readonly ISender _sender;
@@ -20,6 +19,7 @@ namespace Notifications.WebUI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<NotificationSettingsDto?>> UpdateNotificationSettings([FromBody] UpdateNotificationSettings command)
         {
             var result = await _sender.Send(command);
@@ -29,6 +29,7 @@ namespace Notifications.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<ActionResult<NotificationSettingsDto?>> GetNotificationSettings([FromBody] GetNotificationSettings command)
         {
             var result = await _sender.Send(command);

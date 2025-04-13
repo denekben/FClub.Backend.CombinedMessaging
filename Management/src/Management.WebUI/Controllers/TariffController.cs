@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Management.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "IsNotBlocked")]
     [Route("api/management/tariffs")]
     public class TariffController : ControllerBase
     {
@@ -20,6 +20,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<TariffDto?>> CreateTariff([FromBody] CreateTariff command)
         {
             var result = await _sender.Send(command);
@@ -30,6 +31,7 @@ namespace Management.WebUI.Controllers
 
         [HttpDelete]
         [Route("{tariffId:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteTariff([FromRoute] DeleteTariff command)
         {
             await _sender.Send(command);
@@ -37,6 +39,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<TariffDto?>> UpdateTariff([FromBody] UpdateTariff command)
         {
             var result = await _sender.Send(command);
@@ -46,6 +49,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<ActionResult<List<TariffDto>?>> GetTariffs([FromQuery] GetTariffs query)
         {
             var result = await _sender.Send(query);

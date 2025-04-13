@@ -18,6 +18,7 @@ namespace AccessControl.Infrastructure.Data
         public DbSet<Tariff> Tariffs { get; set; }
         public DbSet<Turnstile> Turnstiles { get; set; }
         public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<AppUser> Users { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -37,6 +38,7 @@ namespace AccessControl.Infrastructure.Data
             modelBuilder.ApplyConfiguration<Tariff>(configuration);
             modelBuilder.ApplyConfiguration<Turnstile>(configuration);
             modelBuilder.ApplyConfiguration<UserLog>(configuration);
+            modelBuilder.ApplyConfiguration<AppUser>(configuration);
 
             base.OnModelCreating(modelBuilder);
         }

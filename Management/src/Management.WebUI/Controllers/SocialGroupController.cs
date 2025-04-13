@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Management.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "IsNotBlocked")]
     [Route("api/management/social-groups")]
     public class SocialGroupController : ControllerBase
     {
@@ -20,6 +20,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<SocialGroupDto?>> CreateSocialGroup([FromBody] CreateSocialGroup command)
         {
             var result = await _sender.Send(command);
@@ -30,6 +31,7 @@ namespace Management.WebUI.Controllers
 
         [HttpDelete]
         [Route("{socialGroupId:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteSocialGroup([FromRoute] DeleteSocialGroup command)
         {
             await _sender.Send(command);
@@ -37,6 +39,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<SocialGroupDto?>> UpdateSocialGroup([FromBody] UpdateSocialGroup command)
         {
             var result = await _sender.Send(command);
@@ -46,6 +49,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<ActionResult<List<SocialGroupDto>?>> GetSocialGroups([FromQuery] GetSocialGroups query)
         {
             var result = await _sender.Send(query);

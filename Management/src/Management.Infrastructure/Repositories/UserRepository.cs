@@ -48,5 +48,10 @@ namespace Management.Infrastructure.Repositories
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public async Task<bool?> IsBlocked(Guid id)
+        {
+            return (await _context.AppUsers.FirstOrDefaultAsync(u => u.Id == id))?.IsBlocked;
+        }
     }
 }

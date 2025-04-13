@@ -12,7 +12,7 @@ namespace AccessControl.Infrastructure.Data
         IEntityTypeConfiguration<EntryLog>, IEntityTypeConfiguration<Membership>,
         IEntityTypeConfiguration<Service>, IEntityTypeConfiguration<Tariff>,
         IEntityTypeConfiguration<Turnstile>, IEntityTypeConfiguration<StatisticNote>,
-        IEntityTypeConfiguration<UserLog>
+        IEntityTypeConfiguration<UserLog>, IEntityTypeConfiguration<AppUser>
     {
         public void Configure(EntityTypeBuilder<Membership> builder)
         {
@@ -180,6 +180,13 @@ namespace AccessControl.Infrastructure.Data
             builder.HasKey(ul => ul.Id);
 
             builder.ToTable("UserLogs");
+        }
+
+        public void Configure(EntityTypeBuilder<AppUser> builder)
+        {
+            builder.HasKey(u => u.Id);
+
+            builder.ToTable("AppUsers");
         }
     }
 }

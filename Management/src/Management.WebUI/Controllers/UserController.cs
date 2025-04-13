@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Management.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/management/users")]
     public class UserController : ControllerBase
     {
@@ -22,6 +21,7 @@ namespace Management.WebUI.Controllers
 
         [HttpPut]
         [Route("assign-to-role")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Admin")]
         public async Task<ActionResult> AssignUserToRole([FromBody] AssignUserToRole command)
         {
             await _sender.Send(command);
@@ -40,6 +40,7 @@ namespace Management.WebUI.Controllers
 
         [HttpPost]
         [Route("register")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Admin")]
         public async Task<ActionResult<TokensDto?>> RegisterNewUser([FromBody] RegisterNewUser command)
         {
             var result = await _sender.Send(command);
@@ -60,6 +61,7 @@ namespace Management.WebUI.Controllers
 
         [HttpGet]
         [Route("current")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
         public async Task<ActionResult<UserDto?>> GetCurrentUser([FromBody] GetCurrentUser query)
         {
             var result = await _sender.Send(query);
@@ -70,6 +72,7 @@ namespace Management.WebUI.Controllers
 
         [HttpGet]
         [Route("{userId:guid}")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
         public async Task<ActionResult<UserDto?>> GetUser([FromRoute] Guid userId)
         {
             var result = await _sender.Send(new GetUser(userId));
@@ -79,6 +82,7 @@ namespace Management.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
         public async Task<ActionResult<List<UserDto>?>> GetUsers([FromQuery] GetUsers query)
         {
             var result = await _sender.Send(query);
@@ -89,6 +93,7 @@ namespace Management.WebUI.Controllers
 
         [HttpGet]
         [Route("current/logs")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
         public async Task<ActionResult<List<UserLogDto>?>> GetCurrentUserLogs([FromQuery] GetCurrentUserLogs query)
         {
             var result = await _sender.Send(query);
@@ -99,12 +104,31 @@ namespace Management.WebUI.Controllers
 
         [HttpGet]
         [Route("logs")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
         public async Task<ActionResult<List<UserLogDto>?>> GetCurrentUserLogs([FromQuery] GetLogs query)
         {
             var result = await _sender.Send(query);
             if (result == null)
                 return NotFound();
             return Ok(result);
+        }
+
+        [HttpPut]
+        [Route("{userId:guid}/block")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Admin")]
+        public async Task<ActionResult> BlockUser([FromRoute] Guid userId)
+        {
+            await _sender.Send(new BlockUser(userId));
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{userId:guid}/unblock")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Admin")]
+        public async Task<ActionResult> UnblockUser([FromRoute] Guid userId)
+        {
+            await _sender.Send(new UnblockUser(userId));
+            return Ok();
         }
     }
 }

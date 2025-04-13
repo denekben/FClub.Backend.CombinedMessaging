@@ -2,6 +2,7 @@
 using FClub.Backend.Common.Services;
 using Management.Application.Services;
 using Management.Shared.IntegrationUseCases.Notifications.Clients;
+using Management.Shared.IntegrationUseCases.Notifications.Users;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Management.Infrastructure.Services
@@ -42,6 +43,21 @@ namespace Management.Infrastructure.Services
         public async Task CreateTariff(Shared.IntegrationUseCases.Notifications.Tariffs.CreateTariff command)
         {
             await _httpClient.SendResponse($"{_basePath}/tariffs", command, RequestType.Post, _token);
+        }
+
+        public async Task BlockUser(BlockUser command)
+        {
+            await _httpClient.SendResponse($"{_basePath}/users/{command.UserId}/block", command, RequestType.Put, _token);
+        }
+
+        public async Task UnblockUser(UnblockUser command)
+        {
+            await _httpClient.SendResponse($"{_basePath}/users/{command.UserId}/unblock", command, RequestType.Put, _token);
+        }
+
+        public async Task RegisterNewUser(RegisterNewUser command)
+        {
+            await _httpClient.SendResponse($"{_basePath}/clients/register-user", command, RequestType.Post, _token);
         }
     }
 }

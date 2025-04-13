@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccessControl.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
     [Route("api/access-control/entry-logs")]
     public class EntryLogController : ControllerBase
     {

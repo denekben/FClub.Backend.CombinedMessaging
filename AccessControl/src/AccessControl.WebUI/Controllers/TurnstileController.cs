@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccessControl.WebUI.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/access-control/turnstiles")]
     public class TurnstileController : ControllerBase
     {
@@ -20,6 +19,7 @@ namespace AccessControl.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Admin")]
         public async Task<ActionResult<TurnstileDto?>> CreateTurnstile([FromBody] CreateTurnstile command)
         {
             var result = await _sender.Send(command);
@@ -28,6 +28,7 @@ namespace AccessControl.WebUI.Controllers
 
         [HttpDelete]
         [Route("{turnstileId:guid}")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Admin")]
         public async Task<ActionResult> DeleteTurnstile([FromRoute] Guid turnstileId)
         {
             var command = new DeleteTurnstile(turnstileId);
@@ -44,6 +45,7 @@ namespace AccessControl.WebUI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Admin")]
         public async Task<ActionResult<TurnstileDto?>> UpdateTurnstile([FromBody] UpdateTurnstile command)
         {
             var result = await _sender.Send(command);
@@ -52,6 +54,7 @@ namespace AccessControl.WebUI.Controllers
 
         [HttpGet]
         [Route("{turnstileId:guid}")]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
         public async Task<ActionResult<TurnstileDto?>> GetTurnstile([FromRoute] Guid turnstileId)
         {
             var result = await _sender.Send(new GetTurnstile(turnstileId));
@@ -61,6 +64,7 @@ namespace AccessControl.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
         public async Task<ActionResult<List<TurnstileDto>?>> GetTurnstiles([FromQuery] GetTurnstiles query)
         {
             var result = await _sender.Send(query);

@@ -6,6 +6,7 @@ using Management.Shared.IntegrationUseCases.AccessControl.Clients;
 using Management.Shared.IntegrationUseCases.AccessControl.Memberships;
 using Management.Shared.IntegrationUseCases.AccessControl.Services;
 using Management.Shared.IntegrationUseCases.AccessControl.Tariffs;
+using Management.Shared.IntegrationUseCases.AccessControl.Users;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Management.Infrastructure.Services
@@ -21,6 +22,11 @@ namespace Management.Infrastructure.Services
             _httpClient = httpClient;
             _basePath = "/api/access-control/internal";
             _token = tokenService.GenerateInternalAccessToken();
+        }
+
+        public async Task BlockUser(BlockUser command)
+        {
+            await _httpClient.SendResponse($"{_basePath}/users/{command.UserId}/block", command, RequestType.Put, _token);
         }
 
         public async Task CreateBranch(CreateBranch command)
@@ -76,6 +82,11 @@ namespace Management.Infrastructure.Services
         public async Task RegisterNewUser(RegisterNewUser command)
         {
             await _httpClient.SendResponse($"{_basePath}/clients/register-user", command, RequestType.Post, _token);
+        }
+
+        public async Task UnblockUser(UnblockUser command)
+        {
+            await _httpClient.SendResponse($"{_basePath}/users/{command.UserId}/unblock", command, RequestType.Put, _token);
         }
 
         public async Task UpdateBranch(UpdateBranch command)
