@@ -1,7 +1,7 @@
 ﻿using AccessControl.Domain.Entities;
 using MediatR;
 
-namespace AccessControl.Application.UseCases.Clients.Commands
+namespace AccessControl.Application.IntegrationUseCases.Clients.Commands
 {
     public sealed record CreateClient(
         Guid Id,

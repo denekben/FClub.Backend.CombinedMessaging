@@ -1,9 +1,11 @@
 ﻿using FClub.Backend.Common.Exceptions;
+using FClub.Backend.Common.Logging;
 using MediatR;
 using Notifications.Domain.Repositories;
 
 namespace Notifications.Application.IntegrationUseCases.Clients.Handlers
 {
+    [SkipLogging]
     public sealed class UpdateClientHandler : IRequestHandler<UpdateClient>
     {
         private readonly IClientRepository _clientRepository;

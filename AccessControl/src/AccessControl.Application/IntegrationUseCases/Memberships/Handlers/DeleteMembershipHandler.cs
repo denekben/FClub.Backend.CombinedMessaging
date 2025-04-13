@@ -1,5 +1,5 @@
 ﻿using AccessControl.Domain.Repositories;
-using AccessControl.Shared.Logging;
+using FClub.Backend.Common.Logging;
 using MediatR;
 
 namespace AccessControl.Application.IntegrationUseCases.Memberships.Handlers

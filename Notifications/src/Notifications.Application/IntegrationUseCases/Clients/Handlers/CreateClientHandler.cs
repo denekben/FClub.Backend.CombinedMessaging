@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using FClub.Backend.Common.Logging;
+using MediatR;
 using Notifications.Domain.Entities;
 using Notifications.Domain.Repositories;
 
 namespace Notifications.Application.IntegrationUseCases.Clients.Handlers
 {
+    [SkipLogging]
     public sealed class CreateClientHandler : IRequestHandler<CreateClient>
     {
         private readonly IClientRepository _clientRepository;

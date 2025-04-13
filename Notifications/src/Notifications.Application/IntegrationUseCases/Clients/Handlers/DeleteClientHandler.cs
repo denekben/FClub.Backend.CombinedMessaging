@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using FClub.Backend.Common.Logging;
+using MediatR;
 using Notifications.Domain.Repositories;
 
 namespace Notifications.Application.IntegrationUseCases.Clients.Handlers
 {
+    [SkipLogging]
     public sealed class DeleteClientHandler : IRequestHandler<DeleteClient>
     {
         private readonly IClientRepository _clientRepository;

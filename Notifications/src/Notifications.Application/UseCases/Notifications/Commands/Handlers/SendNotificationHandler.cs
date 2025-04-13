@@ -1,24 +1,22 @@
-﻿using MediatR;
-using Notifications.Domain.Repositories;
+﻿using FClub.Backend.Common.InMemoryBrokerMessaging.Messaging;
+using MediatR;
+using Notifications.Application.UseCases.Notifications.Commands.BrokerHandlers;
 
 namespace Notifications.Application.UseCases.Notifications.Commands.Handlers
 {
     public sealed class SendNotificationHandler : IRequestHandler<SendNotification>
     {
-        private readonly INotificationRepository _notificationRepository;
-        private readonly IRepository _repository;
+        private readonly IMessageBroker _broker;
 
-        public SendNotificationHandler(
-            INotificationRepository notificationRepository,
-            IRepository repository)
+        public SendNotificationHandler(IMessageBroker broker)
         {
-            _notificationRepository = notificationRepository;
-            _repository = repository;
+            _broker = broker;
         }
 
         public async Task Handle(SendNotification command, CancellationToken cancellationToken)
         {
-
+            var (subject, title, text, saveNotification) = command;
+            await _broker.PublishAsync(new NotificationSent(subject, title, text, saveNotification));
         }
     }
 }

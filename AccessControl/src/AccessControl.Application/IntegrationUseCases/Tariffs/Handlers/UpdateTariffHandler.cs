@@ -1,8 +1,8 @@
 ﻿using AccessControl.Domain.Entities.Pivots;
 using AccessControl.Domain.Repositories;
-using AccessControl.Shared.Logging;
 using AccessControll.Domain.Entities;
 using FClub.Backend.Common.Exceptions;
+using FClub.Backend.Common.Logging;
 using MediatR;
 
 namespace AccessControl.Application.IntegrationUseCases.Tariffs.Handler

@@ -1,6 +1,6 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
-using AccessControl.Shared.Logging;
+using FClub.Backend.Common.Logging;
 using FClub.Backend.Common.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;

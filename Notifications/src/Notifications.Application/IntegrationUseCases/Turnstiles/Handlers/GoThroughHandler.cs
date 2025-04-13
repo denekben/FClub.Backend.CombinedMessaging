@@ -1,10 +1,12 @@
 ﻿using FClub.Backend.Common.Exceptions;
+using FClub.Backend.Common.Logging;
 using MediatR;
-using Notifications.Application.UseCases.Turnstiles.Commands;
+using Notifications.Application.IntegrationUseCases.Turnstiles.Commands;
 using Notifications.Domain.Repositories;
 
 namespace Notifications.Application.IntegrationUseCases.Turnstiles.Handlers
 {
+    [SkipLogging]
     public sealed class GoThroughHandler : IRequestHandler<GoThrough>
     {
         private readonly IClientRepository _clientRepository;

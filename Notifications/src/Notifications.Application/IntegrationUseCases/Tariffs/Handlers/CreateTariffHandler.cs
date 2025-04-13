@@ -1,9 +1,10 @@
-﻿using FClub.Backend.Common.InMemoryBrokerMessaging.Events;
-using FClub.Backend.Common.InMemoryBrokerMessaging.Messaging;
+﻿using FClub.Backend.Common.InMemoryBrokerMessaging.Messaging;
+using FClub.Backend.Common.Logging;
 using MediatR;
 
 namespace Notifications.Application.IntegrationUseCases.Tariffs.Handlers
 {
+    [SkipLogging]
     public sealed class CreateTariffHandler : IRequestHandler<CreateTariff>
     {
         private readonly IMessageBroker _messageBroker;
@@ -19,12 +20,4 @@ namespace Notifications.Application.IntegrationUseCases.Tariffs.Handlers
             await _messageBroker.PublishAsync(new TariffCreated(name, priceForNMonths, discountForSocialGroup, allowMultiBranches, serviceNames));
         }
     }
-
-    public sealed record TariffCreated(
-        string Name,
-        Dictionary<int, int> PriceForNMonths,
-        Dictionary<Guid, int>? DiscountForSocialGroup,
-        bool AllowMultiBranches,
-        List<string> ServiceNames
-    ) : IEvent;
 }

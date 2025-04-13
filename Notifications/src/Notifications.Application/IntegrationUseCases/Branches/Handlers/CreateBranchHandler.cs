@@ -1,9 +1,10 @@
-﻿using FClub.Backend.Common.InMemoryBrokerMessaging.Events;
-using FClub.Backend.Common.InMemoryBrokerMessaging.Messaging;
+﻿using FClub.Backend.Common.InMemoryBrokerMessaging.Messaging;
+using FClub.Backend.Common.Logging;
 using MediatR;
 
 namespace Notifications.Application.IntegrationUseCases.Branches.Handlers
 {
+    [SkipLogging]
     public sealed class CreateBranchHandler : IRequestHandler<CreateBranch>
     {
         private readonly IMessageBroker _messageBroker;
@@ -19,13 +20,4 @@ namespace Notifications.Application.IntegrationUseCases.Branches.Handlers
             await _messageBroker.PublishAsync(new BranchCreated(name, country, city, street, houseNumber, serviceNames));
         }
     }
-
-    public sealed record BranchCreated(
-        string? Name,
-        string? Country,
-        string? City,
-        string? Street,
-        string? HouseNumber,
-        List<string> ServiceNames
-    ) : IEvent;
 }

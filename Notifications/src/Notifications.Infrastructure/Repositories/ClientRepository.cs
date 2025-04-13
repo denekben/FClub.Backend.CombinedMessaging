@@ -29,7 +29,7 @@ namespace Notifications.Infrastructure.Repositories
             return await _context.Clients.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<List<string>?> GetEmails(int limit = 100)
+        public async Task<List<string>?> GetEmailsAsync(int limit = 100)
         {
             return await _context.Clients.Where(c => c.AllowNotifications).Take(limit).Select(c => c.Email).ToListAsync();
         }

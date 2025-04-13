@@ -1,7 +1,7 @@
 ﻿using AccessControl.Application.IntegrationUseCases.Clients;
 using AccessControl.Domain.Repositories;
-using AccessControl.Shared.Logging;
 using FClub.Backend.Common.Exceptions;
+using FClub.Backend.Common.Logging;
 using MediatR;
 
 namespace AccessControl.Application.UseCases.Clients.Commands.Handlers

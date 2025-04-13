@@ -17,7 +17,7 @@ namespace Management.Infrastructure.Services
         public HttpAccessControlClient([FromKeyedServices("AccessControl")] IHttpClientService httpClient)
         {
             _httpClient = httpClient;
-            _basePath = "/api/access-control";
+            _basePath = "/api/access-control/internal";
         }
 
         public async Task CreateBranch(CreateBranch command)
@@ -47,32 +47,32 @@ namespace Management.Infrastructure.Services
 
         public async Task DeleteBranch(DeleteBranch command)
         {
-            await _httpClient.SendResponse($"{_basePath}/branches", command, RequestType.Delete);
+            await _httpClient.SendResponse($"{_basePath}/branches/{command.Id}", command, RequestType.Delete);
         }
 
         public async Task DeleteClient(DeleteClient command)
         {
-            await _httpClient.SendResponse($"{_basePath}/clients", command, RequestType.Delete);
+            await _httpClient.SendResponse($"{_basePath}/clients/{command.Id}", command, RequestType.Delete);
         }
 
         public async Task DeleteMembership(DeleteMembership command)
         {
-            await _httpClient.SendResponse($"{_basePath}/memberships", command, RequestType.Delete);
+            await _httpClient.SendResponse($"{_basePath}/memberships/{command.MembershipId}", command, RequestType.Delete);
         }
 
         public async Task DeleteService(DeleteService command)
         {
-            await _httpClient.SendResponse($"{_basePath}/services", command, RequestType.Delete);
+            await _httpClient.SendResponse($"{_basePath}/services/{command.Id}", command, RequestType.Delete);
         }
 
         public async Task DeleteTariff(DeleteTariff command)
         {
-            await _httpClient.SendResponse($"{_basePath}/tariffs", command, RequestType.Delete);
+            await _httpClient.SendResponse($"{_basePath}/tariffs/{command.Id}", command, RequestType.Delete);
         }
 
         public async Task RegisterNewUser(RegisterNewUser command)
         {
-            await _httpClient.SendResponse($"{_basePath}/clients", command, RequestType.Post);
+            await _httpClient.SendResponse($"{_basePath}/clients/register-user", command, RequestType.Post);
         }
 
         public async Task UpdateBranch(UpdateBranch command)

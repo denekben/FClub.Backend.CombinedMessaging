@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Notifications.Application.UseCases.Turnstiles.Commands
+namespace Notifications.Application.IntegrationUseCases.Turnstiles.Commands
 {
     public sealed record GoThrough(Guid ClientId) : IRequest;
 }

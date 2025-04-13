@@ -3,5 +3,5 @@ using MediatR;
 
 namespace AccessControl.Application.UseCases.Turnstiles.Commands
 {
-    public sealed record GoThrough(Guid ClientId, Guid TurnstileId, EntryType entryType) : IRequest;
+    public sealed record GoThrough(Guid ClientId, Guid TurnstileId, EntryType EntryType) : IRequest;
 }

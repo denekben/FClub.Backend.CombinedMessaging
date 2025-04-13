@@ -30,7 +30,7 @@ namespace Notifications.Application.IntegrationUseCases.Branches.Handlers
             var notification = await _notificationRepository.GetBranchNotificationAsync()
                 ?? throw new NotFoundException("Cannot find branch notification");
             var message = EmailParser.Parse(notification.Text, @event);
-            var emails = await _clientRepository.GetEmails();
+            var emails = await _clientRepository.GetEmailsAsync();
 
             IEnumerable<Task>? sendTasks = null;
             if (emails != null)
@@ -40,4 +40,13 @@ namespace Notifications.Application.IntegrationUseCases.Branches.Handlers
             }
         }
     }
+
+    public sealed record BranchCreated(
+        string? Name,
+        string? Country,
+        string? City,
+        string? Street,
+        string? HouseNumber,
+        List<string> ServiceNames
+    ) : IEvent;
 }

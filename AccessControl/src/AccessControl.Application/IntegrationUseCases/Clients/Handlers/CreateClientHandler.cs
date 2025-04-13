@@ -1,6 +1,7 @@
-﻿using AccessControl.Domain.Entities;
+﻿using AccessControl.Application.IntegrationUseCases.Clients.Commands;
+using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
-using AccessControl.Shared.Logging;
+using FClub.Backend.Common.Logging;
 using MediatR;
 
 namespace AccessControl.Application.UseCases.Clients.Commands.Handlers

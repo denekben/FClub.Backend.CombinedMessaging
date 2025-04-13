@@ -1,11 +1,13 @@
 ﻿using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.InMemoryBrokerMessaging.Events;
+using FClub.Backend.Common.Logging;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Notifications.Application.Services;
 using Notifications.Domain.Repositories;
 
 namespace Notifications.Application.IntegrationUseCases.Tariffs.Handlers
 {
+    [SkipLogging]
     public sealed class CreateTariffBrokerHandler : IEventHandler<TariffCreated>
     {
         private readonly IEmailSender _sender;
@@ -29,7 +31,7 @@ namespace Notifications.Application.IntegrationUseCases.Tariffs.Handlers
             var notification = await _notificationRepository.GetTariffNotificationAsync()
                 ?? throw new NotFoundException("Cannot find tariff notification");
             var message = EmailParser.Parse(notification.Text, @event);
-            var emails = await _clientRepository.GetEmails();
+            var emails = await _clientRepository.GetEmailsAsync();
 
             IEnumerable<Task>? sendTasks = null;
             if (emails != null)
@@ -39,4 +41,12 @@ namespace Notifications.Application.IntegrationUseCases.Tariffs.Handlers
             }
         }
     }
+
+    public sealed record TariffCreated(
+        string Name,
+        Dictionary<int, int> PriceForNMonths,
+        Dictionary<Guid, int>? DiscountForSocialGroup,
+        bool AllowMultiBranches,
+        List<string> ServiceNames
+    ) : IEvent;
 }

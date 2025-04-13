@@ -13,7 +13,7 @@ namespace Management.Infrastructure.Services
         public HttpNotificationsClient([FromKeyedServices("Notifications")] IHttpClientService httpClient)
         {
             _httpClient = httpClient;
-            _basePath = "/api/notifications";
+            _basePath = "/api/notifications/internal";
         }
 
         public async Task CreateClient(CreateClient command)
@@ -23,7 +23,7 @@ namespace Management.Infrastructure.Services
 
         public async Task DeleteClient(DeleteClient command)
         {
-            await _httpClient.SendResponse($"{_basePath}/clients", command, RequestType.Delete);
+            await _httpClient.SendResponse($"{_basePath}/clients/{command.Id}", command, RequestType.Delete);
         }
 
         public async Task UpdateClient(UpdateClient command)
