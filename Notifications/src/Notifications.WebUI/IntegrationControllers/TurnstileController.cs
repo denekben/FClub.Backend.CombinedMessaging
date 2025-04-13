@@ -1,10 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notifications.Application.IntegrationUseCases.Turnstiles.Commands;
 
 namespace Notifications.WebUI.IntegrationControllers
 {
     [ApiController]
+    [Authorize(Policy = "AccessControlAudience")]
     [Route("api/notifications/internal/turnstiles")]
     public class TurnstileController : ControllerBase
     {

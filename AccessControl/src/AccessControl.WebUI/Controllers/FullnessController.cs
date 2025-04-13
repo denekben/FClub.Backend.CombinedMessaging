@@ -1,10 +1,12 @@
 ﻿using AccessControl.Application.UseCases.Branches.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessControl.WebUI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/access-control/fullness")]
     public class FullnessController : ControllerBase
     {

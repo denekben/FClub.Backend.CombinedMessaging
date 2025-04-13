@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notifications.Application.UseCases.UserLogs.Queries;
 using Notifications.Domain.DTOs;
@@ -6,6 +7,7 @@ using Notifications.Domain.DTOs;
 namespace Notifications.WebUI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/notifications/users")]
     public class UserController : ControllerBase
     {

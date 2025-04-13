@@ -2,11 +2,13 @@
 using AccessControl.Application.UseCases.Turnstiles.Queries;
 using AccessControl.Domain.DTOs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessControl.WebUI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/access-control/turnstiles")]
     public class TurnstileController : ControllerBase
     {

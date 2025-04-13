@@ -1,10 +1,12 @@
 ﻿using AccessControl.Application.IntegrationUseCases.Tariffs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessControl.WebUI.IntegrationControllers
 {
     [ApiController]
+    [Authorize(Policy = "ManagementAudience")]
     [Route("api/access-control/internal/tariffs")]
     public class TariffController : ControllerBase
     {

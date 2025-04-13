@@ -2,11 +2,13 @@
 using Management.Application.UseCases.Branches.Queries;
 using Management.Domain.DTOs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Management.WebUI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/management/branches")]
     public class BranchController : ControllerBase
     {

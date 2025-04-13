@@ -1,10 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notifications.Application.IntegrationUseCases.Clients;
 
 namespace Notifications.WebUI.IntegrationControllers
 {
     [ApiController]
+    [Authorize(Policy = "ManagementAudience")]
     [Route("api/notifications/internal/clients")]
     public class ClientController : ControllerBase
     {

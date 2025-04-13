@@ -1,11 +1,13 @@
 ﻿using AccessControl.Application.UseCases.ClientLogs.Queries;
 using AccessControl.Domain.DTOs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessControl.WebUI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/access-control/entry-logs")]
     public class EntryLogController : ControllerBase
     {

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notifications.Application.UseCases.NotificationSettings.Commands;
 using Notifications.Application.UseCases.NotificationSettings.Queries;
@@ -7,6 +8,7 @@ using Notifications.Domain.DTOs;
 namespace Notifications.WebUI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/notifications/notification-settings")]
     public class NotificationSettingsController : ControllerBase
     {

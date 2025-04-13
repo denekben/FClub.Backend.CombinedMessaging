@@ -1,11 +1,13 @@
 ﻿using Management.Application.UseCases.Memberships.Commands;
 using Management.Domain.DTOs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Management.WebUI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/management/memberships")]
     public class MembershipController : ControllerBase
     {

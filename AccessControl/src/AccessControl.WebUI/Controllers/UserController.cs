@@ -1,11 +1,13 @@
 ﻿using AccessControl.Application.UseCases.UserLogs.Queries;
 using AccessControl.Domain.DTOs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessControl.WebUI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/access-control/users")]
     public class UserController : ControllerBase
     {

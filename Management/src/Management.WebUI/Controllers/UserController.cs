@@ -3,11 +3,13 @@ using Management.Application.UseCases.AppUsers.Queries;
 using Management.Application.UseCases.UserLogs.Queries;
 using Management.Domain.DTOs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Management.WebUI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/management/users")]
     public class UserController : ControllerBase
     {
