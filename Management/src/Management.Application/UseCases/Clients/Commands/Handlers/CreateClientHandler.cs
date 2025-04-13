@@ -51,7 +51,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
                     ?? throw new NotFoundException($"Cannot find social group {socialGroupId}");
             }
 
-            var client = Client.Create(firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
+            var client = Client.Create(firstName, secondName, patronymic, phone, email, false, allowEntry, allowNotifications, membershipId, socialGroupId);
 
             await _clientRepository.AddAsync(client);
 

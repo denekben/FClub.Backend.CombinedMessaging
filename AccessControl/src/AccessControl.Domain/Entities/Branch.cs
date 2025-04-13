@@ -10,6 +10,7 @@ namespace AccessControll.Domain.Entities
         public Guid Id { get; init; }
         public string? Name { get; set; }
         public uint MaxOccupancy { get; set; }
+        public uint CurrentClientQuantity { get; set; }
         public Address Address { get; set; }
         public List<ServiceBranch> ServiceBranches { get; set; } = [];
         public List<Turnstile> Turnstiles { get; set; } = [];
@@ -25,6 +26,7 @@ namespace AccessControll.Domain.Entities
             Id = id;
             Name = name;
             MaxOccupancy = maxOccupancy;
+            CurrentClientQuantity = 0;
             Address = address;
             CreatedDate = DateTime.UtcNow;
         }
@@ -45,6 +47,16 @@ namespace AccessControll.Domain.Entities
             Name = name;
             Address = address;
             MaxOccupancy = maxOccupancy;
+        }
+
+        public void Enter()
+        {
+            CurrentClientQuantity += 1;
+        }
+
+        public void Exit()
+        {
+            CurrentClientQuantity -= 1;
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
             membership.Client = client;
             membership.SetCost();
 
-            await _statisticRepository.AddAsync(StatisticNote.Create(membership.TotalCost));
+            await _statisticRepository.AddAsync(StatisticNote.Create(membership.BranchId, membership.TotalCost));
 
             await _membershipRepository.AddAsync(membership);
 

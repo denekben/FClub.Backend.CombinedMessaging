@@ -9,6 +9,7 @@ namespace Management.Shared.IntegrationUseCases.AccessControl.Clients
         string? Patronymic,
         string? Phone,
         string Email,
+        bool IsStaff,
         bool AllowEntry,
         MembershipDto? Membership
     );

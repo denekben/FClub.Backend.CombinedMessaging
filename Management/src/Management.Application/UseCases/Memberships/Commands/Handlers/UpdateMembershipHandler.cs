@@ -46,7 +46,7 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
             membership.SetCost();
             membership.UpdateDetails(tariffId, expiresDate, clientId, branchId);
 
-            await _statisticRepository.AddAsync(StatisticNote.Create(membership.TotalCost));
+            await _statisticRepository.AddAsync(StatisticNote.Create(membership.BranchId, membership.TotalCost));
 
             await _accessControlClient.CreateMembership(
                 new(

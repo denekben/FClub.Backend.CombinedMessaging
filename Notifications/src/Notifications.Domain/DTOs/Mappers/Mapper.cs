@@ -25,13 +25,15 @@ namespace Notifications.Domain.DTOs.Mappers
                 settings.AllowAttendanceNotifications,
                 settings.AttendanceNotificationPeriod,
                 settings.AttendanceNotificationReSendPeriod,
+                settings.AttendanceEmailSubject,
                 attendanceNotification?.AsDto(),
                 settings.AllowTariffNotifications,
+                settings.TariffEmailSubject,
                 tariffNotification?.AsDto(),
                 settings.AllowBranchfNotifications,
+                settings.BranchEmailSubject,
                 branchNotification?.AsDto()
             );
-
         }
 
         public static UserLogDto AsDto(this UserLog log)

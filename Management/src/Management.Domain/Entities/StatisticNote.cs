@@ -6,6 +6,8 @@ namespace Management.Domain.Entities
     {
         public Guid Id { get; init; }
         public DateTime CreatedDate { get; init; }
+        public Guid BranchId { get; set; }
+        public Branch Branch { get; set; }
         public double MembershipCost { get; set; }
         public uint MembershipQuantity { get; set; }
 
@@ -20,8 +22,10 @@ namespace Management.Domain.Entities
             MembershipQuantity = membershipQuantity;
         }
 
-        public static StatisticNote Create(double membershipCost, OperationType type = OperationType.Insertion, uint membershipQuantity = 1)
+        public static StatisticNote Create(Guid branchId, double membershipCost, OperationType type = OperationType.Insertion, uint membershipQuantity = 1)
         {
+            if (branchId == Guid.Empty)
+                throw new DomainException($"Invalid argument for StatisticNote[branchId]. Entered value: {branchId}");
             if (membershipCost < 0 && type == OperationType.Insertion)
                 throw new DomainException($"Invalid argument for StatisticNote[membershipCost]. Entered value: {membershipCost}");
             if (membershipQuantity < 1)
@@ -30,8 +34,10 @@ namespace Management.Domain.Entities
             return new(membershipCost, membershipQuantity);
         }
 
-        public void UpdateDetails(double membershipCost, OperationType type = OperationType.Insertion, uint membershipQuantity = 1)
+        public void UpdateDetails(Guid branchId, double membershipCost, OperationType type = OperationType.Insertion, uint membershipQuantity = 1)
         {
+            if (branchId == Guid.Empty)
+                throw new DomainException($"Invalid argument for StatisticNote[branchId]. Entered value: {branchId}");
             if (membershipCost < 0 && type == OperationType.Insertion)
                 throw new DomainException($"Invalid argument for StatisticNote[membershipCost]. Entered value: {membershipCost}");
             if (membershipQuantity < 1)

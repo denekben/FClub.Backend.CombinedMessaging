@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Management.Application.UseCases.Branches.Queries
 {
-    public sealed record GetBranch : IRequest<BranchDto?>;
+    public sealed record GetBranch(Guid BranchId) : IRequest<BranchDto?>;
 }

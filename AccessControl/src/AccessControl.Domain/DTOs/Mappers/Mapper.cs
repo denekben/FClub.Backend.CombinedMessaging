@@ -10,7 +10,6 @@ namespace AccessControl.Domain.DTOs.Mappers
                 turnstile.Id,
                 turnstile.Name,
                 turnstile.IsMain,
-                turnstile.EnteredClientsQuantity,
                 turnstile.BranchId,
                 turnstile.ServiceId,
                 turnstile.CreatedDate,

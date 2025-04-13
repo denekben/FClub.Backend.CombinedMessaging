@@ -3,5 +3,9 @@ using MediatR;
 
 namespace Management.Application.UseCases.StatisticNotes.Queries
 {
-    public sealed record GetStatisticNotes : IRequest<List<StatisticNoteDto>?>;
+    public sealed record GetStatisticNotes(
+        Guid? BranchId,
+        DateTime StartDate,
+        DateTime EndDate
+    ) : IRequest<List<StatisticNoteDto>?>;
 }

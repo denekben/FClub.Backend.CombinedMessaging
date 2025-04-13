@@ -10,6 +10,7 @@ namespace Management.Application.UseCases.Clients.Commands
         string? Patronymic,
         string? Phone,
         string Email,
+        bool IsStaff,
         bool AllowEntry,
         bool AllowNotifications,
         Guid? MembershipId,

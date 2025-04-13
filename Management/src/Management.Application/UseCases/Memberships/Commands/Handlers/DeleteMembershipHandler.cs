@@ -30,7 +30,7 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
                 ?? throw new NotFoundException($"Cannot find membership {command.MembershipId}");
 
             membership.SetCost();
-            await _statisticRepository.AddAsync(StatisticNote.Create(-1 * membership.TotalCost, OperationType.Deletion));
+            await _statisticRepository.AddAsync(StatisticNote.Create(membership.BranchId, -1 * membership.TotalCost, OperationType.Deletion));
 
             await _membershipRepository.DeleteAsync(command.MembershipId);
 

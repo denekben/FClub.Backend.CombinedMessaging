@@ -3,5 +3,10 @@ using MediatR;
 
 namespace Management.Application.UseCases.Tariffs.Queries
 {
-    public sealed record GetTariffs : IRequest<List<TariffDto>?>;
+    public sealed record GetTariffs(
+        string? NameSearchPhrase,
+        bool? SortByCreatedDate,
+        int PageNumber = 1,
+        int PageSize = 20
+    ) : IRequest<List<TariffDto>?>;
 }

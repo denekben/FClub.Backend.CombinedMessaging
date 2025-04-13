@@ -138,6 +138,10 @@ namespace AccessControl.Infrastructure.Data
                 .HasForeignKey(el => el.TurnstileId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder
+                .Property(el => el.EntryType)
+                .HasConversion<int>();
+
             builder.ToTable("UserLogs");
         }
 

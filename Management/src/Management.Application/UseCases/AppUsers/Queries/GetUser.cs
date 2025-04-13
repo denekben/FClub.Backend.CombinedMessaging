@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Management.Application.UseCases.AppUsers.Queries
 {
-    public sealed record GetUser : IRequest<UserDto?>;
+    public sealed record GetUser(Guid UserId) : IRequest<UserDto?>;
 }

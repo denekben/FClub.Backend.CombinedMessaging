@@ -38,7 +38,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
         public async Task<ClientDto?> Handle(UpdateClient command, CancellationToken cancellationToken)
         {
-            var (id, firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId) = command;
+            var (id, firstName, secondName, patronymic, phone, email, isStaff, allowEntry, allowNotifications, membershipId, socialGroupId) = command;
 
             Membership? membership = null;
             if (membershipId != null)
@@ -70,7 +70,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
             if (updatingClient.Email != email && await _clientRepository.ExistsByEmailAsync(email))
                 throw new BadRequestException($"Client with email {email} already exists");
 
-            updatingClient.UpdateDetails(firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId);
+            updatingClient.UpdateDetails(firstName, secondName, patronymic, phone, email, isStaff, allowEntry, allowNotifications, membershipId, socialGroupId);
 
             await _accessControlClient.UpdateClient(
                 new(
@@ -80,6 +80,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
                     updatingClient.FullName.Patronymic,
                     updatingClient.Phone,
                     updatingClient.Email,
+                    updatingClient.IsStaff,
                     updatingClient.AllowEntry,
                     membership == null ? null : new(
                         membership.Id,

@@ -8,7 +8,6 @@ namespace AccessControl.Domain.Entities
         public Guid Id { get; init; }
         public string? Name { get; set; }
         public bool IsMain { get; set; }
-        public uint EnteredClientsQuantity { get; set; }
         public Guid BranchId { get; set; }
         public Branch Branch { get; set; }
         public Guid? ServiceId { get; set; }
@@ -25,7 +24,6 @@ namespace AccessControl.Domain.Entities
             Id = Guid.NewGuid();
             Name = name;
             IsMain = isMain;
-            EnteredClientsQuantity = 0;
             BranchId = branchId;
             ServiceId = serviceId;
             CreatedDate = DateTime.UtcNow;
