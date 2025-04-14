@@ -1,4 +1,5 @@
 ﻿using AccessControl.Application.UseCases.Branches.Queries;
+using AccessControl.Domain.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace AccessControl.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Dictionary<Guid, uint>?>> GetBranchesFullness([FromQuery] GetBranchesFullness query)
+        public async Task<ActionResult<List<BranchDto>?>> GetBranchesFullness([FromQuery] GetBranchesFullness query)
         {
             var result = await _sender.Send(query);
             if (result == null)
@@ -28,7 +29,7 @@ namespace AccessControl.WebUI.Controllers
 
         [HttpGet]
         [Route("{branchId:guid}")]
-        public async Task<ActionResult<uint?>> GetBranchFullness([FromRoute] Guid branchId)
+        public async Task<ActionResult<BranchDto?>> GetBranchFullness([FromRoute] Guid branchId)
         {
             var query = new GetBranchFullness(branchId);
             var result = await _sender.Send(query);

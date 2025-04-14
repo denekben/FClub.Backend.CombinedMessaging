@@ -1,4 +1,6 @@
 ﻿using AccessControl.Domain.Entities;
+using AccessControll.Domain.Entities;
+using FClub.Backend.Common.ValueObjects.DTOs.Mappers;
 
 namespace AccessControl.Domain.DTOs.Mappers
 {
@@ -40,6 +42,17 @@ namespace AccessControl.Domain.DTOs.Mappers
                 log.Text,
                 log.CreatedDate,
                 log.UpdatedDate
+            );
+        }
+
+        public static BranchDto AsDto(this Branch branch)
+        {
+            return new(
+                branch.Id,
+                branch.Name,
+                branch.MaxOccupancy,
+                branch.CurrentClientQuantity,
+                branch.Address.AsDto()
             );
         }
     }

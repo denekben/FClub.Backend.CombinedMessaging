@@ -9,14 +9,16 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IHttpNotificationsClient _notificationClient;
+        private readonly IHttpAccessControlClient _accessControlClient;
         private readonly IRepository _repository;
 
         public BlockUserHandler(IUserRepository userRepository, IRepository repository,
-            IHttpNotificationsClient notificationClient)
+            IHttpNotificationsClient notificationClient, IHttpAccessControlClient accessControlClient)
         {
             _userRepository = userRepository;
             _repository = repository;
             _notificationClient = notificationClient;
+            _accessControlClient = accessControlClient;
         }
 
         public async Task Handle(BlockUser command, CancellationToken cancellationToken)
@@ -26,6 +28,7 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
             user.IsBlocked = true;
 
             await _notificationClient.BlockUser(new(user.Id));
+            await _accessControlClient.BlockUser(new(user.Id));
 
             await _repository.SaveChangesAsync();
         }

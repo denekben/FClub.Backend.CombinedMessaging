@@ -1,4 +1,6 @@
 ﻿using AccessControl.Application.UseCases.Branches.Queries;
+using AccessControl.Domain.DTOs;
+using AccessControl.Domain.DTOs.Mappers;
 using AccessControl.Infrastructure.Data;
 using AccessControll.Domain.Entities;
 using MediatR;
@@ -6,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Queries.Handlers.Branches
 {
-    public sealed class GetBranchesFullnessHandler : IRequestHandler<GetBranchesFullness, Dictionary<Guid, uint>?>
+    public sealed class GetBranchesFullnessHandler : IRequestHandler<GetBranchesFullness, List<BranchDto>?>
     {
         private readonly AppDbContext _context;
 
@@ -15,7 +17,7 @@ namespace AccessControl.Infrastructure.Queries.Handlers.Branches
             _context = context;
         }
 
-        public async Task<Dictionary<Guid, uint>?> Handle(GetBranchesFullness query, CancellationToken cancellationToken)
+        public async Task<List<BranchDto>?> Handle(GetBranchesFullness query, CancellationToken cancellationToken)
         {
             var (nameSearchPhrase, sortByCurrentClientQuantity, sortByMaxOccupancy, sortByCreatedDate, pageNumber, pageSize) = query;
 
@@ -50,7 +52,7 @@ namespace AccessControl.Infrastructure.Queries.Handlers.Branches
 
             var pagedfullness = orderedfullness.Skip(skipNumber).Take(pageSize);
 
-            return await pagedfullness.ToDictionaryAsync(b => b.Id, b => b.CurrentClientQuantity);
+            return await pagedfullness.Select(f => f.AsDto()).ToListAsync();
         }
     }
 }
