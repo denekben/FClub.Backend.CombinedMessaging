@@ -1,4 +1,5 @@
 using AccessControl.Infrastructure;
+using AccessControl.Infrastructure.Data;
 using AccessControl.WebUI.Policies;
 using FClub.Backend.Common.Middleware;
 using FClub.Backend.Common.Swagger;
@@ -37,5 +38,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+if (app.Environment.IsProduction())
+{
+    await PrepDb.PrepPopulation(app);
+}
 
 app.Run();

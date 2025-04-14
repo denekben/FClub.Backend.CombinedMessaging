@@ -1,6 +1,7 @@
 using FClub.Backend.Common.Middleware;
 using FClub.Backend.Common.Swagger;
 using Notifications.Infrastructure;
+using Notifications.Infrastructure.Data;
 using Notifications.WebUI.Policies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,5 +37,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+if (app.Environment.IsProduction())
+{
+    await PrepDb.PrepPopulation(app);
+}
 
 app.Run();
