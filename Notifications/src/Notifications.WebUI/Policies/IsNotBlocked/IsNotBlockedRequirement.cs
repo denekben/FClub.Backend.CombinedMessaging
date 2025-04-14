@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace AccessControl.WebUI.Policies
+namespace Notifications.WebUI.Policies.IsNotBlocked
 {
     public class IsNotBlockedRequirement : IAuthorizationRequirement
     {

@@ -142,7 +142,7 @@ namespace AccessControl.Infrastructure.Data
                 .Property(el => el.EntryType)
                 .HasConversion<int>();
 
-            builder.ToTable("UserLogs");
+            builder.ToTable("EntryLogs");
         }
 
         public void Configure(EntityTypeBuilder<Turnstile> builder)

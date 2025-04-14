@@ -13,6 +13,14 @@ namespace Notifications.Infrastructure.Data
         {
             builder.HasKey(c => c.Id);
 
+            builder
+                .OwnsOne(au => au.FullName, ownedBuilder =>
+                {
+                    ownedBuilder.Property(fn => fn.FirstName);
+                    ownedBuilder.Property(fn => fn.SecondName);
+                    ownedBuilder.Property(fn => fn.Patronymic);
+                });
+
             builder.ToTable("Clients");
         }
 
@@ -21,6 +29,8 @@ namespace Notifications.Infrastructure.Data
             builder.HasKey(c => c.Id);
 
             builder.ToTable("Notifications");
+
+            builder.HasData([Seed.AttendanceNotification, Seed.TariffNotification, Seed.BranchNotification]);
         }
 
         public void Configure(EntityTypeBuilder<NotificationSettings> builder)
@@ -29,23 +39,25 @@ namespace Notifications.Infrastructure.Data
 
             builder
                 .HasOne(ns => ns.AttendanceNotification)
-                .WithOne(n => n.NotificationSettings)
+                .WithOne(n => n.AttendanceNotificationSettings)
                 .HasForeignKey<NotificationSettings>(ns => ns.AttendanceNotificationId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(ns => ns.TariffNotification)
-                .WithOne(n => n.NotificationSettings)
+                .WithOne(n => n.TariffNotificationSettings)
                 .HasForeignKey<NotificationSettings>(ns => ns.TariffNotificationId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(ns => ns.BranchNotification)
-                .WithOne(n => n.NotificationSettings)
+                .WithOne(n => n.BranchNotificationSettings)
                 .HasForeignKey<NotificationSettings>(ns => ns.BranchNotificationId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.ToTable("NotificationSettings");
+
+            builder.HasData(Seed.NotificationSettings);
         }
 
         public void Configure(EntityTypeBuilder<UserLog> builder)

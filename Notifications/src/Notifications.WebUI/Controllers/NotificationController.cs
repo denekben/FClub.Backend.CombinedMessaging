@@ -29,7 +29,7 @@ namespace Notifications.WebUI.Controllers
         }
 
         [HttpDelete]
-        [Route("{notificationId}:guid")]
+        [Route("{notificationId:guid}")]
         public async Task<ActionResult> DeleteNotification([FromRoute] Guid notificationId)
         {
             await _sender.Send(new DeleteNotification(notificationId));

@@ -18,7 +18,7 @@ namespace AccessControl.Application.IntegrationUseCases.Memberships.Handlers
 
         public async Task Handle(DeleteMembership command, CancellationToken cancellationToken)
         {
-            await _membershipRepository.DeleteAsync(command.MembershipId);
+            await _membershipRepository.DeleteAsync(command.membershipId);
             await _repository.SaveChangesAsync();
         }
     }

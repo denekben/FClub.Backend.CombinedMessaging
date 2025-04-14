@@ -6,7 +6,7 @@ using Notifications.Application.IntegrationUseCases.Turnstiles.Commands;
 namespace Notifications.WebUI.IntegrationControllers
 {
     [ApiController]
-    [Authorize(Policy = "AccessControlAudience")]
+    [Authorize(Policy = "AccessControlIssuer")]
     [Route("api/notifications/internal/turnstiles")]
     public class TurnstileController : ControllerBase
     {

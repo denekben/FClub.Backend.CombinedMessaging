@@ -1,4 +1,5 @@
-﻿using FClub.Backend.Common.Services.EmailSender;
+﻿using FClub.Backend.Common.Services;
+using FClub.Backend.Common.Services.EmailSender;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +17,7 @@ namespace Notifications.Infrastructure
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(
-                options => options.UseNpgsql(configuration["ConnectionString:DefaultConntection"])
+                options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
             );
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
@@ -25,6 +26,9 @@ namespace Notifications.Infrastructure
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
             });
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<IHttpContextService, HttpContextService>();
 
             services.AddHostedService<AttendanceNotificationService>();
 

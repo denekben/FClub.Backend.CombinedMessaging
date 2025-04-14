@@ -13,10 +13,8 @@ namespace Notifications.Infrastructure.BackgroundService
         private Timer _timer;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        public AttendanceNotificationService(
-            Timer timer, IServiceScopeFactory scopeFactory)
+        public AttendanceNotificationService(IServiceScopeFactory scopeFactory)
         {
-            _timer = timer;
             _scopeFactory = scopeFactory;
         }
 

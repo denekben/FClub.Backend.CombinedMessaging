@@ -66,7 +66,13 @@ namespace Notifications.Application.Services
 
         public static string Parse(string text, Client client)
         {
-            return "";
+            var messageText = Regex.Replace(
+                input: text,
+                pattern: @"(?<!\\)\{client.Name\(?<!\\)\}",
+                replacement: client.FullName?.FirstName.ToString() ?? string.Empty
+            );
+
+            return messageText;
         }
     }
 }

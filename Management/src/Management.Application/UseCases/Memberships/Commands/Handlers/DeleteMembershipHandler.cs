@@ -26,13 +26,13 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
 
         public async Task Handle(DeleteMembership command, CancellationToken cancellationToken)
         {
-            var membership = await _membershipRepository.GetAsync(command.MembershipId, MembershipIncludes.Client | MembershipIncludes.Tariff)
-                ?? throw new NotFoundException($"Cannot find membership {command.MembershipId}");
+            var membership = await _membershipRepository.GetAsync(command.membershipId, MembershipIncludes.Client | MembershipIncludes.Tariff)
+                ?? throw new NotFoundException($"Cannot find membership {command.membershipId}");
 
             membership.SetCost();
             await _statisticRepository.AddAsync(StatisticNote.Create(membership.BranchId, -1 * membership.TotalCost, OperationType.Deletion));
 
-            await _membershipRepository.DeleteAsync(command.MembershipId);
+            await _membershipRepository.DeleteAsync(command.membershipId);
 
             await _accessControlClient.DeleteMembership(
                 new(membership.Id)

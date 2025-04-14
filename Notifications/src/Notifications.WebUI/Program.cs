@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 //------------------------// Custom //------------------------//
 builder.Services.AddInfrastructureLayer(builder.Configuration);
-builder.Services.AddPolicies();
+builder.Services.AddPolicies(builder.Configuration);
 builder.Services.AddCustomErrorHandling();
 builder.Services.AddCustomSwagger(options =>
 {

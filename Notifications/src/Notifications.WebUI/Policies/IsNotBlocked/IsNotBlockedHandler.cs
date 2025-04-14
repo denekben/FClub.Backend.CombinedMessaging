@@ -1,9 +1,9 @@
-﻿using AccessControl.Domain.Repositories;
-using FClub.Backend.Common.Exceptions;
+﻿using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Services;
 using Microsoft.AspNetCore.Authorization;
+using Notifications.Domain.Repositories;
 
-namespace AccessControl.WebUI.Policies
+namespace Notifications.WebUI.Policies.IsNotBlocked
 {
     public class IsNotBlockedHandler : AuthorizationHandler<IsNotBlockedRequirement>
     {
@@ -20,7 +20,7 @@ namespace AccessControl.WebUI.Policies
         {
             var userId = _httpContextService.GetCurrentUserId()
                 ?? throw new BadRequestException("Invalid authorization header");
-            var result = await _userRepository.IsBlocked((Guid)userId);
+            var result = await _userRepository.IsBlocked(userId);
             if (result != null && !(bool)result)
             {
                 context.Succeed(requirement);

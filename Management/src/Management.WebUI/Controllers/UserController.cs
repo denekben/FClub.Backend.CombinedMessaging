@@ -30,7 +30,7 @@ namespace Management.WebUI.Controllers
 
         [HttpGet]
         [Route("access-token")]
-        public async Task<ActionResult<string?>> RefreshExpiredToken([FromBody] RefreshExpiredToken command)
+        public async Task<ActionResult<string?>> RefreshExpiredToken([FromQuery] RefreshExpiredToken command)
         {
             var result = await _sender.Send(command);
             if (result == null)
@@ -62,7 +62,7 @@ namespace Management.WebUI.Controllers
         [HttpGet]
         [Route("current")]
         [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
-        public async Task<ActionResult<UserDto?>> GetCurrentUser([FromBody] GetCurrentUser query)
+        public async Task<ActionResult<UserDto?>> GetCurrentUser([FromQuery] GetCurrentUser query)
         {
             var result = await _sender.Send(query);
             if (result == null)

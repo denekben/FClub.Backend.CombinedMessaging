@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccessControl.WebUI.IntegrationControllers
 {
     [ApiController]
-    [Authorize(Policy = "ManagementAudience")]
+    [Authorize(Policy = "ManagementIssuer")]
     [Route("api/access-control/internal/branches")]
     public class BranchController : ControllerBase
     {

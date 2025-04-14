@@ -3,6 +3,6 @@
 namespace Management.Application.UseCases.Memberships.Commands
 {
     public sealed record DeleteMembership(
-        Guid MembershipId
+        Guid membershipId
     ) : IRequest;
 }

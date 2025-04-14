@@ -13,7 +13,7 @@ namespace Management.Infrastructure.Data
         public DbSet<ServiceTariff> ServiceTariffs { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Tariff> Tariffs { get; set; }
-        public DbSet<ServiceBranch> ServiceBranchs { get; set; }
+        public DbSet<ServiceBranch> ServiceBranches { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<DomainService> Services { get; set; }

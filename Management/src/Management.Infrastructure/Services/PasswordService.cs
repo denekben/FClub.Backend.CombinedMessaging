@@ -12,7 +12,6 @@ namespace Management.Infrastructure.Service
         private readonly int _keySize;
         private readonly int _iterations;
         private readonly HashAlgorithmName _hashAlgorithm;
-        private readonly double _refreshTokenLifeTime;
         private static readonly Regex _passwordPattern = new(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,30}$");
 
         public PasswordService(IConfiguration configuration)

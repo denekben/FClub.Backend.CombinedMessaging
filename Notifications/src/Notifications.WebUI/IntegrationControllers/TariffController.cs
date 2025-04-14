@@ -6,7 +6,7 @@ using Notifications.Application.IntegrationUseCases.Tariffs;
 namespace Notifications.WebUI.IntegrationControllers
 {
     [ApiController]
-    [Authorize(Policy = "ManagementAudience")]
+    [Authorize(Policy = "ManagementIssuer")]
     [Route("api/notifications/internal/tariffs")]
     public class TariffController : ControllerBase
     {

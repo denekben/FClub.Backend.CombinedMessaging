@@ -484,3 +484,15 @@ $RECYCLE.BIN/
 *.swp
 
 FClub.Backend.Common/
+
+Notifications/src/Notifications.WebUI/appsettings.json
+Notifications/src/Notifications.WebUI/appsettings.Development.json
+Notifications/src/Notifications.WebUI/appsettings.Production.json
+
+AccessControl/src/AccessControl.WebUI/appsettings.json
+AccessControl/src/AccessControl.WebUI/appsettings.Development.json
+AccessControl/src/AccessControl.WebUI/appsettings.Production.json
+
+Management/src/Management.WebUI/appsettings.json
+Management/src/Management.WebUI/appsettings.Development.json
+Management/src/Management.WebUI/appsettings.Production.json

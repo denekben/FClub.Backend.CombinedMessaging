@@ -7,7 +7,9 @@ namespace Notifications.Domain.Entities
         public Guid Id { get; init; }
         public string Title { get; set; }
         public string Text { get; set; }
-        public NotificationSettings NotificationSettings { get; set; }
+        public NotificationSettings AttendanceNotificationSettings { get; set; }
+        public NotificationSettings TariffNotificationSettings { get; set; }
+        public NotificationSettings BranchNotificationSettings { get; set; }
 
         public DateTime CreatedDate { get; init; }
         public DateTime? UpdatedDate { get; set; }

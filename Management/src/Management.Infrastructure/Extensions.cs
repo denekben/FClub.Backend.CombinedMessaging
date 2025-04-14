@@ -19,7 +19,7 @@ namespace Management.Infrastructure
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(
-                options => options.UseNpgsql(configuration["ConnectionString:DefaultConntection"])
+                options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
             );
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
@@ -56,6 +56,7 @@ namespace Management.Infrastructure
                 options.RefreshTokenLifeTime = configuration["Jwt:RefreshTokenLifetime"];
             });
 
+            services.AddHttpContextAccessor();
             services.AddScoped<IHttpContextService, HttpContextService>();
 
             services.AddScoped<IPasswordService, PasswordService>();

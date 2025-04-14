@@ -6,7 +6,7 @@ using Notifications.Application.IntegrationUseCases.Clients;
 namespace Notifications.WebUI.IntegrationControllers
 {
     [ApiController]
-    [Authorize(Policy = "ManagementAudience")]
+    [Authorize(Policy = "ManagementIssuer")]
     [Route("api/notifications/internal/clients")]
     public class ClientController : ControllerBase
     {

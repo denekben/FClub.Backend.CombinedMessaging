@@ -9,6 +9,7 @@ namespace Notifications.WebUI.Controllers
 {
     [ApiController]
     [Authorize(Policy = "IsNotBlocked")]
+    [Route("api/notifications/notification-settings")]
     public class NotificationSettingsController : ControllerBase
     {
         private readonly ISender _sender;
@@ -30,7 +31,7 @@ namespace Notifications.WebUI.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Manager,Admin")]
-        public async Task<ActionResult<NotificationSettingsDto?>> GetNotificationSettings([FromBody] GetNotificationSettings command)
+        public async Task<ActionResult<NotificationSettingsDto?>> GetNotificationSettings([FromQuery] GetNotificationSettings command)
         {
             var result = await _sender.Send(command);
             if (result == null)

@@ -6,7 +6,7 @@ using Notifications.Application.IntegrationUseCases.Branches;
 namespace Notifications.WebUI.IntegrationControllers
 {
     [ApiController]
-    [Authorize(Policy = "ManagementAudience")]
+    [Authorize(Policy = "ManagementIssuer")]
     [Route("api/notifications/internal/branches")]
     public class BranchController : ControllerBase
     {
