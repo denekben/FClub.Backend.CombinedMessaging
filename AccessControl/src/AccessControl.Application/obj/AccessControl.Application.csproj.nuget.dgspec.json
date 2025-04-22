@@ -55,10 +55,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "FClub.Backend.Common": {
-              "target": "Package",
-              "version": "[1.2.2, )"
-            },
             "MediatR": {
               "target": "Package",
               "version": "[12.5.0, )"
@@ -134,12 +130,6 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "dependencies": {
-            "FClub.Backend.Common": {
-              "target": "Package",
-              "version": "[1.2.2, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -209,7 +199,7 @@
           "dependencies": {
             "FClub.Backend.Common": {
               "target": "Package",
-              "version": "[1.2.2, )"
+              "version": "[1.2.4, )"
             }
           },
           "imports": [

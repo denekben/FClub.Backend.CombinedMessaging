@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FClub.Backend.Common" Version="1.2.2" />
     <PackageReference Include="MediatR" Version="12.5.0" />
   </ItemGroup>
 
