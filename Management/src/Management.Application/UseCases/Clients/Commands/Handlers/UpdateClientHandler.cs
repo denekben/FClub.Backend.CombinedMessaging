@@ -38,14 +38,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
         public async Task<ClientDto?> Handle(UpdateClient command, CancellationToken cancellationToken)
         {
-            var (id, firstName, secondName, patronymic, phone, email, isStaff, allowEntry, allowNotifications, membershipId, socialGroupId) = command;
-
-            Membership? membership = null;
-            if (membershipId != null)
-            {
-                membership = await _membershipRepository.GetAsync((Guid)membershipId)
-                    ?? throw new NotFoundException($"Cannot find membership {membershipId}");
-            }
+            var (id, firstName, secondName, patronymic, phone, email, isStaff, allowEntry, allowNotifications, socialGroupId) = command;
 
             SocialGroup? socialGroup = null;
             if (socialGroupId != null)
@@ -70,7 +63,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
             if (updatingClient.Email != email && await _clientRepository.ExistsByEmailAsync(email))
                 throw new BadRequestException($"Client with email {email} already exists");
 
-            updatingClient.UpdateDetails(firstName, secondName, patronymic, phone, email, isStaff, allowEntry, allowNotifications, membershipId, socialGroupId);
+            updatingClient.UpdateDetails(firstName, secondName, patronymic, phone, email, isStaff, allowEntry, allowNotifications, socialGroupId);
 
             await _accessControlClient.UpdateClient(
                 new(
@@ -81,14 +74,8 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
                     updatingClient.Phone,
                     updatingClient.Email,
                     updatingClient.IsStaff,
-                    updatingClient.AllowEntry,
-                    membership == null ? null : new(
-                        membership.Id,
-                        membership.TariffId,
-                        membership.ExpiresDate,
-                        membership.ClientId,
-                        membership.BranchId))
-            );
+                    updatingClient.AllowEntry
+                ));
 
             await _notificationsClient.UpdateClient(
                 new(
@@ -103,7 +90,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
             await _repository.SaveChangesAsync();
 
-            return updatingClient.AsDto(membership, socialGroup);
+            return updatingClient.AsDto(null, socialGroup);
         }
     }
 }

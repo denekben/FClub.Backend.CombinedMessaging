@@ -20,12 +20,27 @@ namespace Management.Domain.Entities
             CreatedDate = DateTime.UtcNow;
         }
 
+        private SocialGroup(Guid id, string name)
+        {
+            Id = id;
+            Name = name;
+            CreatedDate = DateTime.UtcNow;
+        }
+
         public static SocialGroup Create(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new DomainException($"Invalid argument for Service[name]. Entered value: {name}");
 
             return new(name);
+        }
+
+        public static SocialGroup Create(Guid id, string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new DomainException($"Invalid argument for Service[name]. Entered value: {name}");
+
+            return new(id, name);
         }
 
         public void UpdateDetails(string name)

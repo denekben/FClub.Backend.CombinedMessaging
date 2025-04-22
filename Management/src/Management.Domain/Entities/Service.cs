@@ -15,11 +15,28 @@ namespace Management.Domain.Entities
 
         private Service() { }
 
+        private Service(Guid id, string name)
+        {
+            Id = id;
+            Name = name;
+            CreatedDate = DateTime.UtcNow;
+        }
+
         private Service(string name)
         {
             Id = Guid.NewGuid();
             Name = name;
             CreatedDate = DateTime.UtcNow;
+        }
+
+        public static Service Create(Guid id, string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new DomainException($"Invalid argument for Service[name]. Entered value: {name}");
+            }
+
+            return new(id, name);
         }
 
         public static Service Create(string name)

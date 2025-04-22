@@ -1,8 +1,9 @@
-﻿using Notifications.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Notifications.Domain.Entities;
 
 namespace Notifications.Infrastructure.Data
 {
-    public static class Seed
+    public class Seed
     {
         private const string _attendanceTitle = "Оповещение о посещаемости";
         private const string _attendanceText = @"
@@ -152,13 +153,22 @@ namespace Notifications.Infrastructure.Data
             </html>
         ";
 
-        public static Notification AttendanceNotification { get; }
-        public static Notification TariffNotification { get; }
-        public static Notification BranchNotification { get; }
-        public static NotificationSettings NotificationSettings { get; }
-        public static List<AppUser> AppUsers { get; } = [];
+        public Notification AttendanceNotification { get; private set; }
+        public Notification TariffNotification { get; private set; }
+        public Notification BranchNotification { get; private set; }
+        public List<Notification> Notifications { get; private set; } = [];
+        public NotificationSettings NotificationSettings { get; private set; }
+        public List<AppUser> AppUsers { get; private set; } = [];
+        public List<Client> Clients { get; private set; } = [];
 
-        static Seed()
+        public void SeedData(ModelBuilder modelBuilder)
+        {
+            SeedNotifications(modelBuilder);
+            SeedAppUsers(modelBuilder);
+            SeedClients(modelBuilder);
+        }
+
+        private void SeedNotifications(ModelBuilder modelBuilder)
         {
             var attendanceNotification = Notification.Create(_attendanceTitle, _attendanceText);
             AttendanceNotification = attendanceNotification;
@@ -174,16 +184,17 @@ namespace Notifications.Infrastructure.Data
                 true, "У нас новинки!", tariffNotification.Id,
                 true, "Мы расширяемся!", branchNotification.Id);
 
+            Notifications.AddRange([AttendanceNotification, TariffNotification, BranchNotification]);
+            modelBuilder.Entity<Notification>().HasData(Notifications);
+            modelBuilder.Entity<NotificationSettings>().HasData(NotificationSettings);
+        }
 
+        private void SeedAppUsers(ModelBuilder modelBuilder)
+        {
             AppUsers.AddRange([
                 AppUser.Create
                 (
                     Guid.Parse("58be07ff-8668-4d38-9c76-c0f3b805fe57"),
-                    false
-                ),
-                AppUser.Create
-                (
-                    Guid.Parse("a8085988-e681-4f9d-85f8-e99e2fa4aeec"),
                     false
                 ),
                 AppUser.Create
@@ -197,6 +208,74 @@ namespace Notifications.Infrastructure.Data
                     false
                 )
             ]);
+
+            modelBuilder.Entity<AppUser>().HasData(AppUsers);
+        }
+
+        private void SeedClients(ModelBuilder modelBuilder)
+        {
+            var client1 = Client.Create(
+                Guid.Parse("1db4505a-02f3-49a5-9837-aec1b0ecca44"),
+                "Иван", "Иванов", "Иванович", "+79991234567", "ivanov@example.com",
+                false, default, default);
+
+            var client2 = Client.Create(
+                Guid.Parse("287bc96f-469a-4acb-9f83-ca0932c787e2"),
+                "Петр", "Петров", "Петрович", "+79992345678", "petrov@example.com",
+                false, default, default);
+
+            var client3 = Client.Create(
+                Guid.Parse("754d703a-f1ea-425a-b3eb-b98829627774"),
+                "Анна", "Сидорова", "Сергеевна", "+79993456789", "sidorova@example.com",
+                false, default, default);
+
+            var client4 = Client.Create(
+                Guid.Parse("d789e2e0-13d7-4fdb-9b38-2df0675525fc"),
+                "Мария", "Кузнецова", "Алексеевна", "+79994567890", "kuznetsova@example.com",
+                false, default, default);
+
+            var client5 = Client.Create(
+                Guid.Parse("3294e0e3-6409-431b-8ed2-db3819ebc635"),
+                "Алексей", "Смирнов", "Дмитриевич", "+79995678901", "smirnov@example.com",
+                false, default, default);
+
+            var client6 = Client.Create(
+                Guid.Parse("ed8a6578-96f3-4891-a816-ef0559b27ed3"),
+                "Елена", "Попова", "Викторовна", "+79996789012", "popova@example.com",
+                false, default, default);
+
+            var client7 = Client.Create(
+                Guid.Parse("a783ccef-eaf0-415d-b72a-6dffeeb247f5"),
+                "Дмитрий", "Васильев", "Олегович", "+79997890123", "vasilev@example.com",
+                false, default, default);
+
+            var client8 = Client.Create(
+                Guid.Parse("d1cbac4f-29bb-46ad-a6dd-b987523de71a"),
+                "Ольга", "Новикова", "Игоревна", "+79998901234", "novikova@example.com",
+                false, default, default);
+
+            Clients.AddRange([
+                client1, client2, client3, client4, client5, client6, client7, client8]);
+
+            modelBuilder.Entity<Client>().HasData(Clients.Select(c => new
+            {
+                c.Id,
+                c.Phone,
+                c.Email,
+                c.AllowNotifications,
+                c.LastEntry,
+                c.LastNotification,
+                c.CreatedDate,
+                c.UpdatedDate
+            }).ToList());
+
+            modelBuilder.Entity<Client>().OwnsOne(c => c.FullName).HasData(Clients.Select(c => new
+            {
+                ClientId = c.Id,
+                c.FullName.FirstName,
+                c.FullName.SecondName,
+                c.FullName.Patronymic,
+            }).ToList());
         }
     }
 }

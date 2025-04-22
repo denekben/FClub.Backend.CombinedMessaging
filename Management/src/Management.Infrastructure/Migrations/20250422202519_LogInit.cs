@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Notifications.Infrastructure.Migrations.AppLogDb
+namespace Management.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class LogInit : Migration
@@ -12,11 +12,11 @@ namespace Notifications.Infrastructure.Migrations.AppLogDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "FClub.Notifications");
+                name: "FClub.Management");
 
             migrationBuilder.CreateTable(
                 name: "UserLogs",
-                schema: "FClub.Notifications",
+                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -37,7 +37,7 @@ namespace Notifications.Infrastructure.Migrations.AppLogDb
         {
             migrationBuilder.DropTable(
                 name: "UserLogs",
-                schema: "FClub.Notifications");
+                schema: "FClub.Management");
         }
     }
 }

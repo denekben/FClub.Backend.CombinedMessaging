@@ -11,7 +11,6 @@ namespace Management.Application.UseCases.Clients.Commands
         string Email,
         bool AllowEntry,
         bool AllowNotifications,
-        Guid? MembershipId,
         Guid? SocialGroupId
     ) : IRequest<ClientDto?>;
 }

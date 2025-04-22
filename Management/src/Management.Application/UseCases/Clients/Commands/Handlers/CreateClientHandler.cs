@@ -32,17 +32,10 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
         public async Task<ClientDto?> Handle(CreateClient command, CancellationToken cancellationToken)
         {
-            var (firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, membershipId, socialGroupId) = command;
+            var (firstName, secondName, patronymic, phone, email, allowEntry, allowNotifications, socialGroupId) = command;
 
             if (await _clientRepository.ExistsByEmailAsync(email))
                 throw new BadRequestException($"Client with email {email} already exists");
-
-            Membership? membership = null;
-            if (membershipId != null)
-            {
-                membership = await _membershipRepository.GetAsync((Guid)membershipId)
-                    ?? throw new NotFoundException($"Cannot find membership {membershipId}");
-            }
 
             SocialGroup? socialGroup = null;
             if (socialGroupId != null)
@@ -51,7 +44,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
                     ?? throw new NotFoundException($"Cannot find social group {socialGroupId}");
             }
 
-            var client = Client.Create(firstName, secondName, patronymic, phone, email, false, allowEntry, allowNotifications, membershipId, socialGroupId);
+            var client = Client.Create(firstName, secondName, patronymic, phone, email, false, allowEntry, allowNotifications, socialGroupId);
 
             await _clientRepository.AddAsync(client);
 
@@ -63,14 +56,8 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
                     client.FullName.Patronymic,
                     client.Phone,
                     client.Email,
-                    client.AllowEntry,
-                    membership == null ? null : new(
-                        membership.Id,
-                        membership.TariffId,
-                        membership.ExpiresDate,
-                        membership.ClientId,
-                        membership.BranchId))
-            );
+                    client.AllowEntry
+                ));
 
             await _notificationsClient.CreateClient(
                 new(
@@ -85,7 +72,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
             await _repository.SaveChangesAsync();
 
-            return client.AsDto(membership, socialGroup);
+            return client.AsDto(null, socialGroup);
         }
     }
 }

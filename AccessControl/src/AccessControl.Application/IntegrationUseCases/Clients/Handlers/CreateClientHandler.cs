@@ -20,16 +20,9 @@ namespace AccessControl.Application.UseCases.Clients.Commands.Handlers
 
         public async Task Handle(CreateClient command, CancellationToken cancellationToken)
         {
-            var (id, firstName, secondName, patronymic, phone, email, allowEntry, membership) = command;
+            var (id, firstName, secondName, patronymic, phone, email, allowEntry) = command;
 
-            var client = Client.Create(id, firstName, secondName, patronymic, phone, email, allowEntry, false, membership?.Id);
-            if (membership != null)
-                client.Membership = Membership.Create(
-                    membership.Id,
-                    membership.TariffId,
-                    membership.ExpiresDate,
-                    membership.ClientId,
-                    membership.BranchId);
+            var client = Client.Create(id, firstName, secondName, patronymic, phone, email, allowEntry, false);
 
             await _clientRepository.AddAsync(client);
             await _repository.SaveChangesAsync();

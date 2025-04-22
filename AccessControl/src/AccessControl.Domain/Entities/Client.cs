@@ -15,7 +15,6 @@ namespace AccessControl.Domain.Entities
         public string Email { get; set; }
         public bool AllowEntry { get; set; }
         public bool IsStaff { get; set; }
-        public Guid? MembershipId { get; set; }
         public Membership? Membership { get; set; }
         public List<EntryLog> EntryLogs { get; set; } = [];
 
@@ -24,7 +23,7 @@ namespace AccessControl.Domain.Entities
 
         private Client() { }
 
-        private Client(Guid id, FullName fullName, string? phone, string email, bool allowEntry, bool isStaff, Guid? membershipId)
+        private Client(Guid id, FullName fullName, string? phone, string email, bool allowEntry, bool isStaff)
         {
             Id = id;
             FullName = fullName;
@@ -32,12 +31,11 @@ namespace AccessControl.Domain.Entities
             Email = email;
             AllowEntry = allowEntry;
             IsStaff = isStaff;
-            MembershipId = membershipId;
             CreatedDate = DateTime.UtcNow;
         }
 
         public static Client Create(Guid id, string firstName, string secondName, string? patronymic,
-            string? phone, string email, bool allowEntry, bool isStaff, Guid? membershipId)
+            string? phone, string email, bool allowEntry, bool isStaff)
         {
             if (id == Guid.Empty)
                 throw new DomainException($"Invalid value for Client[id]. Entered value {id}");
@@ -45,29 +43,24 @@ namespace AccessControl.Domain.Entities
                 throw new DomainException($"Invalid value for Client[phone]. Entered value {phone}");
             if (string.IsNullOrWhiteSpace(email) || !_emailPattern.IsMatch(email))
                 throw new DomainException($"Invalid value for Client[email]. Entered value {email}");
-            if (membershipId == Guid.Empty)
-                throw new DomainException($"Invalid value for Client[membershipId]. Entered value {membershipId}");
             var fullName = FullName.Create(firstName, secondName, patronymic);
 
-            return new(id, fullName, phone, email, allowEntry, isStaff, membershipId);
+            return new(id, fullName, phone, email, allowEntry, isStaff);
         }
 
         public void UpdateDetails(string firstName, string secondName, string? patronymic,
-            string? phone, string email, bool allowEntry, bool isStaff, Guid? membershipId)
+            string? phone, string email, bool allowEntry, bool isStaff)
         {
             if (phone != null && !_phonePattern.IsMatch(phone))
                 throw new DomainException($"Invalid value for Client[phone]. Entered value {phone}");
             if (string.IsNullOrWhiteSpace(email) || !_emailPattern.IsMatch(email))
                 throw new DomainException($"Invalid value for Client[email]. Entered value {email}");
-            if (membershipId == Guid.Empty)
-                throw new DomainException($"Invalid value for Client[membershipId]. Entered value {membershipId}");
             var fullName = FullName.Create(firstName, secondName, patronymic);
 
             FullName = fullName;
             Phone = phone;
             Email = email;
             AllowEntry = allowEntry;
-            MembershipId = membershipId;
         }
     }
 }

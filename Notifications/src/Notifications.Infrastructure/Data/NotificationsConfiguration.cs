@@ -29,8 +29,6 @@ namespace Notifications.Infrastructure.Data
             builder.HasKey(c => c.Id);
 
             builder.ToTable("Notifications");
-
-            builder.HasData([Seed.AttendanceNotification, Seed.TariffNotification, Seed.BranchNotification]);
         }
 
         public void Configure(EntityTypeBuilder<NotificationSettings> builder)
@@ -56,8 +54,6 @@ namespace Notifications.Infrastructure.Data
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.ToTable("NotificationSettings");
-
-            builder.HasData(Seed.NotificationSettings);
         }
 
         public void Configure(EntityTypeBuilder<UserLog> builder)
@@ -72,8 +68,6 @@ namespace Notifications.Infrastructure.Data
             builder.HasKey(u => u.Id);
 
             builder.ToTable("AppUsers");
-
-            builder.HasData(Seed.AppUsers);
         }
     }
 }

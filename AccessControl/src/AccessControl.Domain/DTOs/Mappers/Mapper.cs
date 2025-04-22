@@ -1,5 +1,5 @@
 ﻿using AccessControl.Domain.Entities;
-using AccessControll.Domain.Entities;
+using AccessControl.Domain.Entities;
 using FClub.Backend.Common.ValueObjects.DTOs.Mappers;
 
 namespace AccessControl.Domain.DTOs.Mappers

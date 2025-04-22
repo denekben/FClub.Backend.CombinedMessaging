@@ -40,6 +40,8 @@ namespace Management.Infrastructure.Repositories
 
             if (includes.HasFlag(ClientIncludes.SocialGroup))
                 query = query.Include(c => c.SocialGroup);
+            if (includes.HasFlag(ClientIncludes.Membership))
+                query = query.Include(c => c.Membership);
 
             return await query.FirstOrDefaultAsync();
         }

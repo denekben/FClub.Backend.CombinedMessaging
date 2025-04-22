@@ -36,13 +36,13 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
         {
             var (tariffId, monthQuantity, clientId, branchId) = command;
 
-            var client = await _clientRepository.GetAsync(clientId, ClientIncludes.SocialGroup)
+            var client = await _clientRepository.GetAsync(clientId, ClientIncludes.SocialGroup | ClientIncludes.Membership)
                 ?? throw new NotFoundException($"Cannot find client {clientId}");
 
             var branch = await _branchRepository.GetAsync(branchId)
                 ?? throw new NotFoundException($"Cannot find branch {branchId}");
 
-            if (client.MembershipId != null)
+            if (client.Membership != null)
                 throw new BadRequestException($"Client already have membership");
 
             var tariff = await _tariffRepository.GetAsync(tariffId, TariffIncludes.Services)

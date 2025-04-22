@@ -163,12 +163,6 @@ namespace Management.Infrastructure.Data
                 });
 
             builder
-                .HasOne(c => c.Membership)
-                .WithOne(m => m.Client)
-                .HasForeignKey<Client>(c => c.MembershipId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            builder
                 .HasOne(c => c.SocialGroup)
                 .WithMany(sg => sg.Clients)
                 .HasForeignKey(c => c.SocialGroupId)

@@ -1,4 +1,4 @@
-﻿using AccessControll.Domain.Entities;
+﻿using AccessControl.Domain.Entities;
 
 namespace AccessControl.Domain.Repositories
 {

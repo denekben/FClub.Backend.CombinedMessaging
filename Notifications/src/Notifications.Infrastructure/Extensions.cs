@@ -53,6 +53,8 @@ namespace Notifications.Infrastructure
                 options.MailPassword = configuration["Smtp:Password"];
             });
 
+            services.AddTransient<Seed>();
+
             return services;
         }
     }

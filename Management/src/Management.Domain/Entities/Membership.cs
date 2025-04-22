@@ -24,9 +24,21 @@ namespace Management.Domain.Entities
             TariffId = tariffId;
             MonthQuantity = monthQuantity;
             var now = DateTime.UtcNow;
-            var year = (int)Math.Floor((now.Month + monthQuantity) / 12.0);
-            var month = (now.Month + monthQuantity) % 12;
-            ExpiresDate = new DateTime(now.Year + year, now.Month + month, now.Day);
+            now = new DateTime(now.Year, now.Month, now.Day);
+            ExpiresDate = now.AddMonths(monthQuantity);
+            ClientId = clientId;
+            BranchId = branchId;
+            CreatedDate = DateTime.UtcNow;
+        }
+
+        private Membership(Guid id, Guid tariffId, int monthQuantity, Guid clientId, Guid branchId)
+        {
+            Id = id;
+            TariffId = tariffId;
+            MonthQuantity = monthQuantity;
+            var now = DateTime.UtcNow;
+            now = new DateTime(now.Year, now.Month, now.Day);
+            ExpiresDate = now.AddMonths(monthQuantity);
             ClientId = clientId;
             BranchId = branchId;
             CreatedDate = DateTime.UtcNow;
@@ -45,6 +57,21 @@ namespace Management.Domain.Entities
 
             return new(tariffId, monthQuantity, clientId, branchId);
         }
+
+        public static Membership Create(Guid id, Guid tariffId, int monthQuantity, Guid clientId, Guid branchId)
+        {
+            if (tariffId == Guid.Empty)
+                throw new DomainException($"Invalid value for Membership[tariffId]. Entered value {tariffId}");
+            if (clientId == Guid.Empty)
+                throw new DomainException($"Invalid value for Membership[clientId]. Entered value {clientId}");
+            if (branchId == Guid.Empty)
+                throw new DomainException($"Invalid value for Membership[branchId]. Entered value {branchId}");
+            if (monthQuantity <= 0)
+                throw new DomainException($"Invalid value for Membership[monthQuantity]. Entered value {monthQuantity}");
+
+            return new(id, tariffId, monthQuantity, clientId, branchId);
+        }
+
 
         public void UpdateDetails(Guid tariffId, int monthQuantity, Guid clientId, Guid branchId)
         {

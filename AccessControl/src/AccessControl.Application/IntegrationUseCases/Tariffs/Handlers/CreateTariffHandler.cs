@@ -1,7 +1,7 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Pivots;
 using AccessControl.Domain.Repositories;
-using AccessControll.Domain.Entities;
+using AccessControl.Domain.Entities;
 using FClub.Backend.Common.Logging;
 using MediatR;
 

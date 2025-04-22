@@ -19,6 +19,13 @@ namespace Management.Domain.Entities.Pivots
             TariffId = tarrifId;
         }
 
+        private ServiceTariff(Guid id, Guid serviceId, Guid tarrifId)
+        {
+            Id = id;
+            ServiceId = serviceId;
+            TariffId = tarrifId;
+        }
+
         public static ServiceTariff Create(Guid serviceId, Guid tariffId)
         {
             if (serviceId == Guid.Empty)
@@ -26,6 +33,15 @@ namespace Management.Domain.Entities.Pivots
             if (tariffId == Guid.Empty)
                 throw new DomainException($"Invalid value for ServiceTariff[tariffId]. Entered value {tariffId}");
             return new(serviceId, tariffId);
+        }
+
+        public static ServiceTariff Create(Guid id, Guid serviceId, Guid tariffId)
+        {
+            if (serviceId == Guid.Empty)
+                throw new DomainException($"Invalid value for ServiceTariff[serviceId]. Entered value {serviceId}");
+            if (tariffId == Guid.Empty)
+                throw new DomainException($"Invalid value for ServiceTariff[tariffId]. Entered value {tariffId}");
+            return new(id, serviceId, tariffId);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Pivots;
-using AccessControll.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -111,12 +110,6 @@ namespace AccessControl.Infrastructure.Data
                     ownedBuilder.Property(fn => fn.SecondName);
                     ownedBuilder.Property(fn => fn.Patronymic);
                 });
-
-            builder
-                .HasOne(c => c.Membership)
-                .WithOne(m => m.Client)
-                .HasForeignKey<Client>(c => c.MembershipId)
-                .OnDelete(DeleteBehavior.SetNull);
 
             builder.ToTable("Clients");
         }

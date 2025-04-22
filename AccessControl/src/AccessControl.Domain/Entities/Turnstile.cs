@@ -1,4 +1,4 @@
-﻿using AccessControll.Domain.Entities;
+﻿using AccessControl.Domain.Entities;
 using FClub.Backend.Common.Exceptions;
 
 namespace AccessControl.Domain.Entities

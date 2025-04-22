@@ -3,7 +3,7 @@ using AccessControl.Domain.Entities.Pivots;
 using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.ValueObjects;
 
-namespace AccessControll.Domain.Entities
+namespace AccessControl.Domain.Entities
 {
     public sealed class Branch
     {

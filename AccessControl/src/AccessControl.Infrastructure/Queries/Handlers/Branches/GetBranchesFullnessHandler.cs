@@ -2,7 +2,7 @@
 using AccessControl.Domain.DTOs;
 using AccessControl.Domain.DTOs.Mappers;
 using AccessControl.Infrastructure.Data;
-using AccessControll.Domain.Entities;
+using AccessControl.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

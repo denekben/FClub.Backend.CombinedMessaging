@@ -1,6 +1,6 @@
 ﻿using AccessControl.Domain.Repositories;
 using AccessControl.Infrastructure.Data;
-using AccessControll.Domain.Entities;
+using AccessControl.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Repositories

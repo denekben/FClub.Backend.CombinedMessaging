@@ -24,7 +24,7 @@ namespace AccessControl.Application.IntegrationUseCases.Clients.Handlers
         public async Task Handle(RegisterNewUser command, CancellationToken cancellationToken)
         {
             var (id, firstName, secondName, patronymic, phone, email, allowEntry) = command;
-            var client = Client.Create(id, firstName, secondName, patronymic, phone, email, allowEntry, true, null);
+            var client = Client.Create(id, firstName, secondName, patronymic, phone, email, allowEntry, true);
             var user = AppUser.Create(id, false);
             await _clientRepository.AddAsync(client);
             await _userRepository.AddAsync(user);

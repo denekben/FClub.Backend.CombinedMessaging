@@ -1,8 +1,7 @@
-﻿using AccessControl.Domain.Entities;
-using AccessControl.Domain.Entities.Pivots;
+﻿using AccessControl.Domain.Entities.Pivots;
 using FClub.Backend.Common.Exceptions;
 
-namespace AccessControll.Domain.Entities
+namespace AccessControl.Domain.Entities
 {
     public sealed class Service
     {

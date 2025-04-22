@@ -1,6 +1,4 @@
-﻿using Management.Shared.IntegrationUseCases.AccessControl.DTOs;
-
-namespace Management.Shared.IntegrationUseCases.AccessControl.Clients
+﻿namespace Management.Shared.IntegrationUseCases.AccessControl.Clients
 {
     public sealed record UpdateClient(
         Guid Id,
@@ -10,7 +8,6 @@ namespace Management.Shared.IntegrationUseCases.AccessControl.Clients
         string? Phone,
         string Email,
         bool IsStaff,
-        bool AllowEntry,
-        MembershipDto? Membership
+        bool AllowEntry
     );
 }

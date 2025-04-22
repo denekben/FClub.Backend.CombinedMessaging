@@ -1,6 +1,4 @@
-﻿using Management.Shared.IntegrationUseCases.AccessControl.DTOs;
-
-namespace Management.Shared.IntegrationUseCases.AccessControl.Clients
+﻿namespace Management.Shared.IntegrationUseCases.AccessControl.Clients
 {
     public sealed record CreateClient(
         Guid Id,
@@ -9,7 +7,6 @@ namespace Management.Shared.IntegrationUseCases.AccessControl.Clients
         string? Patronymic,
         string? Phone,
         string Email,
-        bool AllowEntry,
-        MembershipDto? Membership
+        bool AllowEntry
     );
 }

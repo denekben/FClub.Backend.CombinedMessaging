@@ -1,6 +1,6 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Pivots;
-using AccessControll.Domain.Entities;
+using AccessControl.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Data

@@ -50,7 +50,7 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
                     if (client.Membership == null)
                         throw new BadRequestException($"Client {client.Id} does not have a membership");
                     if (client.Membership.Tariff == null)
-                        throw new BadRequestException($"Membership {client.MembershipId} does not have a tariff");
+                        throw new BadRequestException($"Membership {client.Membership.Id} does not have a tariff");
                     if (!client.Membership.Tariff.AllowMultiBranches && client.Membership.BranchId != turnstile.BranchId)
                         throw new BadRequestException($"Client {client.Id} is not allowed to entry to branch {turnstile.BranchId}");
                     if (turnstile.ServiceId != null && !client.Membership.Tariff.ServiceTariffs.Select(st => st.ServiceId).ToList().Contains((Guid)turnstile.ServiceId))

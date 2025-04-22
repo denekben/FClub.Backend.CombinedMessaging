@@ -13,7 +13,6 @@ namespace Management.Application.UseCases.Clients.Commands
         bool IsStaff,
         bool AllowEntry,
         bool AllowNotifications,
-        Guid? MembershipId,
         Guid? SocialGroupId
     ) : IRequest<ClientDto?>;
 }

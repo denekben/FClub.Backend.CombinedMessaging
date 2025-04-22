@@ -19,6 +19,13 @@ namespace Management.Domain.Entities.Pivots
             BranchId = branchId;
         }
 
+        private ServiceBranch(Guid id, Guid serviceId, Guid branchId)
+        {
+            Id = id;
+            ServiceId = serviceId;
+            BranchId = branchId;
+        }
+
         public static ServiceBranch Create(Guid serviceId, Guid branchId)
         {
             if (serviceId == Guid.Empty)
@@ -26,6 +33,15 @@ namespace Management.Domain.Entities.Pivots
             if (branchId == Guid.Empty)
                 throw new DomainException($"Invalid value for ServiceBranch[branchId]. Entered value {branchId}");
             return new(serviceId, branchId);
+        }
+
+        public static ServiceBranch Create(Guid id, Guid serviceId, Guid branchId)
+        {
+            if (serviceId == Guid.Empty)
+                throw new DomainException($"Invalid value for ServiceBranch[serviceId]. Entered value {serviceId}");
+            if (branchId == Guid.Empty)
+                throw new DomainException($"Invalid value for ServiceBranch[branchId]. Entered value {branchId}");
+            return new(id, serviceId, branchId);
         }
     }
 }

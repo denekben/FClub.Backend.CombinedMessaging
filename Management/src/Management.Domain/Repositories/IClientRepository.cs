@@ -14,6 +14,7 @@ namespace Management.Domain.Repositories
     [Flags]
     public enum ClientIncludes
     {
-        SocialGroup = 1
+        SocialGroup = 1,
+        Membership = 2
     }
 }
