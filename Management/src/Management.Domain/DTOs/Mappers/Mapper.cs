@@ -50,6 +50,7 @@ namespace Management.Domain.DTOs.Mappers
                 client.FullName.AsDto(),
                 client.Phone,
                 client.Email,
+                client.IsStaff,
                 client.AllowEntry,
                 client.AllowNotifications,
                 membershipDto,
@@ -69,6 +70,22 @@ namespace Management.Domain.DTOs.Mappers
                 membership.TotalCost,
                 membership.MonthQuantity,
                 membership.Tariff.AsDto(),
+                membership.ExpiresDate,
+                membership.CreatedDate,
+                membership.UpdatedDate
+            );
+        }
+
+        public static MembershipDto AsDto(this Membership membership, List<Service> services)
+        {
+            if (membership.Tariff == null)
+                throw new MappingException("Cannot map MembershipDto: Tariff is null");
+
+            return new(
+                membership.Id,
+                membership.TotalCost,
+                membership.MonthQuantity,
+                membership.Tariff.AsDto(services),
                 membership.ExpiresDate,
                 membership.CreatedDate,
                 membership.UpdatedDate
@@ -128,7 +145,6 @@ namespace Management.Domain.DTOs.Mappers
         public static StatisticNoteDto AsDto(this StatisticNote note)
         {
             return new(
-                note.Id,
                 note.CreatedDate,
                 note.MembershipCost,
                 note.MembershipQuantity

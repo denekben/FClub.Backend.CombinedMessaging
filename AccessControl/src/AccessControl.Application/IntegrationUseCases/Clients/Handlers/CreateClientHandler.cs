@@ -23,7 +23,13 @@ namespace AccessControl.Application.UseCases.Clients.Commands.Handlers
             var (id, firstName, secondName, patronymic, phone, email, allowEntry, membership) = command;
 
             var client = Client.Create(id, firstName, secondName, patronymic, phone, email, allowEntry, false, membership?.Id);
-            client.Membership = membership;
+            if (membership != null)
+                client.Membership = Membership.Create(
+                    membership.Id,
+                    membership.TariffId,
+                    membership.ExpiresDate,
+                    membership.ClientId,
+                    membership.BranchId);
 
             await _clientRepository.AddAsync(client);
             await _repository.SaveChangesAsync();

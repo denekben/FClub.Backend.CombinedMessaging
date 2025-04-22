@@ -24,13 +24,13 @@ namespace Management.Infrastructure.Queries.Handlers.Clients
             var clients = _context.Clients.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(fullNameSearchPhrase))
-                clients = clients.Where(u => EF.Functions.ILike(u.FullName.ToString(), $"%{fullNameSearchPhrase}%"));
+                clients = clients.Where(u => EF.Functions.ILike(u.FullName.SecondName + " " + u.FullName.FirstName + " " + (u.FullName.Patronymic ?? string.Empty), $"%{fullNameSearchPhrase.Trim()}%"));
 
             if (!string.IsNullOrWhiteSpace(phoneSearchPhrase))
-                clients = clients.Where(u => EF.Functions.ILike(u.FullName.ToString(), $"%{phoneSearchPhrase}%"));
+                clients = clients.Where(u => EF.Functions.ILike(u.Phone ?? string.Empty, $"%{phoneSearchPhrase.Trim()}%"));
 
             if (!string.IsNullOrWhiteSpace(emailSearchPhrase))
-                clients = clients.Where(u => EF.Functions.ILike(u.FullName.ToString(), $"%{emailSearchPhrase}%"));
+                clients = clients.Where(u => EF.Functions.ILike(u.Email ?? string.Empty, $"%{emailSearchPhrase.Trim()}%"));
 
             clients = isStaff switch
             {
@@ -65,9 +65,9 @@ namespace Management.Infrastructure.Queries.Handlers.Clients
 
             int skipSize = (pageNumber - 1) * pageSize;
 
-            clients = clients.Skip(skipSize).Take(pageNumber);
+            clients = clients.Skip(skipSize).Take(pageSize);
 
-            return await clients.Include(c => c.Membership).Include(c => c.SocialGroup).Select(c => c.AsDto(c.Membership, c.SocialGroup)).ToListAsync();
+            return await clients.Include(c => c.SocialGroup).Include(c => c.Membership).ThenInclude(m => m!.Tariff).Select(c => c.AsDto(c.Membership, c.SocialGroup)).ToListAsync();
         }
     }
 }

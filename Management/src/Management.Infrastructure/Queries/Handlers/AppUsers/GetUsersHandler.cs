@@ -21,15 +21,14 @@ namespace Management.Infrastructure.Queries.Handlers.AppUsers
             var (fullNameSearchPhrase, phoneSearchPhrase, emailSearchPhrase, isBlocked, allowedToEntry, roleId, sortByCreatedDate, pageNumber, pageSize) = query;
 
             var users = _context.AppUsers.AsQueryable();
-
             if (!string.IsNullOrWhiteSpace(fullNameSearchPhrase))
-                users = users.Where(u => EF.Functions.ILike(u.FullName.ToString(), $"%{fullNameSearchPhrase}%"));
+                users = users.Where(u => EF.Functions.ILike(u.FullName.SecondName + " " + u.FullName.FirstName + " " + (u.FullName.Patronymic ?? string.Empty), $"%{fullNameSearchPhrase.Trim()}%"));
 
             if (!string.IsNullOrWhiteSpace(phoneSearchPhrase))
-                users = users.Where(u => EF.Functions.ILike(u.FullName.ToString(), $"%{phoneSearchPhrase}%"));
+                users = users.Where(u => EF.Functions.ILike(u.Phone ?? string.Empty, $"%{phoneSearchPhrase.Trim()}%"));
 
             if (!string.IsNullOrWhiteSpace(emailSearchPhrase))
-                users = users.Where(u => EF.Functions.ILike(u.FullName.ToString(), $"%{emailSearchPhrase}%"));
+                users = users.Where(u => EF.Functions.ILike(u.Email ?? string.Empty, $"%{emailSearchPhrase.Trim()}%"));
 
             users = isBlocked switch
             {

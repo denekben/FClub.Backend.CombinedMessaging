@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace AccessControl.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Init2 : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -102,23 +104,6 @@ namespace AccessControl.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserLogs",
-                schema: "FClub.AccessControl",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    AppUserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ServiceName = table.Column<string>(type: "text", nullable: false),
-                    Text = table.Column<string>(type: "text", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserLogs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "StatisticNotes",
                 schema: "FClub.AccessControl",
                 columns: table => new
@@ -126,7 +111,7 @@ namespace AccessControl.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BranchId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    EntriesQuantity = table.Column<long>(type: "bigint", nullable: false)
+                    EntriesQuantity = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -221,7 +206,7 @@ namespace AccessControl.Infrastructure.Migrations
                         principalSchema: "FClub.AccessControl",
                         principalTable: "Branches",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Memberships_Clients_ClientId",
                         column: x => x.ClientId,
@@ -275,7 +260,7 @@ namespace AccessControl.Infrastructure.Migrations
                     ClientId = table.Column<Guid>(type: "uuid", nullable: false),
                     TurnstileId = table.Column<Guid>(type: "uuid", nullable: false),
                     ClientFullName = table.Column<string>(type: "text", nullable: false),
-                    BranchName = table.Column<string>(type: "text", nullable: false),
+                    BranchName = table.Column<string>(type: "text", nullable: true),
                     ServiceName = table.Column<string>(type: "text", nullable: true),
                     EntryType = table.Column<int>(type: "integer", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -296,6 +281,30 @@ namespace AccessControl.Infrastructure.Migrations
                         principalSchema: "FClub.AccessControl",
                         principalTable: "Turnstiles",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                schema: "FClub.AccessControl",
+                table: "AppUsers",
+                columns: new[] { "Id", "IsBlocked" },
+                values: new object[,]
+                {
+                    { new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"), false },
+                    { new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"), false },
+                    { new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"), false },
+                    { new Guid("a8085988-e681-4f9d-85f8-e99e2fa4aeec"), false }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "FClub.AccessControl",
+                table: "Clients",
+                columns: new[] { "Id", "AllowEntry", "CreatedDate", "Email", "IsStaff", "MembershipId", "Phone", "UpdatedDate", "FullName_FirstName", "FullName_Patronymic", "FullName_SecondName" },
+                values: new object[,]
+                {
+                    { new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"), true, new DateTime(2025, 4, 22, 15, 11, 9, 657, DateTimeKind.Utc).AddTicks(6657), "ivanov@yandex.ru", true, null, "+78005553535", null, "Иванов", "Иванович", "Иван" },
+                    { new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"), true, new DateTime(2025, 4, 22, 15, 11, 9, 657, DateTimeKind.Utc).AddTicks(6383), "iolovich@yandex.ru", true, null, "+78005553535", null, "Евгения", "Алексеевна", "Иолович" },
+                    { new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"), true, new DateTime(2025, 4, 22, 15, 11, 9, 657, DateTimeKind.Utc).AddTicks(6702), "ivanova@yandex.ru", true, null, "+79991001010", null, "Иванова", "Ибрагимовна", "Иванка" },
+                    { new Guid("a8085988-e681-4f9d-85f8-e99e2fa4aeec"), true, new DateTime(2025, 4, 22, 15, 11, 9, 657, DateTimeKind.Utc).AddTicks(6627), "denekben@yandex.ru", true, null, "+79991001010", null, "Курбанаев", "Алексеевич", "Денис" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -397,10 +406,6 @@ namespace AccessControl.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "StatisticNotes",
-                schema: "FClub.AccessControl");
-
-            migrationBuilder.DropTable(
-                name: "UserLogs",
                 schema: "FClub.AccessControl");
 
             migrationBuilder.DropTable(

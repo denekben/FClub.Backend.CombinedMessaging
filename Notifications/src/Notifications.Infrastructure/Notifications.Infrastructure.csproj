@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Notifications.Application\Notifications.Application.csproj" />
-    <ProjectReference Include="..\Notifications.Domain\Notifications.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

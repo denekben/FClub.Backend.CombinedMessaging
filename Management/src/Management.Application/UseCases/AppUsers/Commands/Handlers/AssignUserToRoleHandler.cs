@@ -1,5 +1,6 @@
 ﻿using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Services;
+using Management.Domain.Entities;
 using Management.Domain.Repositories;
 using MediatR;
 
@@ -31,10 +32,12 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
 
             var user = await _userRepository.GetAsync(userId)
                 ?? throw new NotFoundException($"Cannot find user {userId}");
-            var currentUser = await _userRepository.GetAsync(currentUserId)
+            var currentUser = await _userRepository.GetAsync(currentUserId, UserIncludes.Role)
                 ?? throw new NotFoundException($"Cannot find current user {currentUserId}");
             if (user.RoleId == currentUser.RoleId)
                 throw new BadRequestException($"User cannot change role for user with same role");
+            if (currentUser.Role.Name == Role.Manager.Name)
+                throw new BadRequestException($"Manager cannot change roles");
 
             var role = await _roleRepository.GetAsync(roleId)
                 ?? throw new NotFoundException($"Cannot find role {roleId}");

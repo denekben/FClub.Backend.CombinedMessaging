@@ -24,13 +24,25 @@ namespace AccessControl.Infrastructure.Repositories
             await _context.Branches.Where(b => b.Id == id).ExecuteDeleteAsync();
         }
 
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _context.Branches.AnyAsync(b => b.Id == id);
+        }
+
         public async Task<Branch?> GetAsync(Guid id, BranchIncludes includes)
         {
             var query = _context.Branches.Where(b => b.Id == id);
             if (includes.HasFlag(BranchIncludes.ServicesBranches))
                 query = query.Include(b => b.ServiceBranches);
+            if (includes.HasFlag(BranchIncludes.Services))
+                query = query.Include(b => b.ServiceBranches).ThenInclude(sb => sb.Service);
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Branch?> GetAsync(Guid id)
+        {
+            return await _context.Branches.FirstOrDefaultAsync(b => b.Id == id);
         }
     }
 }

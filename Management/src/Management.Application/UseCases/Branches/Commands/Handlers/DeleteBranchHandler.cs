@@ -24,8 +24,8 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
 
         public async Task Handle(DeleteBranch command, CancellationToken cancellationToken)
         {
-            var branch = await _branchRepository.GetAsync(command.Id, BranchIncludes.ServiceBranches)
-                ?? throw new BadRequestException($"Cannot find branch {command.Id}");
+            var branch = await _branchRepository.GetAsync(command.branchId, BranchIncludes.ServiceBranches)
+                ?? throw new BadRequestException($"Cannot find branch {command.branchId}");
 
             var serviceIds = branch.ServiceBranches.Select(sb => sb.ServiceId).ToList();
 

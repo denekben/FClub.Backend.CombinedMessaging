@@ -23,7 +23,7 @@ namespace Management.Infrastructure.Queries.Handlers.Tariffs
             var tariffs = _context.Tariffs.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(nameSearchPhrase))
-                tariffs = tariffs.Where(t => EF.Functions.ILike(t.Name, $"%{nameSearchPhrase}%"));
+                tariffs = tariffs.Where(t => EF.Functions.ILike(t.Name, $"%{nameSearchPhrase.Trim()}%"));
 
             tariffs = sortByCreatedDate switch
             {

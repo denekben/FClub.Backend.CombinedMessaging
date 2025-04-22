@@ -7,7 +7,7 @@ namespace AccessControl.Domain.Entities
         private const string _serviceName = "AccessControl";
 
         public Guid Id { get; init; }
-        public Guid AppUserId { get; set; }
+        public Guid? AppUserId { get; set; }
         public string ServiceName { get; init; }
         public string Text { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -15,7 +15,7 @@ namespace AccessControl.Domain.Entities
 
         private UserLog() { }
 
-        private UserLog(Guid appUserId, string text)
+        private UserLog(Guid? appUserId, string text)
         {
             Id = Guid.NewGuid();
             AppUserId = appUserId;
@@ -24,7 +24,7 @@ namespace AccessControl.Domain.Entities
             CreatedDate = DateTime.UtcNow;
         }
 
-        public static UserLog Create(Guid appUserId, string text)
+        public static UserLog Create(Guid? appUserId, string text)
         {
             if (string.IsNullOrWhiteSpace(text))
                 throw new DomainException($"Invalid argument for UserLog[text]. Entered value: {text}");

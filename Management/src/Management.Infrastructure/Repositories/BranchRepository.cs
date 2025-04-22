@@ -24,6 +24,11 @@ namespace Management.Infrastructure.Repositories
             await _context.Branches.Where(b => b.Id == id).ExecuteDeleteAsync();
         }
 
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _context.Branches.AnyAsync(b => b.Id == id);
+        }
+
         public async Task<Branch?> GetAsync(Guid id)
         {
             return await _context.Branches.FirstOrDefaultAsync(b => b.Id == id);

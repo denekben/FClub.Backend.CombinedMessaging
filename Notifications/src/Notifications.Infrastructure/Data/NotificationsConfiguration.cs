@@ -72,6 +72,8 @@ namespace Notifications.Infrastructure.Data
             builder.HasKey(u => u.Id);
 
             builder.ToTable("AppUsers");
+
+            builder.HasData(Seed.AppUsers);
         }
     }
 }

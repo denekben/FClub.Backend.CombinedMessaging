@@ -27,7 +27,7 @@ namespace Management.Infrastructure.Services
 
         public async Task DeleteClient(DeleteClient command)
         {
-            await _httpClient.SendResponse($"{_basePath}/clients/{command.Id}", command, RequestType.Delete, _token);
+            await _httpClient.SendResponse($"{_basePath}/clients/{command.clientId}", command, RequestType.Delete, _token);
         }
 
         public async Task UpdateClient(UpdateClient command)
@@ -57,7 +57,7 @@ namespace Management.Infrastructure.Services
 
         public async Task RegisterNewUser(RegisterNewUser command)
         {
-            await _httpClient.SendResponse($"{_basePath}/clients/register-user", command, RequestType.Post, _token);
+            await _httpClient.SendResponse($"{_basePath}/users/register-user", command, RequestType.Post, _token);
         }
     }
 }

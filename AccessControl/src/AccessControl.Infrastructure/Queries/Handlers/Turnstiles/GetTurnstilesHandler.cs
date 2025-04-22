@@ -23,7 +23,7 @@ namespace AccessControl.Infrastructure.Queries.Handlers.Turnstiles
             var turnstiles = _context.Turnstiles.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(nameSearchPhrase))
-                turnstiles = turnstiles.Where(t => EF.Functions.ILike(t.Name ?? string.Empty, $"%{nameSearchPhrase}%"));
+                turnstiles = turnstiles.Where(t => EF.Functions.ILike(t.Name ?? string.Empty, $"%{nameSearchPhrase.Trim()}%"));
 
             turnstiles = isMain switch
             {

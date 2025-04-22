@@ -16,9 +16,8 @@ namespace AccessControl.WebUI.Policies
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = configuration["Jwt:Issuer"],
-                        ValidateAudience = true,
-                        ValidAudience = configuration["Jwt:Audience"],
+                        ValidIssuer = configuration["ManagementService:Hostname"],
+                        ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
@@ -35,7 +34,7 @@ namespace AccessControl.WebUI.Policies
                         ValidateLifetime = false,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]))
+                            Encoding.UTF8.GetBytes(configuration["Jwt:ServiceSecretKey"]))
                     };
                 });
 

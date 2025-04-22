@@ -30,7 +30,7 @@ namespace Notifications.WebUI.Controllers
 
         [HttpGet]
         [Route("logs")]
-        public async Task<ActionResult<List<UserLogDto>?>> GetCurrentUserLogs([FromQuery] GetUserLogs query)
+        public async Task<ActionResult<List<UserLogDto>?>> GetUserLogs([FromQuery] GetUserLogs query)
         {
             var result = await _sender.Send(query);
             if (result == null)

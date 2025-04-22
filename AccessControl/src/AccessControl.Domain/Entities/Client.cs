@@ -31,6 +31,7 @@ namespace AccessControl.Domain.Entities
             Phone = phone;
             Email = email;
             AllowEntry = allowEntry;
+            IsStaff = isStaff;
             MembershipId = membershipId;
             CreatedDate = DateTime.UtcNow;
         }

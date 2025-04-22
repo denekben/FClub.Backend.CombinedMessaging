@@ -24,10 +24,15 @@ namespace Management.Infrastructure.Queries.Handlers.Branches
             var branches = _context.Branches.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(nameSearchPhrase))
-                branches = branches.Where(b => EF.Functions.ILike(b.Name ?? string.Empty, $"%{nameSearchPhrase}%"));
+                branches = branches.Where(b => EF.Functions.ILike(b.Name ?? string.Empty, $"%{nameSearchPhrase.Trim()}%"));
 
             if (!string.IsNullOrWhiteSpace(addressSearchPhrase))
-                branches = branches.Where(b => EF.Functions.ILike(b.Address.ToString(), $"%{addressSearchPhrase}%"));
+                branches = branches.Where(b => EF.Functions.ILike(
+                    (b.Address.Country ?? string.Empty + " ") +
+                    (b.Address.City ?? string.Empty + " ") +
+                    (b.Address.Street ?? string.Empty + " ") +
+                    (b.Address.HouseNumber ?? string.Empty)
+                    , $"%{addressSearchPhrase.Trim()}%"));
 
             IOrderedQueryable<Branch>? orderedBranches = null;
             orderedBranches = sortByMaxOccupancy switch

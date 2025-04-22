@@ -30,6 +30,12 @@ namespace AccessControl.Infrastructure.Data
                 .HasForeignKey<Membership>(m => m.ClientId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder
+                .HasOne(m => m.Branch)
+                .WithMany(b => b.Memberships)
+                .HasForeignKey(m => m.BranchId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             builder.ToTable("Memberships");
         }
 

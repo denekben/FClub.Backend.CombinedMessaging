@@ -6,9 +6,9 @@ namespace Notifications.Infrastructure.Repositories
 {
     public class UserLogRepository : IUserLogRepository
     {
-        private readonly AppDbContext _context;
+        private readonly AppLogDbContext _context;
 
-        public UserLogRepository(AppDbContext context)
+        public UserLogRepository(AppLogDbContext context)
         {
             _context = context;
         }

@@ -24,6 +24,11 @@ namespace Management.Infrastructure.Repositories
             await _context.Tariffs.Where(t => t.Id == id).ExecuteDeleteAsync();
         }
 
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _context.Tariffs.AnyAsync(t => t.Id == id);
+        }
+
         public async Task<Tariff?> GetAsync(Guid id)
         {
             return await _context.Tariffs.FirstOrDefaultAsync(t => t.Id == id);

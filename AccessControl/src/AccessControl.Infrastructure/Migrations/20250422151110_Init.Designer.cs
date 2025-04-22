@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AccessControl.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250414141831_Init2")]
-    partial class Init2
+    [Migration("20250422151110_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,28 @@ namespace AccessControl.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers", "FClub.AccessControl");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"),
+                            IsBlocked = false
+                        },
+                        new
+                        {
+                            Id = new Guid("a8085988-e681-4f9d-85f8-e99e2fa4aeec"),
+                            IsBlocked = false
+                        },
+                        new
+                        {
+                            Id = new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"),
+                            IsBlocked = false
+                        },
+                        new
+                        {
+                            Id = new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"),
+                            IsBlocked = false
+                        });
                 });
 
             modelBuilder.Entity("AccessControl.Domain.Entities.Client", b =>
@@ -71,6 +93,44 @@ namespace AccessControl.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clients", "FClub.AccessControl");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"),
+                            AllowEntry = true,
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 9, 657, DateTimeKind.Utc).AddTicks(6383),
+                            Email = "iolovich@yandex.ru",
+                            IsStaff = true,
+                            Phone = "+78005553535"
+                        },
+                        new
+                        {
+                            Id = new Guid("a8085988-e681-4f9d-85f8-e99e2fa4aeec"),
+                            AllowEntry = true,
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 9, 657, DateTimeKind.Utc).AddTicks(6627),
+                            Email = "denekben@yandex.ru",
+                            IsStaff = true,
+                            Phone = "+79991001010"
+                        },
+                        new
+                        {
+                            Id = new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"),
+                            AllowEntry = true,
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 9, 657, DateTimeKind.Utc).AddTicks(6657),
+                            Email = "ivanov@yandex.ru",
+                            IsStaff = true,
+                            Phone = "+78005553535"
+                        },
+                        new
+                        {
+                            Id = new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"),
+                            AllowEntry = true,
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 9, 657, DateTimeKind.Utc).AddTicks(6702),
+                            Email = "ivanova@yandex.ru",
+                            IsStaff = true,
+                            Phone = "+79991001010"
+                        });
                 });
 
             modelBuilder.Entity("AccessControl.Domain.Entities.EntryLog", b =>
@@ -80,7 +140,6 @@ namespace AccessControl.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("BranchName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ClientFullName")
@@ -204,8 +263,8 @@ namespace AccessControl.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long>("EntriesQuantity")
-                        .HasColumnType("bigint");
+                    b.Property<int>("EntriesQuantity")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -269,34 +328,6 @@ namespace AccessControl.Infrastructure.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("Turnstiles", "FClub.AccessControl");
-                });
-
-            modelBuilder.Entity("AccessControl.Domain.Entities.UserLog", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AppUserId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("ServiceName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserLogs", "FClub.AccessControl");
                 });
 
             modelBuilder.Entity("AccessControll.Domain.Entities.Branch", b =>
@@ -370,6 +401,36 @@ namespace AccessControl.Infrastructure.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("ClientId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    ClientId = new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"),
+                                    FirstName = "Евгения",
+                                    Patronymic = "Алексеевна",
+                                    SecondName = "Иолович"
+                                },
+                                new
+                                {
+                                    ClientId = new Guid("a8085988-e681-4f9d-85f8-e99e2fa4aeec"),
+                                    FirstName = "Курбанаев",
+                                    Patronymic = "Алексеевич",
+                                    SecondName = "Денис"
+                                },
+                                new
+                                {
+                                    ClientId = new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"),
+                                    FirstName = "Иванов",
+                                    Patronymic = "Иванович",
+                                    SecondName = "Иван"
+                                },
+                                new
+                                {
+                                    ClientId = new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"),
+                                    FirstName = "Иванова",
+                                    Patronymic = "Ибрагимовна",
+                                    SecondName = "Иванка"
+                                });
                         });
 
                     b.Navigation("FullName")
@@ -398,9 +459,9 @@ namespace AccessControl.Infrastructure.Migrations
             modelBuilder.Entity("AccessControl.Domain.Entities.Membership", b =>
                 {
                     b.HasOne("AccessControll.Domain.Entities.Branch", "Branch")
-                        .WithMany()
+                        .WithMany("Memberships")
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("AccessControl.Domain.Entities.Client", "Client")
@@ -540,6 +601,8 @@ namespace AccessControl.Infrastructure.Migrations
 
             modelBuilder.Entity("AccessControll.Domain.Entities.Branch", b =>
                 {
+                    b.Navigation("Memberships");
+
                     b.Navigation("ServiceBranches");
 
                     b.Navigation("StatisticNotes");

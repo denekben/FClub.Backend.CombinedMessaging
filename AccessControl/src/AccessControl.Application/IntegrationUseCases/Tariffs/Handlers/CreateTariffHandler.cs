@@ -1,5 +1,7 @@
 ﻿using AccessControl.Domain.Entities;
+using AccessControl.Domain.Entities.Pivots;
 using AccessControl.Domain.Repositories;
+using AccessControll.Domain.Entities;
 using FClub.Backend.Common.Logging;
 using MediatR;
 
@@ -9,23 +11,44 @@ namespace AccessControl.Application.IntegrationUseCases.Tariffs.Handler
     public sealed class CreateTariffHandler : IRequestHandler<CreateTariff>
     {
         private readonly ITariffRepository _tariffRepository;
+        private readonly IServiceRepository _serviceRepository;
         private readonly IRepository _repository;
 
-        public CreateTariffHandler(ITariffRepository tariffRepository, IRepository repository)
+        public CreateTariffHandler(ITariffRepository tariffRepository, IRepository repository,
+            IServiceRepository serviceRepository)
         {
             _tariffRepository = tariffRepository;
             _repository = repository;
+            _serviceRepository = serviceRepository;
         }
 
         public async Task Handle(CreateTariff command, CancellationToken cancellationToken)
         {
-            var (id, name, allowMultiBranches, serviceTariffs, services) = command;
+            var (id, name, allowMultiBranches, serviceTariffsDto, servicesDto) = command;
             var tariff = Tariff.Create(id, name, allowMultiBranches);
 
-            foreach (var serviceTariff in serviceTariffs)
+            var serviceTariffs = new List<ServiceTariff>();
+            foreach (var serviceTariffDto in serviceTariffsDto)
             {
-                var service = services.First(s => s.Id == serviceTariff.ServiceId);
-                serviceTariff.Service = service;
+                serviceTariffs.Add(ServiceTariff.Create(serviceTariffDto.Id, serviceTariffDto.ServiceId, serviceTariffDto.TariffId));
+            }
+
+            var services = new List<Service>();
+            foreach (var serviceDto in servicesDto)
+            {
+                var service = await _serviceRepository.GetAsync(serviceDto.Id);
+                if (service == null)
+                {
+                    service = Service.Create(serviceDto.Id, serviceDto.Name);
+                    await _serviceRepository.AddAsync(service);
+                }
+                services.Add(service);
+            }
+
+            foreach (var serviceBranch in serviceTariffs)
+            {
+                var service = services.First(s => s.Id == serviceBranch.ServiceId);
+                serviceBranch.Service = service;
             }
             tariff.ServiceTariffs = serviceTariffs;
 

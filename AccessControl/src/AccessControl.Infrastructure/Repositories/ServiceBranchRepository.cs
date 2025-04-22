@@ -1,0 +1,32 @@
+﻿using AccessControl.Domain.Entities.Pivots;
+using AccessControl.Domain.Repositories;
+using AccessControl.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace AccessControl.Infrastructure.Repositories
+{
+    public class ServiceBranchRepository : IServiceBranchRepository
+    {
+        private readonly AppDbContext _context;
+
+        public ServiceBranchRepository(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task AddAsync(ServiceBranch sb)
+        {
+            await _context.ServiceBranches.AddAsync(sb);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            await _context.ServiceBranches.Where(sb => sb.Id == id).ExecuteDeleteAsync();
+        }
+
+        public async Task DeleteByBranchId(Guid id)
+        {
+            await _context.ServiceBranches.Where(sb => sb.BranchId == id).ExecuteDeleteAsync();
+        }
+    }
+}

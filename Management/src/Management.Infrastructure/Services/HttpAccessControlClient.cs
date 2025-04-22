@@ -61,27 +61,27 @@ namespace Management.Infrastructure.Services
 
         public async Task DeleteClient(DeleteClient command)
         {
-            await _httpClient.SendResponse($"{_basePath}/clients/{command.Id}", command, RequestType.Delete, _token);
+            await _httpClient.SendResponse($"{_basePath}/clients/{command.clientId}", command, RequestType.Delete, _token);
         }
 
         public async Task DeleteMembership(DeleteMembership command)
         {
-            await _httpClient.SendResponse($"{_basePath}/memberships/{command.MembershipId}", command, RequestType.Delete, _token);
+            await _httpClient.SendResponse($"{_basePath}/memberships/{command.membershipId}", command, RequestType.Delete, _token);
         }
 
         public async Task DeleteService(DeleteService command)
         {
-            await _httpClient.SendResponse($"{_basePath}/services/{command.Id}", command, RequestType.Delete, _token);
+            await _httpClient.SendResponse($"{_basePath}/services/{command.serviceId}", command, RequestType.Delete, _token);
         }
 
         public async Task DeleteTariff(DeleteTariff command)
         {
-            await _httpClient.SendResponse($"{_basePath}/tariffs/{command.Id}", command, RequestType.Delete, _token);
+            await _httpClient.SendResponse($"{_basePath}/tariffs/{command.tariffId}", command, RequestType.Delete, _token);
         }
 
         public async Task RegisterNewUser(RegisterNewUser command)
         {
-            await _httpClient.SendResponse($"{_basePath}/clients/register-user", command, RequestType.Post, _token);
+            await _httpClient.SendResponse($"{_basePath}/users/register-user", command, RequestType.Post, _token);
         }
 
         public async Task UnblockUser(UnblockUser command)

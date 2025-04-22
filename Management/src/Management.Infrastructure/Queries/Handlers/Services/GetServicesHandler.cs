@@ -23,7 +23,7 @@ namespace Management.Infrastructure.Queries.Handlers.Services
             var services = _context.Services.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(nameSearchPhrase))
-                services = services.Where(s => EF.Functions.ILike(s.Name, $"%{nameSearchPhrase}%"));
+                services = services.Where(s => EF.Functions.ILike(s.Name, $"%{nameSearchPhrase.Trim()}%"));
 
             services = sortByCreatedDate switch
             {

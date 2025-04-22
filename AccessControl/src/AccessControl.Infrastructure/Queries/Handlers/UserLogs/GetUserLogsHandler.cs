@@ -9,9 +9,9 @@ namespace AccessControl.Infrastructure.Queries.Handlers.UserLogs
 {
     public sealed class GetUserLogsHandler : IRequestHandler<GetUserLogs, List<UserLogDto>?>
     {
-        private readonly AppDbContext _context;
+        private readonly AppLogDbContext _context;
 
-        public GetUserLogsHandler(AppDbContext context)
+        public GetUserLogsHandler(AppLogDbContext context)
         {
             _context = context;
         }
@@ -20,10 +20,15 @@ namespace AccessControl.Infrastructure.Queries.Handlers.UserLogs
         {
             var (userId, textSearchPhrase, sortByCreatedDate, pageNumber, pageSize) = query;
 
-            var logs = _context.UserLogs.Where(l => l.AppUserId == userId).AsQueryable();
+            var logs = _context.UserLogs.AsQueryable();
+
+            if (userId != null)
+            {
+                logs = logs.Where(l => l.AppUserId == userId);
+            }
 
             if (!string.IsNullOrWhiteSpace(textSearchPhrase))
-                logs = logs.Where(l => EF.Functions.ILike(l.Text, $"%{textSearchPhrase}%"));
+                logs = logs.Where(l => EF.Functions.ILike(l.Text, $"%{textSearchPhrase.Trim()}%"));
 
             logs = sortByCreatedDate switch
             {

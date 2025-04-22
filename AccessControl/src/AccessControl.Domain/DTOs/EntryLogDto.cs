@@ -5,8 +5,9 @@
         Guid ClientId,
         string ClientFullName,
         Guid TurnstileId,
-        string BranchName,
+        string? BranchName,
         string? ServiceName,
+        string EntryType,
         DateTime CreatedDate,
         DateTime UpdatedDate
     );

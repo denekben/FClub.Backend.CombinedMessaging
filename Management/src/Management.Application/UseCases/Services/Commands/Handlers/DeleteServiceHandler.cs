@@ -21,9 +21,9 @@ namespace Management.Application.UseCases.Services.Commands.Handlers
 
         public async Task Handle(DeleteService command, CancellationToken cancellationToken)
         {
-            var service = await _serviceRepository.GetAsync(command.Id)
-                ?? throw new NotFoundException($"Cannot find service {command.Id}");
-            await _serviceRepository.DeleteAsync(command.Id);
+            var service = await _serviceRepository.GetAsync(command.serviceId)
+                ?? throw new NotFoundException($"Cannot find service {command.serviceId}");
+            await _serviceRepository.DeleteAsync(command.serviceId);
 
             await _accessControlClient.DeleteService(
                 new(service.Id)

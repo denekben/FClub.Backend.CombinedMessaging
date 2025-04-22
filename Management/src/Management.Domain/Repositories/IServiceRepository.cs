@@ -6,6 +6,7 @@ namespace Management.Domain.Repositories
     {
         Task<Service?> GetAsync(Guid id);
         Task<Service?> GetByNameAsync(string name);
+        Task<Service?> GetByNameNoTrackingAsync(string name);
         Task DeleteAsync(Guid id);
         Task AddAsync(Service service);
     }

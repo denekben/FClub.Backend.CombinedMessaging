@@ -17,10 +17,10 @@ namespace Management.Application.UseCases.SocialGroups.Commands.Handlers
 
         public async Task Handle(DeleteSocialGroup command, CancellationToken cancellationToken)
         {
-            var socialGroup = await _socialGroupRepository.GetAsync(command.Id)
-                ?? throw new NotFoundException($"Cannot find social group {command.Id}");
+            var socialGroup = await _socialGroupRepository.GetAsync(command.socialGroupId)
+                ?? throw new NotFoundException($"Cannot find social group {command.socialGroupId}");
 
-            await _socialGroupRepository.DeleteAsync(command.Id);
+            await _socialGroupRepository.DeleteAsync(command.socialGroupId);
             await _repository.SaveChangesAsync();
         }
     }

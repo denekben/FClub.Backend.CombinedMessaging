@@ -28,8 +28,17 @@ namespace AccessControl.Domain.DTOs.Mappers
                 log.TurnstileId,
                 log.BranchName,
                 log.ServiceName,
+                log.EntryType.ToString(),
                 log.CreatedDate,
                 log.UpdatedDate
+            );
+        }
+
+        public static StatisticNoteDto AsDto(this StatisticNote stat)
+        {
+            return new(
+                stat.CreatedDate,
+                stat.EntriesQuantity
             );
         }
 

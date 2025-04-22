@@ -34,7 +34,7 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
 
         public async Task<MembershipDto?> Handle(CreateMembership command, CancellationToken cancellationToken)
         {
-            var (tariffId, monthQuantity, expiresDate, clientId, branchId) = command;
+            var (tariffId, monthQuantity, clientId, branchId) = command;
 
             var client = await _clientRepository.GetAsync(clientId, ClientIncludes.SocialGroup)
                 ?? throw new NotFoundException($"Cannot find client {clientId}");
@@ -45,10 +45,10 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
             if (client.MembershipId != null)
                 throw new BadRequestException($"Client already have membership");
 
-            var tariff = await _tariffRepository.GetAsync(tariffId)
+            var tariff = await _tariffRepository.GetAsync(tariffId, TariffIncludes.Services)
                 ?? throw new NotFoundException($"Cannot find tariff {tariffId}");
 
-            var membership = Membership.Create(tariffId, expiresDate, clientId, branchId);
+            var membership = Membership.Create(tariffId, monthQuantity, clientId, branchId);
 
             membership.Tariff = tariff;
             membership.Client = client;
@@ -69,6 +69,9 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
 
             await _repository.SaveChangesAsync();
 
+            var services = membership.Tariff.ServiceTariffs.Select(st => st.Service).ToList();
+            if (services.Count != 0)
+                return membership.AsDto(services);
             return membership.AsDto();
         }
     }

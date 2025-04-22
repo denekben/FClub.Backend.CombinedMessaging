@@ -39,13 +39,5 @@ namespace AccessControl.WebUI.IntegrationControllers
             await _sender.Send(command);
             return Ok();
         }
-
-        [HttpPost]
-        [Route("register-user")]
-        public async Task<ActionResult> RegisterNewUser([FromBody] RegisterNewUser command)
-        {
-            await _sender.Send(command);
-            return Ok();
-        }
     }
 }

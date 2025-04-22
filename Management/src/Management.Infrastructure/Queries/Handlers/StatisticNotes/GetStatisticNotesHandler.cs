@@ -20,13 +20,34 @@ namespace Management.Infrastructure.Queries.Handlers.StatisticNotes
         {
             var (branchId, startDate, endDate) = query;
 
-            var notes = _context.StatisticNotes.Where(n => n.BranchId == branchId).AsQueryable();
+            var notes = _context.StatisticNotes.Where(n => n.CreatedDate >= startDate && n.CreatedDate <= endDate);
 
-            notes = notes.Where(n => n.CreatedDate >= startDate && n.CreatedDate <= endDate);
+            if (branchId != null)
+            {
+                var result = await notes.Where(n => n.BranchId == branchId)
+                    .OrderBy(n => n.CreatedDate)
+                    .ToListAsync();
+                return result.Select(n => n.AsDto()).ToList();
+            }
+            else
+            {
+                var groupedData = await notes
+                    .GroupBy(n => n.CreatedDate)
+                    .Select(g => new
+                    {
+                        Date = g.Key,
+                        TotalCost = g.Sum(n => n.MembershipCost),
+                        TotalQuantity = g.Sum(n => n.MembershipQuantity)
+                    })
+                    .OrderBy(x => x.Date)
+                    .ToListAsync(cancellationToken);
 
-            notes = notes.OrderBy(n => n.CreatedDate);
-
-            return await notes.Select(n => n.AsDto()).ToListAsync();
+                return groupedData.Select(x => new StatisticNoteDto(
+                    x.Date,
+                    x.TotalCost,
+                    x.TotalQuantity
+                )).ToList();
+            }
         }
     }
 }

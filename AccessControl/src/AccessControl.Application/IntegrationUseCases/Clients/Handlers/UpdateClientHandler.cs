@@ -1,4 +1,5 @@
 ﻿using AccessControl.Application.IntegrationUseCases.Clients;
+using AccessControl.Domain.Entities;
 using AccessControl.Domain.Repositories;
 using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Logging;
@@ -35,7 +36,13 @@ namespace AccessControl.Application.UseCases.Clients.Commands.Handlers
                 var existingMembership = await _membershipRepository.GetAsync(membership.Id);
                 if (existingMembership == null)
                 {
-                    await _membershipRepository.AddAsync(membership);
+                    await _membershipRepository.AddAsync(
+                        Membership.Create(
+                            membership.Id,
+                            membership.TariffId,
+                            membership.ExpiresDate,
+                            membership.ClientId,
+                            membership.BranchId));
                 }
                 else
                 {

@@ -11,6 +11,6 @@ namespace Management.Shared.IntegrationUseCases.AccessControl.Branches
         string? Street,
         string? HouseNumber,
         List<ServiceBranchDto> ServiceBranches,
-        List<ServiceDto> Services
+        List<ServiceDto> ServiceToAddClient
     );
 }

@@ -18,7 +18,7 @@ namespace Management.Infrastructure.Queries.Handlers.Clients
 
         public async Task<ClientDto?> Handle(GetClient query, CancellationToken cancellationToken)
         {
-            var client = await _context.Clients.Where(c => c.Id == query.ClientId).Include(c => c.Membership).Include(c => c.SocialGroup).FirstOrDefaultAsync();
+            var client = await _context.Clients.Where(c => c.Id == query.ClientId).Include(c => c.Membership).ThenInclude(m => m!.Tariff).Include(c => c.SocialGroup).FirstOrDefaultAsync();
             return client?.AsDto(client.Membership, client.SocialGroup);
         }
     }

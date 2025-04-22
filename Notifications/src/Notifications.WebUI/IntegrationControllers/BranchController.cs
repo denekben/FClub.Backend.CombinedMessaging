@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notifications.Application.IntegrationUseCases.Branches;
+using System.Text.Json;
 
 namespace Notifications.WebUI.IntegrationControllers
 {
@@ -20,6 +21,7 @@ namespace Notifications.WebUI.IntegrationControllers
         [HttpPost]
         public async Task<ActionResult> CreateBranch([FromBody] CreateBranch command)
         {
+            Console.WriteLine(JsonSerializer.Serialize(command));
             await _sender.Send(command);
             return Ok();
         }

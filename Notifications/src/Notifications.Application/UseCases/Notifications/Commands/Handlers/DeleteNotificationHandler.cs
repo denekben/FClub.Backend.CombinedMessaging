@@ -16,7 +16,7 @@ namespace Notifications.Application.UseCases.Notifications.Commands.Handlers
 
         public async Task Handle(DeleteNotification command, CancellationToken cancellationToken)
         {
-            await _notificationRepository.DeleteAsync(command.Id);
+            await _notificationRepository.DeleteAsync(command.notificationId);
             await _repository.SaveChangesAsync();
         }
     }

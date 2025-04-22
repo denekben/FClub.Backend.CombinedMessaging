@@ -29,13 +29,13 @@ namespace AccessControl.Infrastructure.Queries.Handlers.EntryLogs
                 logs = logs.Where(l => l.TurnstileId == turnstileId);
 
             if (!string.IsNullOrWhiteSpace(clientNameSearchPhrase))
-                logs = logs.Where(l => EF.Functions.ILike(l.ClientFullName, $"%{clientNameSearchPhrase}%"));
+                logs = logs.Where(l => EF.Functions.ILike(l.ClientFullName, $"%{clientNameSearchPhrase.Trim()}%"));
 
             if (!string.IsNullOrWhiteSpace(branchNameSearchPhrase))
-                logs = logs.Where(l => EF.Functions.ILike(l.BranchName, $"%{branchNameSearchPhrase}%"));
+                logs = logs.Where(l => EF.Functions.ILike(l.BranchName, $"%{branchNameSearchPhrase.Trim()}%"));
 
             if (!string.IsNullOrWhiteSpace(serviceNameSearchPhrase))
-                logs = logs.Where(l => EF.Functions.ILike((l.ServiceName ?? string.Empty), $"%{serviceNameSearchPhrase}%"));
+                logs = logs.Where(l => EF.Functions.ILike((l.ServiceName ?? string.Empty), $"%{serviceNameSearchPhrase.Trim()}%"));
 
             logs = sortByCreatedDate switch
             {

@@ -23,10 +23,10 @@ namespace Notifications.Infrastructure.Queries.Handlers.Notifications
             var notifications = _context.Notifications.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(titleSearchPhrase))
-                notifications = notifications.Where(n => EF.Functions.ILike(n.Title, $"%{titleSearchPhrase}%"));
+                notifications = notifications.Where(n => EF.Functions.ILike(n.Title, $"%{titleSearchPhrase.Trim()}%"));
 
             if (!string.IsNullOrWhiteSpace(textSearchPhrase))
-                notifications = notifications.Where(n => EF.Functions.ILike(n.Text, $"%{textSearchPhrase}%"));
+                notifications = notifications.Where(n => EF.Functions.ILike(n.Text, $"%{textSearchPhrase.Trim()}%"));
 
             notifications = sortByCreatedDate switch
             {

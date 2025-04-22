@@ -34,12 +34,18 @@ namespace Management.Infrastructure.Logging
             CancellationToken cancellationToken)
         {
             var requestName = typeof(TRequest).Name;
-            var userId = _contextService.GetCurrentUserId() ?? Guid.Empty;
+            Guid? userId = null;
+            try
+            {
+                userId = _contextService.GetCurrentUserId();
+            }
+            catch (Exception)
+            {
+            }
 
             var logText = $"[MediatR] Handling {requestName}. Request data: {JsonSerializer.Serialize(request)}.";
             _logger.LogInformation(logText);
             await _userLogRepository.AddAsync(UserLog.Create(userId, logText));
-            await _repository.SaveChangesAsync();
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -52,7 +58,7 @@ namespace Management.Infrastructure.Logging
                 logText = $"[MediatR] Handled {requestName} in {stopwatch.ElapsedMilliseconds}ms.";
                 _logger.LogInformation(logText);
                 await _userLogRepository.AddAsync(UserLog.Create(userId, logText));
-                await _repository.SaveChangesAsync();
+                await _repository.SaveLogsAsync();
 
                 return response;
             }
@@ -63,7 +69,7 @@ namespace Management.Infrastructure.Logging
                 logText = $"[MediatR] Error handling {requestName} after {stopwatch.ElapsedMilliseconds}ms. Error message: {ex.Message}.";
                 _logger.LogError(logText);
                 await _userLogRepository.AddAsync(UserLog.Create(userId, logText));
-                await _repository.SaveChangesAsync();
+                await _repository.SaveLogsAsync();
 
                 throw;
             }

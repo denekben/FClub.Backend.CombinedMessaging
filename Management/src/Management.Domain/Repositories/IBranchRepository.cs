@@ -8,6 +8,7 @@ namespace Management.Domain.Repositories
         Task<Branch?> GetAsync(Guid id, BranchIncludes includes);
         Task AddAsync(Branch branch);
         Task DeleteAsync(Guid id);
+        Task<bool> ExistsAsync(Guid id);
     }
 
     [Flags]

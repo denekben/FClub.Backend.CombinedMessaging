@@ -24,7 +24,7 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands.Handl
 
         public async Task<NotificationSettingsDto?> Handle(UpdateNotificationSettings command, CancellationToken cancellationToken)
         {
-            var (id,
+            var (
                 allowAttendanceNotifications,
                 attendanceNotificationPeriod,
                 attendanceNotificationReSendPeriod,
@@ -38,8 +38,8 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands.Handl
                 branchNotificationId
             ) = command;
 
-            var settings = await _settingsRepository.GetAsync(id)
-                ?? throw new NotFoundException($"Cannot find notification settings {id}");
+            var settings = await _settingsRepository.GetAsync()
+                ?? throw new NotFoundException($"Cannot find notification settings");
 
             Notification? attendanceNotification = null;
             if (attendanceNotificationId != null)

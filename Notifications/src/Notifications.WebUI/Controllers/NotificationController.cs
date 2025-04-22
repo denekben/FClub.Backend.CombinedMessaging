@@ -54,10 +54,10 @@ namespace Notifications.WebUI.Controllers
         }
 
         [HttpPost]
-        [Route("{notificationId:guid}/send")]
-        public async Task<ActionResult<NotificationDto?>> SendCreatedNotification([FromRoute] Guid notificationId, [FromBody] string subject)
+        [Route("send-created")]
+        public async Task<ActionResult<NotificationDto?>> SendCreatedNotification([FromBody] SendCreatedNotification command)
         {
-            await _sender.Send(new SendCreatedNotification(subject, notificationId));
+            await _sender.Send(command);
             return Ok();
         }
 

@@ -13,7 +13,6 @@ namespace AccessControl.Domain.Repositories
     [Flags]
     public enum TurnistileIncludes
     {
-        Branches = 1,
-        Services = 2
+        Services = 1
     }
 }

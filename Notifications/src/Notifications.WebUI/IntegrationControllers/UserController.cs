@@ -32,5 +32,13 @@ namespace Notifications.WebUI.IntegrationControllers
             await _sender.Send(new UnblockUser(userId));
             return Ok();
         }
+
+        [HttpPost]
+        [Route("register-user")]
+        public async Task<ActionResult> RegisterNewUser([FromBody] RegisterNewUser command)
+        {
+            await _sender.Send(command);
+            return Ok();
+        }
     }
 }

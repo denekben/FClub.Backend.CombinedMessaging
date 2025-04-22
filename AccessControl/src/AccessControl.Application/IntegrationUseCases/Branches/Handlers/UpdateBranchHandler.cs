@@ -12,52 +12,37 @@ namespace AccessControl.Application.IntegrationUseCases.Branches.Handlers
     {
         private readonly IServiceRepository _serviceRepository;
         private readonly IBranchRepository _branchRepository;
+        private readonly IServiceBranchRepository _serviceBranchRepository;
         private readonly IRepository _repository;
 
         public UpdateBranchHandler(IBranchRepository branchRepository, IRepository repository,
-            IServiceRepository serviceRepository)
+            IServiceRepository serviceRepository, IServiceBranchRepository serviceBranchRepository)
         {
             _branchRepository = branchRepository;
             _repository = repository;
             _serviceRepository = serviceRepository;
+            _serviceBranchRepository = serviceBranchRepository;
         }
 
         public async Task Handle(UpdateBranch command, CancellationToken cancellationToken)
         {
             var (id, name, maxOccupancy, country, city, street, houseNumber, serviceBranches, services) = command;
 
-            var branch = await _branchRepository.GetAsync(id, includes: BranchIncludes.ServicesBranches)
+            var branch = await _branchRepository.GetAsync(id)
                 ?? throw new NotFoundException($"Cannot find branch {id}");
 
             branch.UpdateDetails(name, maxOccupancy, country, city, street, houseNumber);
 
-            var existingServiceIds = branch.ServiceBranches.Select(sb => sb.ServiceId).ToList();
-            var newServiceIds = serviceBranches.Select(sb => sb.ServiceId).ToList();
+            await _serviceBranchRepository.DeleteByBranchId(id);
 
-            var serviceBranchesToRemove = branch.ServiceBranches
-                .Where(sb => !newServiceIds.Contains(sb.ServiceId))
-                .ToList();
-
-            var serviceBranchesToAdd = serviceBranches
-                .Where(sb => !existingServiceIds.Contains(sb.ServiceId))
-                .ToList();
-
-            foreach (var sbDto in serviceBranchesToAdd)
+            foreach (var service in services)
             {
-                var service = await _serviceRepository.GetAsync(sbDto.ServiceId);
-                if (service == null)
-                {
-                    var serviceDto = services.First(s => s.Id == sbDto.ServiceId);
-                    service = Service.Create(serviceDto.Id, serviceDto.Name);
-                    await _serviceRepository.AddAsync(service);
-                }
-
-                branch.ServiceBranches.Add(ServiceBranch.Create(sbDto.Id, sbDto.ServiceId, sbDto.BranchId));
+                await _serviceRepository.AddAsync(Service.Create(service.Id, service.Name));
             }
 
-            foreach (var sb in serviceBranchesToRemove)
+            foreach (var serviceBranch in serviceBranches)
             {
-                branch.ServiceBranches.Remove(sb);
+                await _serviceBranchRepository.AddAsync(ServiceBranch.Create(serviceBranch.Id, serviceBranch.ServiceId, serviceBranch.BranchId));
             }
 
             await _repository.SaveChangesAsync();

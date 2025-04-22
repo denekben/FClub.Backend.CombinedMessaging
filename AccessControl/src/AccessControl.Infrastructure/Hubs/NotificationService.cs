@@ -13,13 +13,13 @@ namespace AccessControl.Infrastructure.Hubs
             _hubContext = hubContext;
         }
 
-        public async Task ClientEntered(Guid branchId, uint entriesQuantity = 1)
+        public async Task ClientEntered(Guid branchId, int entriesQuantity = 1)
         {
             var json = JsonSerializer.Serialize(new { BranchId = branchId, EntriesQuantity = entriesQuantity });
             await _hubContext.Clients.All.SendAsync(json);
         }
 
-        public async Task ClientExited(Guid branchId, uint entriesQuantity = 1)
+        public async Task ClientExited(Guid branchId, int entriesQuantity = -1)
         {
             var json = JsonSerializer.Serialize(new { BranchId = branchId, EntriesQuantity = entriesQuantity });
             await _hubContext.Clients.All.SendAsync(json);

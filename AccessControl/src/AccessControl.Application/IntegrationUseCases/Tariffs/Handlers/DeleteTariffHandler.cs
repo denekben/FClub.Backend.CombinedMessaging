@@ -1,5 +1,4 @@
 ﻿using AccessControl.Domain.Repositories;
-using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Logging;
 using MediatR;
 
@@ -22,9 +21,7 @@ namespace AccessControl.Application.IntegrationUseCases.Tariffs.Handler
 
         public async Task Handle(DeleteTariff command, CancellationToken cancellationToken)
         {
-            var services = await _serviceRepository.GetByTariffId(command.Id)
-                ?? throw new NotFoundException($"Cannot find services by tariff {command.Id}");
-            await _tariffRepository.DeleteAsync(command.Id);
+            await _tariffRepository.DeleteAsync(command.tariffId);
             await _repository.SaveChangesAsync();
         }
     }

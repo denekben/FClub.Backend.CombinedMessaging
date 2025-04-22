@@ -17,6 +17,8 @@ namespace AccessControl.Domain.Entities
         public DateTime CreatedDate { get; init; }
         public DateTime? UpdatedDate { get; set; }
 
+        private Membership() { }
+
         private Membership(Guid id, Guid tariffId, DateTime expiresDate, Guid clientId, Guid branchId)
         {
             Id = id;

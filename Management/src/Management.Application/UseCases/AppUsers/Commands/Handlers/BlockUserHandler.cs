@@ -1,5 +1,6 @@
 ﻿using FClub.Backend.Common.Exceptions;
 using Management.Application.Services;
+using Management.Domain.Entities;
 using Management.Domain.Repositories;
 using MediatR;
 
@@ -23,8 +24,10 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
 
         public async Task Handle(BlockUser command, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(command.UserId)
+            var user = await _userRepository.GetAsync(command.UserId, UserIncludes.Role)
                 ?? throw new NotFoundException($"Cannot find user {command.UserId}");
+            if (user.Role.Name == Role.Admin.Name)
+                throw new BadRequestException("Cannot block user with admin role");
             user.IsBlocked = true;
 
             await _notificationClient.BlockUser(new(user.Id));

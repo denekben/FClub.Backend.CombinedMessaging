@@ -16,11 +16,13 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
         private readonly IStatisticRepository _statisticRepository;
         private readonly IClientRepository _clientRepository;
         private readonly IBranchRepository _branchRepository;
+        private readonly ITariffRepository _tariffRepository;
 
         public UpdateMembershipHandler(
             IRepository repository, IMembershipRepository membershipRepository,
             IStatisticRepository statisticRepository, IClientRepository clientRepository,
-            IBranchRepository branchRepository, IHttpAccessControlClient accessControlClient)
+            IBranchRepository branchRepository, IHttpAccessControlClient accessControlClient,
+            ITariffRepository tariffRepository)
         {
             _repository = repository;
             _membershipRepository = membershipRepository;
@@ -28,14 +30,22 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
             _clientRepository = clientRepository;
             _branchRepository = branchRepository;
             _accessControlClient = accessControlClient;
+            _tariffRepository = tariffRepository;
         }
 
         public async Task<MembershipDto?> Handle(UpdateMembership command, CancellationToken cancellationToken)
         {
-            var (membershipId, tariffId, expiresDate, clientId, branchId) = command;
+            var (membershipId, tariffId, monthQuantity, clientId, branchId) = command;
 
             var membership = await _membershipRepository.GetAsync(membershipId, MembershipIncludes.Tariff | MembershipIncludes.Client)
                 ?? throw new NotFoundException($"Cannot find membership {membershipId}");
+
+            Tariff? tariff = null;
+            if (membership.Tariff != null)
+            {
+                tariff = await _tariffRepository.GetAsync(tariffId, TariffIncludes.Services)
+                    ?? throw new NotFoundException($"Cannot find tariff {tariffId}");
+            }
 
             var client = await _clientRepository.GetAsync(clientId, ClientIncludes.SocialGroup)
                 ?? throw new NotFoundException($"Cannot find client {clientId}");
@@ -43,12 +53,12 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
             var branch = await _branchRepository.GetAsync(branchId)
                 ?? throw new NotFoundException($"Cannot find branch {branchId}");
 
+            membership.UpdateDetails(tariffId, monthQuantity, clientId, branchId);
             membership.SetCost();
-            membership.UpdateDetails(tariffId, expiresDate, clientId, branchId);
 
             await _statisticRepository.AddAsync(StatisticNote.Create(membership.BranchId, membership.TotalCost));
 
-            await _accessControlClient.CreateMembership(
+            await _accessControlClient.UpdateMembership(
                 new(
                     membership.Id,
                     membership.TariffId,
@@ -59,6 +69,12 @@ namespace Management.Application.UseCases.Memberships.Commands.Handlers
 
             await _repository.SaveChangesAsync();
 
+            if (tariff != null)
+            {
+                var services = tariff.ServiceTariffs.Select(st => st.Service).ToList();
+                if (services.Count != 0)
+                    return membership.AsDto(services);
+            }
             return membership.AsDto();
         }
     }

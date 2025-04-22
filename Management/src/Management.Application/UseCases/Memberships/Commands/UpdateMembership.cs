@@ -6,7 +6,7 @@ namespace Management.Application.UseCases.Memberships.Commands
     public sealed record UpdateMembership(
         Guid MembershipId,
         Guid TariffId,
-        DateTime ExpiresDate,
+        int MonthQuantity,
         Guid ClientId,
         Guid BranchId
     ) : IRequest<MembershipDto?>;

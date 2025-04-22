@@ -23,7 +23,7 @@ namespace Management.Infrastructure.Queries.Handlers.SocialGroups
             var groups = _context.SocialGroups.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(nameSearchPhrase))
-                groups = groups.Where(g => EF.Functions.ILike(g.Name, $"%{nameSearchPhrase}%"));
+                groups = groups.Where(g => EF.Functions.ILike(g.Name, $"%{nameSearchPhrase.Trim()}%"));
 
             groups = sortByCreatedDate switch
             {

@@ -27,11 +27,27 @@ namespace Management.Domain.Entities
             CreatedDate = DateTime.UtcNow;
         }
 
+        private Branch(Guid id, string? name, uint maxOccupancy, Address address)
+        {
+            Id = id;
+            Name = name;
+            MaxOccupancy = maxOccupancy;
+            Address = address;
+            CreatedDate = DateTime.UtcNow;
+        }
+
         public static Branch Create(string? name, uint maxOccupancy, string? country, string? city, string? street, string? houseNumber)
         {
             var address = Address.Create(country, city, street, houseNumber);
 
             return new(name, maxOccupancy, address);
+        }
+
+        public static Branch Create(Guid id, string? name, uint maxOccupancy, string? country, string? city, string? street, string? houseNumber)
+        {
+            var address = Address.Create(country, city, street, houseNumber);
+
+            return new(id, name, maxOccupancy, address);
         }
 
         public void UpdateDetails(string? name, uint maxOccupancy, string? country, string? city, string? street, string? houseNumber)

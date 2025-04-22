@@ -16,9 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FClub.Backend.Common\FClub.Backend.Common.csproj" />
     <ProjectReference Include="..\Management.Domain\Management.Domain.csproj" />
-    <ProjectReference Include="..\Management.Shared\Management.Shared.csproj" />
   </ItemGroup>
 
 </Project>

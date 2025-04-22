@@ -11,10 +11,10 @@ namespace AccessControl.Infrastructure.Queries.Handlers.UserLogs
 {
     public sealed class GetCurrentUserLogsHandler : IRequestHandler<GetCurrentUserLogs, List<UserLogDto>?>
     {
-        private readonly AppDbContext _context;
+        private readonly AppLogDbContext _context;
         private readonly IHttpContextService _contextService;
 
-        public GetCurrentUserLogsHandler(AppDbContext context, IHttpContextService contextService)
+        public GetCurrentUserLogsHandler(AppLogDbContext context, IHttpContextService contextService)
         {
             _context = context;
             _contextService = contextService;
@@ -30,7 +30,7 @@ namespace AccessControl.Infrastructure.Queries.Handlers.UserLogs
             var logs = _context.UserLogs.Where(l => l.AppUserId == userId).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(textSearchPhrase))
-                logs = logs.Where(l => EF.Functions.ILike(l.Text, $"%{textSearchPhrase}%"));
+                logs = logs.Where(l => EF.Functions.ILike(l.Text, $"%{textSearchPhrase.Trim()}%"));
 
             logs = sortByCreatedDate switch
             {

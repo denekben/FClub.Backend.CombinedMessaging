@@ -1,5 +1,4 @@
 ﻿using AccessControl.Domain.Repositories;
-using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Logging;
 using MediatR;
 
@@ -22,9 +21,8 @@ namespace AccessControl.Application.IntegrationUseCases.Branches.Handlers
 
         public async Task Handle(DeleteBranch command, CancellationToken cancellationToken)
         {
-            var services = await _serviceRepository.GetByBranchId(command.Id)
-                ?? throw new NotFoundException($"Cannot find services by branch {command.Id}");
-            await _branchRepository.DeleteAsync(command.Id);
+            Console.WriteLine(command.branchId);
+            await _branchRepository.DeleteAsync(command.branchId);
             await _repository.SaveChangesAsync();
         }
     }

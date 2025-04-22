@@ -7,6 +7,6 @@ namespace Management.Shared.IntegrationUseCases.AccessControl.Tariffs
         string Name,
         bool AllowMultiBranches,
         List<ServiceTariffDto> ServiceTariffs,
-        List<ServiceDto> Services
+        List<ServiceDto> ServiceToAddClient
     );
 }

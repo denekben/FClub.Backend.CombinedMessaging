@@ -7,6 +7,7 @@ namespace Management.Domain.DTOs
         FullNameDto FullName,
         string? Phone,
         string Email,
+        bool IsStaff,
         bool AllowEntry,
         bool AllowNotifications,
         MembershipDto? Membership,

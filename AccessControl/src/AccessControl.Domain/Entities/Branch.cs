@@ -12,6 +12,7 @@ namespace AccessControll.Domain.Entities
         public uint MaxOccupancy { get; set; }
         public uint CurrentClientQuantity { get; set; }
         public Address Address { get; set; }
+        public List<Membership> Memberships { get; set; } = [];
         public List<ServiceBranch> ServiceBranches { get; set; } = [];
         public List<Turnstile> Turnstiles { get; set; } = [];
         public List<StatisticNote> StatisticNotes { get; set; } = [];

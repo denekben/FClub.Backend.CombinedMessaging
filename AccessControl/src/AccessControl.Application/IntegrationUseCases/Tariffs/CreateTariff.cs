@@ -1,5 +1,4 @@
-﻿using AccessControl.Domain.Entities.Pivots;
-using AccessControll.Domain.Entities;
+﻿using AccessControl.Application.IntegrationUseCases.DTOs;
 using MediatR;
 
 namespace AccessControl.Application.IntegrationUseCases.Tariffs
@@ -8,7 +7,7 @@ namespace AccessControl.Application.IntegrationUseCases.Tariffs
         Guid Id,
         string Name,
         bool AllowMultiBranches,
-        List<ServiceTariff> ServiceTariffs,
-        List<Service> Services
+        List<ServiceTariffIntegrationDto> ServiceTariffs,
+        List<ServiceIntegrationDto> Services
     ) : IRequest;
 }

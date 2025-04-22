@@ -2,7 +2,7 @@
 {
     public sealed record CreateMembership(
         Guid Id,
-        Guid TariffId,
+        Guid? TariffId,
         DateTime ExpiresDate,
         Guid ClientId,
         Guid BranchId

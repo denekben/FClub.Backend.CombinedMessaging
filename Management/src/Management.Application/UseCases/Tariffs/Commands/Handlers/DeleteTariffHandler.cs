@@ -23,12 +23,12 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
 
         public async Task Handle(DeleteTariff command, CancellationToken cancellationToken)
         {
-            var tariff = await _tariffRepository.GetAsync(command.Id)
-                ?? throw new NotFoundException($"Cannot find tariff {command.Id}");
+            var tariff = await _tariffRepository.GetAsync(command.tariffId)
+                ?? throw new NotFoundException($"Cannot find tariff {command.tariffId}");
 
             var serviceIds = tariff.ServiceTariffs.Select(sb => sb.ServiceId).ToList();
 
-            await _tariffRepository.DeleteAsync(command.Id);
+            await _tariffRepository.DeleteAsync(command.tariffId);
 
             await _accessControlClient.DeleteTariff(
                 new(tariff.Id)

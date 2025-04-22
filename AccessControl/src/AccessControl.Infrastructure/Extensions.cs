@@ -9,6 +9,7 @@ using FClub.Backend.Common.HttpMessaging;
 using FClub.Backend.Common.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -19,8 +20,13 @@ namespace AccessControl.Infrastructure
     {
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddDbContext<AppLogDbContext>(
+                options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
+                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
+            );
             services.AddDbContext<AppDbContext>(
                 options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
+                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
             );
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
@@ -31,6 +37,7 @@ namespace AccessControl.Infrastructure
                     options.HostName = configuration["NotificationsService:Hostname"];
                     options.ServiceName = configuration["NotificationsService:Name"];
                 });
+
             services.AddScoped<IHttpNotificationsClient, HttpNotificationsClient>();
 
             services.AddSignalR();
@@ -44,7 +51,8 @@ namespace AccessControl.Infrastructure
 
             services.AddCustomTokenService(options =>
             {
-                options.Key = configuration["Jwt:SecretKey"];
+                options.SecretKey = configuration["Jwt:SecretKey"];
+                options.ServiceSecretKey = configuration["Jwt:ServiceSecretKey"];
                 options.Issuer = configuration["Jwt:Issuer"];
                 options.Audience = configuration["Jwt:Audience"];
                 options.AccessTokenLifeTime = configuration["Jwt:AccessTokenLifetime"];
@@ -65,6 +73,10 @@ namespace AccessControl.Infrastructure
             services.AddScoped<ITurnstileRepository, TurnstileRepository>();
             services.AddScoped<IUserLogRepository, UserLogRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IServiceBranchRepository, ServiceBranchRepository>();
+            services.AddScoped<IServiceTariffRepository, ServiceTariffRepository>();
+
+            services.AddTransient<Seed>();
 
             return services;
         }

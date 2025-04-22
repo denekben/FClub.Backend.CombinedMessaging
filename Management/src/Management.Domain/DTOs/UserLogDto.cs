@@ -2,7 +2,7 @@
 {
     public sealed record UserLogDto(
         Guid Id,
-        Guid AppUserId,
+        Guid? AppUserId,
         string ServiceName,
         string Text,
         DateTime CreatedDate,

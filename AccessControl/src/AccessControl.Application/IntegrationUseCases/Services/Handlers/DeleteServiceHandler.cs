@@ -18,7 +18,7 @@ namespace AccessControl.Application.IntegrationUseCases.Services.Handlers
 
         public async Task Handle(DeleteService command, CancellationToken cancellationToken)
         {
-            await _serviceRepository.DeleteAsync(command.Id);
+            await _serviceRepository.DeleteAsync(command.serviceId);
             await _repository.SaveChangesAsync();
         }
     }

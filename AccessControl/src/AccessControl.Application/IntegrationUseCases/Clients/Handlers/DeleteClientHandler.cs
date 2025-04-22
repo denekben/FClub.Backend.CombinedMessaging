@@ -19,7 +19,7 @@ namespace AccessControl.Application.UseCases.Clients.Commands.Handlers
 
         public async Task Handle(DeleteClient command, CancellationToken cancellationToken)
         {
-            await _clientRepository.DeleteAsync(command.Id);
+            await _clientRepository.DeleteAsync(command.clientId);
             await _repository.SaveChangesAsync();
         }
     }

@@ -34,7 +34,7 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
         public async Task Handle(GoThrough command, CancellationToken cancellationToken)
         {
             var (clientId, turnstileId, entryType) = command;
-            var turnstile = await _turnstileRepository.GetAsync(turnstileId, TurnistileIncludes.Branches | TurnistileIncludes.Services)
+            var turnstile = await _turnstileRepository.GetAsync(turnstileId, TurnistileIncludes.Services)
                 ?? throw new NotFoundException($"Cannot find turnstile {turnstileId}");
 
             var client = await _clientRepository.GetAsync(clientId, ClientIncludes.ServiceTariff)
@@ -53,7 +53,7 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
                         throw new BadRequestException($"Membership {client.MembershipId} does not have a tariff");
                     if (!client.Membership.Tariff.AllowMultiBranches && client.Membership.BranchId != turnstile.BranchId)
                         throw new BadRequestException($"Client {client.Id} is not allowed to entry to branch {turnstile.BranchId}");
-                    if (turnstile.ServiceId != null && client.Membership.Tariff.ServiceTariffs.Select(st => st.ServiceId).ToList().Contains((Guid)turnstile.ServiceId))
+                    if (turnstile.ServiceId != null && !client.Membership.Tariff.ServiceTariffs.Select(st => st.ServiceId).ToList().Contains((Guid)turnstile.ServiceId))
                         throw new BadRequestException($"Client {client.Id} is not allowed to entry service {turnstile.ServiceId}");
                     if (client.Membership.ExpiresDate < DateTime.UtcNow)
                         throw new BadRequestException($"Client's {client.Id} membership expired");
@@ -68,8 +68,11 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
             }
             else
             {
-                await _notifications.ClientExited(turnstile.BranchId);
-                turnstile.Branch.Exit();
+                if (!client.IsStaff)
+                {
+                    await _notifications.ClientExited(turnstile.BranchId);
+                    turnstile.Branch.Exit();
+                }
             }
 
             await _entryLogRepository.AddAsync(
@@ -77,15 +80,18 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
                     clientId,
                     turnstileId,
                     client.FullName.ToString(),
-                    turnstile.Branch.Name ?? string.Empty,
-                    turnstile.Service.Name,
+                    turnstile.Branch.Name,
+                    turnstile.Branch.ServiceBranches.Select(st => st.Service).FirstOrDefault(s => s.Id == turnstile.ServiceId)?.Name,
                     entryType
             ));
 
-            if (entryType == EntryType.Enter)
-                await _notificationsClient.GoThrough(
-                    new(clientId)
-                );
+            if (!client.IsStaff)
+            {
+                if (entryType == EntryType.Enter)
+                    await _notificationsClient.GoThrough(
+                        new(clientId)
+                    );
+            }
 
             await _repository.SaveChangesAsync();
         }

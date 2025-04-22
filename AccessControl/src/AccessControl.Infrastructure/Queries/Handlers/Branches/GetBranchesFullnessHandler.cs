@@ -24,7 +24,7 @@ namespace AccessControl.Infrastructure.Queries.Handlers.Branches
             var fullness = _context.Branches.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(nameSearchPhrase))
-                fullness = fullness.Where(b => EF.Functions.ILike(b.Name ?? string.Empty, $"%{nameSearchPhrase}%"));
+                fullness = fullness.Where(b => EF.Functions.ILike(b.Name ?? string.Empty, $"%{nameSearchPhrase.Trim()}%"));
 
             IOrderedQueryable<Branch>? orderedfullness = null;
             orderedfullness = sortByCreatedDate switch

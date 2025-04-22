@@ -1,4 +1,4 @@
 ﻿namespace Management.Shared.IntegrationUseCases.Notifications.Clients
 {
-    public sealed record DeleteClient(Guid Id);
+    public sealed record DeleteClient(Guid clientId);
 }

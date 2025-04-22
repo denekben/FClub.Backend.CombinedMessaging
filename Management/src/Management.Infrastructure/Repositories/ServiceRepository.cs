@@ -32,5 +32,10 @@ namespace Management.Infrastructure.Repositories
         {
             return await _context.Services.FirstOrDefaultAsync(s => s.Name == name);
         }
+
+        public async Task<Domain.Entities.Service?> GetByNameNoTrackingAsync(string name)
+        {
+            return await _context.Services.AsNoTracking().FirstOrDefaultAsync(s => s.Name == name);
+        }
     }
 }

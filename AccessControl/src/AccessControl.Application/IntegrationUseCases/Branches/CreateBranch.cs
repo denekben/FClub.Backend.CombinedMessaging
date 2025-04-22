@@ -1,5 +1,4 @@
-﻿using AccessControl.Domain.Entities.Pivots;
-using AccessControll.Domain.Entities;
+﻿using AccessControl.Application.IntegrationUseCases.DTOs;
 using MediatR;
 
 namespace AccessControl.Application.IntegrationUseCases.Branches
@@ -12,7 +11,7 @@ namespace AccessControl.Application.IntegrationUseCases.Branches
         string? City,
         string? Street,
         string? HouseNumber,
-        List<ServiceBranch> ServiceBranches,
-        List<Service> Services
+        List<ServiceBranchIntegrationDto> ServiceBranches,
+        List<ServiceIntegrationDto> Services
     ) : IRequest;
 }

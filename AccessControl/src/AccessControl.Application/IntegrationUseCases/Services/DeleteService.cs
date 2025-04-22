@@ -2,5 +2,5 @@
 
 namespace AccessControl.Application.IntegrationUseCases.Services
 {
-    public sealed record DeleteService(Guid Id) : IRequest;
+    public sealed record DeleteService(Guid serviceId) : IRequest;
 }

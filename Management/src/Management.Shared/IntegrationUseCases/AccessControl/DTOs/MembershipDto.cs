@@ -2,7 +2,7 @@
 {
     public sealed record MembershipDto(
         Guid Id,
-        Guid TariffId,
+        Guid? TariffId,
         DateTime ExpiresDate,
         Guid ClientId,
         Guid BranchId

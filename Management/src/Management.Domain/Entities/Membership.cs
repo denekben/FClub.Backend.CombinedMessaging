@@ -18,17 +18,21 @@ namespace Management.Domain.Entities
         public DateTime CreatedDate { get; init; }
         public DateTime? UpdatedDate { get; set; }
 
-        private Membership(Guid tariffId, DateTime expiresDate, Guid clientId, Guid branchId)
+        private Membership(Guid tariffId, int monthQuantity, Guid clientId, Guid branchId)
         {
             Id = Guid.NewGuid();
             TariffId = tariffId;
-            ExpiresDate = expiresDate;
+            MonthQuantity = monthQuantity;
+            var now = DateTime.UtcNow;
+            var year = (int)Math.Floor((now.Month + monthQuantity) / 12.0);
+            var month = (now.Month + monthQuantity) % 12;
+            ExpiresDate = new DateTime(now.Year + year, now.Month + month, now.Day);
             ClientId = clientId;
             BranchId = branchId;
             CreatedDate = DateTime.UtcNow;
         }
 
-        public static Membership Create(Guid tariffId, DateTime expiresDate, Guid clientId, Guid branchId)
+        public static Membership Create(Guid tariffId, int monthQuantity, Guid clientId, Guid branchId)
         {
             if (tariffId == Guid.Empty)
                 throw new DomainException($"Invalid value for Membership[tariffId]. Entered value {tariffId}");
@@ -36,13 +40,13 @@ namespace Management.Domain.Entities
                 throw new DomainException($"Invalid value for Membership[clientId]. Entered value {clientId}");
             if (branchId == Guid.Empty)
                 throw new DomainException($"Invalid value for Membership[branchId]. Entered value {branchId}");
-            if (expiresDate <= DateTime.UtcNow)
-                throw new DomainException($"Invalid value for Membership[expiresDate]. Entered value {expiresDate}");
+            if (monthQuantity <= 0)
+                throw new DomainException($"Invalid value for Membership[monthQuantity]. Entered value {monthQuantity}");
 
-            return new(tariffId, expiresDate, clientId, branchId);
+            return new(tariffId, monthQuantity, clientId, branchId);
         }
 
-        public void UpdateDetails(Guid tariffId, DateTime expiresDate, Guid clientId, Guid branchId)
+        public void UpdateDetails(Guid tariffId, int monthQuantity, Guid clientId, Guid branchId)
         {
             if (tariffId == Guid.Empty)
                 throw new DomainException($"Invalid value for Membership[tariffId]. Entered value {tariffId}");
@@ -50,11 +54,12 @@ namespace Management.Domain.Entities
                 throw new DomainException($"Invalid value for Membership[clientId]. Entered value {clientId}");
             if (branchId == Guid.Empty)
                 throw new DomainException($"Invalid value for Membership[branchId]. Entered value {branchId}");
-            if (expiresDate <= DateTime.UtcNow)
-                throw new DomainException($"Invalid value for Membership[expiresDate]. Entered value {expiresDate}");
+            if (monthQuantity <= 0)
+                throw new DomainException($"Invalid value for Membership[monthQuantity]. Entered value {monthQuantity}");
 
             TariffId = tariffId;
-            ExpiresDate = expiresDate;
+            ExpiresDate = ExpiresDate.AddMonths(monthQuantity - MonthQuantity);
+            MonthQuantity = monthQuantity;
             ClientId = clientId;
             BranchId = branchId;
         }
@@ -70,7 +75,7 @@ namespace Management.Domain.Entities
             if (valueForNMonths == default)
                 throw new DomainException($"Cannot find tariff price for {MonthQuantity} months");
 
-            var discountForSocialGroup = Tariff.DiscountForSocialGroup?.FirstOrDefault(x => x.Key == ClientId).Value;
+            var discountForSocialGroup = Tariff.DiscountForSocialGroup?.FirstOrDefault(x => x.Key == Client.SocialGroupId).Value;
             discountForSocialGroup = discountForSocialGroup ?? 0;
 
             TotalCost = Math.Ceiling((double)valueForNMonths * (1 - (double)discountForSocialGroup / 100));

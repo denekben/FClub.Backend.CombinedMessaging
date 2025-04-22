@@ -11,7 +11,7 @@ namespace AccessControl.Domain.Entities
         public Guid TurnstileId { get; set; }
         public Turnstile Turnstile { get; set; }
         public string ClientFullName { get; set; }
-        public string BranchName { get; set; }
+        public string? BranchName { get; set; }
         public string? ServiceName { get; set; }
         public EntryType EntryType { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -19,7 +19,7 @@ namespace AccessControl.Domain.Entities
 
         private EntryLog() { }
 
-        private EntryLog(Guid clientId, Guid turnstileId, string clientFullName, string branchName, string serviceName, EntryType entryType)
+        private EntryLog(Guid clientId, Guid turnstileId, string clientFullName, string? branchName, string? serviceName, EntryType entryType)
         {
             Id = Guid.NewGuid();
             ClientId = clientId;
@@ -31,7 +31,7 @@ namespace AccessControl.Domain.Entities
             CreatedDate = DateTime.UtcNow;
         }
 
-        public static EntryLog Create(Guid clientId, Guid turnstileId, string clientFullName, string branchName, string serviceName, EntryType entryType)
+        public static EntryLog Create(Guid clientId, Guid turnstileId, string clientFullName, string? branchName, string? serviceName, EntryType entryType)
         {
             if (turnstileId == Guid.Empty)
                 throw new DomainException($"Invalid argument for EntryLog[turnstileId]. Entered value: {turnstileId}");

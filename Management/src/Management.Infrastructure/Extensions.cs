@@ -8,6 +8,7 @@ using Management.Infrastructure.Repositories;
 using Management.Infrastructure.Service;
 using Management.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -18,8 +19,13 @@ namespace Management.Infrastructure
     {
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddDbContext<AppLogDbContext>(
+                options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
+                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
+            );
             services.AddDbContext<AppDbContext>(
                 options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
+                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
             );
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
@@ -49,7 +55,8 @@ namespace Management.Infrastructure
 
             services.AddCustomTokenService(options =>
             {
-                options.Key = configuration["Jwt:SecretKey"];
+                options.SecretKey = configuration["Jwt:SecretKey"];
+                options.ServiceSecretKey = configuration["Jwt:ServiceSecretKey"];
                 options.Issuer = configuration["Jwt:Issuer"];
                 options.Audience = configuration["Jwt:Audience"];
                 options.AccessTokenLifeTime = configuration["Jwt:AccessTokenLifetime"];
@@ -72,6 +79,10 @@ namespace Management.Infrastructure
             services.AddScoped<ITariffRepository, TariffRepository>();
             services.AddScoped<IUserLogRepository, UserLogRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IServiceBranchRepository, ServiceBranchRepository>();
+            services.AddScoped<IServiceTariffRepository, ServiceTariffRepository>();
+
+            services.AddTransient<Seed>();
 
             return services;
         }

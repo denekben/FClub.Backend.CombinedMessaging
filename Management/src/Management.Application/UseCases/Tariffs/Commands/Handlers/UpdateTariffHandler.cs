@@ -16,54 +16,45 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
         private readonly IHttpAccessControlClient _accessControlClient;
         private readonly IServiceRepository _serviceRepository;
         private readonly ITariffRepository _tariffRepository;
+        private readonly IServiceTariffRepository _serviceTariffRepository;
         private readonly IRepository _repository;
 
         public UpdateTariffHandler(ITariffRepository tariffRepository, IRepository repository,
-            IHttpAccessControlClient accessControlClient, IServiceRepository serviceRepository)
+            IHttpAccessControlClient accessControlClient, IServiceRepository serviceRepository,
+            IServiceTariffRepository serviceTariffRepository)
         {
             _tariffRepository = tariffRepository;
             _repository = repository;
             _accessControlClient = accessControlClient;
             _serviceRepository = serviceRepository;
+            _serviceTariffRepository = serviceTariffRepository;
         }
 
         public async Task<TariffDto?> Handle(UpdateTariff command, CancellationToken cancellationToken)
         {
+            var serviceToAddClient = new List<AccessControlServiceDto>();
+            var services = new List<Service>();
             var (id, name, priceForNMonths, discountForSocialGroup, allowMultiBranches, serviceNames) = command;
 
-            var tariff = await _tariffRepository.GetAsync(id, TariffIncludes.Services)
-                ?? throw new NotFoundException($"Cannot find tariff {command.Id}");
+            var tariff = await _tariffRepository.GetAsync(id)
+                ?? throw new NotFoundException($"Cannot find tariff {id}");
 
             tariff.UpdateDetails(name, priceForNMonths, discountForSocialGroup, allowMultiBranches);
 
-            var serviceNamesToDelete = tariff.ServiceTariffs.Select(sb => sb.Service.Name).Except(serviceNames).ToList();
-            var serviceNamesToAdd = serviceNames.Except(tariff.ServiceTariffs.Select(sb => sb.Service.Name)).ToList();
+            await _serviceTariffRepository.DeleteByTariffId(id);
 
-            var services = tariff.ServiceTariffs.Select(st => st.Service).ToList() ?? [];
-            foreach (var serviceName in serviceNamesToAdd)
+            foreach (var serviceName in serviceNames)
             {
-                var service = await _serviceRepository.GetByNameAsync(serviceName);
+                var service = await _serviceRepository.GetByNameNoTrackingAsync(serviceName);
                 if (service == null)
                 {
                     service = Service.Create(serviceName);
+                    serviceToAddClient.Add(new Shared.IntegrationUseCases.AccessControl.DTOs.ServiceDto(service.Id, serviceName));
                     await _serviceRepository.AddAsync(service);
                 }
-                services.Add(service);
-                tariff.ServiceTariffs.Add(ServiceTariff.Create(service.Id, tariff.Id));
-            }
 
-            foreach (var serviceName in serviceNamesToDelete)
-            {
-                var service = await _serviceRepository.GetByNameAsync(serviceName);
-                if (service != null)
-                {
-                    var serviceTariffToRemove = tariff.ServiceTariffs.FirstOrDefault(sb => sb.ServiceId == service.Id);
-                    if (serviceTariffToRemove != null)
-                    {
-                        services.Remove(service);
-                        tariff.ServiceTariffs.Remove(serviceTariffToRemove);
-                    }
-                }
+                await _serviceTariffRepository.AddAsync(ServiceTariff.Create(service.Id, id));
+                services.Add(service);
             }
 
             await _accessControlClient.UpdateTariff(
@@ -72,8 +63,8 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
                     tariff.Name,
                     tariff.AllowMultiBranches,
                     tariff.ServiceTariffs.Select(st => new AccessControlServiceTariffDto(st.Id, st.ServiceId, st.TariffId)).ToList(),
-                    services.Select(s => new AccessControlServiceDto(s.Id, s.Name)).ToList())
-            );
+                    serviceToAddClient
+            ));
 
             await _repository.SaveChangesAsync();
 

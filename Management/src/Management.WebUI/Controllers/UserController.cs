@@ -30,7 +30,7 @@ namespace Management.WebUI.Controllers
 
         [HttpGet]
         [Route("access-token")]
-        public async Task<ActionResult<string?>> RefreshExpiredToken([FromQuery] RefreshExpiredToken command)
+        public async Task<ActionResult<string?>> RefreshExpiredToken([FromBody] RefreshExpiredToken command)
         {
             var result = await _sender.Send(command);
             if (result == null)
@@ -105,7 +105,7 @@ namespace Management.WebUI.Controllers
         [HttpGet]
         [Route("logs")]
         [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
-        public async Task<ActionResult<List<UserLogDto>?>> GetCurrentUserLogs([FromQuery] GetLogs query)
+        public async Task<ActionResult<List<UserLogDto>?>> GetUserLogs([FromQuery] GetLogs query)
         {
             var result = await _sender.Send(query);
             if (result == null)

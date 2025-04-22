@@ -1,4 +1,4 @@
-﻿using AccessControl.Domain.Entities;
+﻿using AccessControl.Application.IntegrationUseCases.DTOs;
 using MediatR;
 
 namespace AccessControl.Application.IntegrationUseCases.Clients
@@ -11,6 +11,6 @@ namespace AccessControl.Application.IntegrationUseCases.Clients
         string? Phone,
         string Email,
         bool AllowEntry,
-        Membership? Membership
+        MembershipDto? Membership
     ) : IRequest;
 }

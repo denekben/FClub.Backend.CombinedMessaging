@@ -7,14 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FClub.Backend.Common" Version="1.2.2" />
     <PackageReference Include="MediatR" Version="12.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FClub.Backend.Common\FClub.Backend.Common.csproj" />
     <ProjectReference Include="..\AccessControl.Domain\AccessControl.Domain.csproj" />
-    <ProjectReference Include="..\AccessControl.Domain\AccessControl.Domain.csproj" />
-    <ProjectReference Include="..\AccessControl.Shared\AccessControl.Shared.csproj" />
   </ItemGroup>
 
 </Project>

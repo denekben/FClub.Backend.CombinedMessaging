@@ -12,52 +12,37 @@ namespace AccessControl.Application.IntegrationUseCases.Tariffs.Handler
     {
         private readonly IServiceRepository _serviceRepository;
         private readonly ITariffRepository _tariffRepository;
+        private readonly IServiceTariffRepository _serviceTariffRepository;
         private readonly IRepository _repository;
 
         public UpdateTariffHandler(ITariffRepository tariffRepository, IRepository repository,
-            IServiceRepository serviceRepository)
+            IServiceRepository serviceRepository, IServiceTariffRepository serviceTariffRepository)
         {
             _tariffRepository = tariffRepository;
             _repository = repository;
             _serviceRepository = serviceRepository;
+            _serviceTariffRepository = serviceTariffRepository;
         }
 
         public async Task Handle(UpdateTariff command, CancellationToken cancellationToken)
         {
             var (id, name, allowMultiBranches, serviceTariffs, services) = command;
 
-            var tariff = await _tariffRepository.GetAsync(id, TariffIncludes.ServicesTariffs)
+            var tariff = await _tariffRepository.GetAsync(id)
                 ?? throw new NotFoundException($"Cannot find branch {id}");
 
             tariff.UpdateDetails(name, allowMultiBranches);
 
-            var existingServiceIds = tariff.ServiceTariffs.Select(sb => sb.ServiceId).ToList();
-            var newServiceIds = serviceTariffs.Select(sb => sb.ServiceId).ToList();
+            await _serviceTariffRepository.DeleteByTariffId(id);
 
-            var serviceTariffsToRemove = tariff.ServiceTariffs
-                .Where(sb => !newServiceIds.Contains(sb.ServiceId))
-                .ToList();
-
-            var serviceTariffsToAdd = serviceTariffs
-                .Where(sb => !existingServiceIds.Contains(sb.ServiceId))
-                .ToList();
-
-            foreach (var stDto in serviceTariffsToAdd)
+            foreach (var service in services)
             {
-                var service = await _serviceRepository.GetAsync(stDto.ServiceId);
-                if (service == null)
-                {
-                    var serviceDto = services.First(s => s.Id == stDto.ServiceId);
-                    service = Service.Create(serviceDto.Id, serviceDto.Name);
-                    await _serviceRepository.AddAsync(service);
-                }
-
-                tariff.ServiceTariffs.Add(ServiceTariff.Create(stDto.Id, stDto.ServiceId, stDto.TariffId));
+                await _serviceRepository.AddAsync(Service.Create(service.Id, service.Name));
             }
 
-            foreach (var sb in serviceTariffsToRemove)
+            foreach (var serviceTariff in serviceTariffs)
             {
-                tariff.ServiceTariffs.Remove(sb);
+                await _serviceTariffRepository.AddAsync(ServiceTariff.Create(serviceTariff.Id, serviceTariff.ServiceId, serviceTariff.TariffId));
             }
 
             await _repository.SaveChangesAsync();

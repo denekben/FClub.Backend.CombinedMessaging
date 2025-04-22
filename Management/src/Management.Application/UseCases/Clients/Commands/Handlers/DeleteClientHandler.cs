@@ -37,19 +37,19 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
 
             var currentUser = await _userRepository.GetAsync(userId, UserIncludes.Role)
                 ?? throw new BadRequestException("Invalid authorization header");
-            var deletingUser = await _userRepository.GetAsync(command.Id, UserIncludes.Role);
+            var deletingUser = await _userRepository.GetAsync(command.clientId, UserIncludes.Role);
 
             if (currentUser.Role.Name != Role.Admin.Name && deletingUser?.Role.Name == Role.Admin.Name)
                 throw new BadRequestException("Only admin can delete admin client");
 
-            await _clientRepository.DeleteAsync(command.Id);
+            await _clientRepository.DeleteAsync(command.clientId);
 
             await _accessControlClient.DeleteClient(
-                new(command.Id)
+                new(command.clientId)
             );
 
             await _notificationsClient.DeleteClient(
-                new(command.Id)
+                new(command.clientId)
             );
 
             await _repository.SaveChangesAsync();

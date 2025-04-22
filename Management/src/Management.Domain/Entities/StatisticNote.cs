@@ -9,32 +9,31 @@ namespace Management.Domain.Entities
         public Guid BranchId { get; set; }
         public Branch Branch { get; set; }
         public double MembershipCost { get; set; }
-        public uint MembershipQuantity { get; set; }
+        public int MembershipQuantity { get; set; }
 
         private StatisticNote() { }
 
-        private StatisticNote(double membershipCost, uint membershipQuantity)
+        private StatisticNote(Guid branchId, double membershipCost, int membershipQuantity)
         {
             Id = Guid.NewGuid();
-            var today = DateTime.Today;
-            CreatedDate = new DateTime(today.Year, today.Month, today.Day, today.Hour, 0, 0);
+            BranchId = branchId;
+            var now = DateTime.Now;
+            CreatedDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0);
             MembershipCost = membershipCost;
             MembershipQuantity = membershipQuantity;
         }
 
-        public static StatisticNote Create(Guid branchId, double membershipCost, OperationType type = OperationType.Insertion, uint membershipQuantity = 1)
+        public static StatisticNote Create(Guid branchId, double membershipCost, OperationType type = OperationType.Insertion, int membershipQuantity = 1)
         {
             if (branchId == Guid.Empty)
                 throw new DomainException($"Invalid argument for StatisticNote[branchId]. Entered value: {branchId}");
             if (membershipCost < 0 && type == OperationType.Insertion)
                 throw new DomainException($"Invalid argument for StatisticNote[membershipCost]. Entered value: {membershipCost}");
-            if (membershipQuantity < 1)
-                throw new DomainException($"Invalid argument for StatisticNote[membershipQuantity]. Entered value: {membershipQuantity}");
 
-            return new(membershipCost, membershipQuantity);
+            return new(branchId, membershipCost, membershipQuantity);
         }
 
-        public void UpdateDetails(Guid branchId, double membershipCost, OperationType type = OperationType.Insertion, uint membershipQuantity = 1)
+        public void UpdateDetails(Guid branchId, double membershipCost, OperationType type = OperationType.Insertion, int membershipQuantity = 1)
         {
             if (branchId == Guid.Empty)
                 throw new DomainException($"Invalid argument for StatisticNote[branchId]. Entered value: {branchId}");

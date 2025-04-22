@@ -28,6 +28,16 @@ namespace Management.Domain.Entities
             AllowMultiBranches = allowMultiBranches;
         }
 
+        private Tariff(Guid id, string name, Dictionary<int, int> priceForNMonths, Dictionary<Guid, int>? discountForSocialGroup, bool allowMultiBranches)
+        {
+            Id = id;
+            Name = name;
+            PriceForNMonths = priceForNMonths;
+            DiscountForSocialGroup = discountForSocialGroup;
+            CreatedDate = DateTime.UtcNow;
+            AllowMultiBranches = allowMultiBranches;
+        }
+
         public static Tariff Create(string name, Dictionary<int, int> priceForNMonths, Dictionary<Guid, int>? discountForSocialGroup, bool allowMultiBranches)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -38,6 +48,18 @@ namespace Management.Domain.Entities
                 throw new DomainException($"Invalid argument for Tariff[discountForSocialGroup]. Entered value: {discountForSocialGroup}");
 
             return new(name, priceForNMonths, discountForSocialGroup, allowMultiBranches);
+        }
+
+        public static Tariff Create(Guid id, string name, Dictionary<int, int> priceForNMonths, Dictionary<Guid, int>? discountForSocialGroup, bool allowMultiBranches)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new DomainException($"Invalid argument for Tariff[name]. Entered value: {name}");
+            if (priceForNMonths == null || !priceForNMonths.Any() || priceForNMonths.Any(x => x.Key < 0 || x.Value < 0))
+                throw new DomainException($"Invalid argument for Tariff[priceForNMonths]. Entered value: {priceForNMonths}");
+            if (discountForSocialGroup?.Any(x => x.Key == default || x.Value < 0) == true)
+                throw new DomainException($"Invalid argument for Tariff[discountForSocialGroup]. Entered value: {discountForSocialGroup}");
+
+            return new(id, name, priceForNMonths, discountForSocialGroup, allowMultiBranches);
         }
 
         public void UpdateDetails(string name, Dictionary<int, int> priceForNMonths, Dictionary<Guid, int>? discountForSocialGroup, bool allowMultiBranches)

@@ -18,15 +18,18 @@ namespace AccessControl.Application.UseCases.UserLogs
         private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
         private readonly IHttpContextService _contextService;
         private readonly IUserLogRepository _userLogRepository;
+        private readonly IRepository _repository;
 
         public LoggingBehavior(
             ILogger<LoggingBehavior<TRequest, TResponse>> logger,
             IHttpContextService currentUserService,
-            IUserLogRepository userLogRepository)
+            IUserLogRepository userLogRepository,
+            IRepository repository)
         {
             _logger = logger;
             _contextService = currentUserService;
             _userLogRepository = userLogRepository;
+            _repository = repository;
         }
 
         public async Task<TResponse> Handle(
@@ -55,12 +58,18 @@ namespace AccessControl.Application.UseCases.UserLogs
 
 
             var requestName = typeof(TRequest).Name;
-            var userId = _contextService.GetCurrentUserId() ?? Guid.Empty;
+            Guid? userId = null;
+            try
+            {
+                userId = _contextService.GetCurrentUserId();
+            }
+            catch (Exception)
+            {
+            }
 
             var logText = $"[MediatR] Handling {requestName}. Request data: {JsonSerializer.Serialize(request)}.";
             _logger.LogInformation(logText);
             await _userLogRepository.AddAsync(UserLog.Create(userId, logText));
-
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -73,6 +82,7 @@ namespace AccessControl.Application.UseCases.UserLogs
                 logText = $"[MediatR] Handled {requestName} in {stopwatch.ElapsedMilliseconds}ms.";
                 _logger.LogInformation(logText);
                 await _userLogRepository.AddAsync(UserLog.Create(userId, logText));
+                await _repository.SaveLogsAsync();
 
                 return response;
             }
@@ -83,6 +93,7 @@ namespace AccessControl.Application.UseCases.UserLogs
                 logText = $"[MediatR] Error handling {requestName} after {stopwatch.ElapsedMilliseconds}ms. Error message: {ex.Message}.";
                 _logger.LogError(logText);
                 await _userLogRepository.AddAsync(UserLog.Create(userId, logText));
+                await _repository.SaveLogsAsync();
 
                 throw;
             }

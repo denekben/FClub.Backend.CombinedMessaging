@@ -21,7 +21,7 @@ namespace AccessControl.Infrastructure.Services
 
         public async Task GoThrough(GoThrough command)
         {
-            await _httpClient.SendResponse($"{_basePath}/go-through", command, RequestType.Put, _token);
+            await _httpClient.SendResponse($"{_basePath}/turnstiles/go-through", command, RequestType.Put, _token);
         }
     }
 }

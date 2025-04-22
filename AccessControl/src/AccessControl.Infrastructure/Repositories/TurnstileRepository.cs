@@ -28,10 +28,13 @@ namespace AccessControl.Infrastructure.Repositories
         {
             var query = _context.Turnstiles.Where(t => t.Id == id);
 
-            if (includes.HasFlag(TurnistileIncludes.Branches))
-                query = query.Include(t => t.Branch);
             if (includes.HasFlag(TurnistileIncludes.Services))
-                query = query.Include(t => t.Service);
+            {
+                query = query
+                    .Include(t => t.Branch)
+                    .ThenInclude(b => b.ServiceBranches)
+                    .ThenInclude(sb => sb.Service);
+            }
 
             return await query.FirstOrDefaultAsync();
         }

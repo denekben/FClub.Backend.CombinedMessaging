@@ -7,7 +7,6 @@ using Management.Domain.Entities.Pivots;
 using Management.Domain.Repositories;
 using MediatR;
 using AccessControlServiceBranchDto = Management.Shared.IntegrationUseCases.AccessControl.DTOs.ServiceBranchDto;
-using AccessControlServiceDto = Management.Shared.IntegrationUseCases.AccessControl.DTOs.ServiceDto;
 
 namespace Management.Application.UseCases.Branches.Commands.Handlers
 {
@@ -16,55 +15,46 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
         private readonly IHttpAccessControlClient _accessControlClient;
         private readonly IBranchRepository _branchRepository;
         private readonly IServiceRepository _serviceRepository;
+        private readonly IServiceBranchRepository _serviceBranchRepository;
         private readonly IRepository _repository;
 
         public UpdateBranchHandler(
             IBranchRepository branchRepository, IServiceRepository serviceRepository, IRepository repository,
-            IHttpAccessControlClient accessControlClient)
+            IHttpAccessControlClient accessControlClient, IServiceBranchRepository serviceBranchRepository)
         {
             _branchRepository = branchRepository;
             _serviceRepository = serviceRepository;
             _repository = repository;
             _accessControlClient = accessControlClient;
+            _serviceBranchRepository = serviceBranchRepository;
         }
 
         public async Task<BranchDto?> Handle(UpdateBranch command, CancellationToken cancellationToken)
         {
+            var serviceToAddClient = new List<Shared.IntegrationUseCases.AccessControl.DTOs.ServiceDto>();
+            var services = new List<Service>();
             var (branchId, name, maxOccupancy, country, city, street, houseNumber, serviceNames) = command;
 
-            var branch = await _branchRepository.GetAsync(branchId, BranchIncludes.Services)
-                ?? throw new NotFoundException($"Cannot find {branchId}");
+            var branch = await _branchRepository.GetAsync(branchId)
+                ?? throw new NotFoundException($"Cannot find branch {branchId}");
 
             branch.UpdateDetails(name, maxOccupancy, country, city, street, houseNumber);
 
-            var serviceNamesToDelete = branch.ServiceBranches.Select(sb => sb.Service.Name).Except(serviceNames).ToList();
-            var serviceNamesToAdd = serviceNames.Except(branch.ServiceBranches.Select(sb => sb.Service.Name)).ToList();
+            await _serviceBranchRepository.DeleteByBranchId(branchId);
 
-            foreach (var serviceName in serviceNamesToAdd)
+            foreach (var serviceName in serviceNames)
             {
-                var service = await _serviceRepository.GetByNameAsync(serviceName);
+                var service = await _serviceRepository.GetByNameNoTrackingAsync(serviceName);
                 if (service == null)
                 {
                     service = Service.Create(serviceName);
+                    serviceToAddClient.Add(new Shared.IntegrationUseCases.AccessControl.DTOs.ServiceDto(service.Id, serviceName));
                     await _serviceRepository.AddAsync(service);
                 }
-                branch.ServiceBranches.Add(ServiceBranch.Create(service.Id, branch.Id));
+                await _serviceBranchRepository.AddAsync(ServiceBranch.Create(service.Id, branchId));
+                services.Add(service);
             }
 
-            foreach (var serviceName in serviceNamesToDelete)
-            {
-                var service = await _serviceRepository.GetByNameAsync(serviceName);
-                if (service != null)
-                {
-                    var serviceBranchToRemove = branch.ServiceBranches.FirstOrDefault(sb => sb.ServiceId == service.Id);
-                    if (serviceBranchToRemove != null)
-                    {
-                        branch.ServiceBranches.Remove(serviceBranchToRemove);
-                    }
-                }
-            }
-
-            var services = branch.ServiceBranches.Select(sb => sb.Service);
             await _accessControlClient.UpdateBranch(
                 new(
                     branch.Id,
@@ -75,12 +65,12 @@ namespace Management.Application.UseCases.Branches.Commands.Handlers
                     branch.Address.Street,
                     branch.Address.HouseNumber,
                     branch.ServiceBranches.Select(sb => new AccessControlServiceBranchDto(sb.Id, sb.ServiceId, sb.BranchId)).ToList(),
-                    services.Select(s => new AccessControlServiceDto(s.Id, s.Name)).ToList())
-            );
+                    serviceToAddClient
+            ));
 
             await _repository.SaveChangesAsync();
 
-            return branch.AsDto(services.ToList());
+            return branch.AsDto(services);
         }
     }
 }

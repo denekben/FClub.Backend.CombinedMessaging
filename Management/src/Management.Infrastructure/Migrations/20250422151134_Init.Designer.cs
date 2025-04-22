@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Management.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250414141444_Init2")]
-    partial class Init2
+    [Migration("20250422151134_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,60 @@ namespace Management.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AppUsers", "FClub.Management");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"),
+                            AllowEntry = true,
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 32, 874, DateTimeKind.Utc).AddTicks(4645),
+                            Email = "iolovich@yandex.ru",
+                            IsBlocked = false,
+                            PasswordHash = "9A7A299E858598882D202C4CED142139D288F090B8432E0AB0D3A9794266F5D3D0762B2FB8B303A6CE8B3502AA98317E1A3CCD8031E00AB1794F48A63A5C14DB:6E5A14685412CD0C2B457F3A58FE45497D8055F553B9609121C180FAB11E0741EE63DDF17C6B1B581B351DDEB72C75B4CAB9C088C4068354ADAA7F9EAF4D00C9",
+                            Phone = "+78005553535",
+                            RefreshToken = "NWWL7PE1LpuX7vBa7+AeCfrRdlZgFRcDANzdBMYKL4QkjiP2pMD/KluxydHMTgqubYh8WU7HRD6jUOiWb9FI5g==",
+                            RefreshTokenExpires = new DateTime(2026, 4, 17, 15, 11, 32, 872, DateTimeKind.Utc).AddTicks(7665),
+                            RoleId = new Guid("ef1cc695-887f-4251-95c4-8442350c446a")
+                        },
+                        new
+                        {
+                            Id = new Guid("a8085988-e681-4f9d-85f8-e99e2fa4aeec"),
+                            AllowEntry = true,
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 33, 99, DateTimeKind.Utc).AddTicks(211),
+                            Email = "denekben@yandex.ru",
+                            IsBlocked = false,
+                            PasswordHash = "42981065BCC7892EE956E4440693C6A858E9C4CB257FDDBA5CD16A8BD29D0D7A288927373570F14E1F81691D04D43742F4A7FB29491BB9B18C62F892B61D720A:C8631BB40F75902A1EBF194D5C725FA1ED432D9699BC98E494CCC6B3E824FB8A596C2AD7A6AF55907BB8E3CAA77495DAC9A50231AA3B9FBDB9B1B6F37BE0CDDA",
+                            Phone = "+79991001010",
+                            RefreshToken = "E5FboOV+s0ux0Fi0BNSxVBe2VdSLdjDbBhybC/RW8r9JPl8a5ti+2Q+QOeB46lhctzZPZ7tzZ7XGO2bSv2P/vg==",
+                            RefreshTokenExpires = new DateTime(2026, 4, 17, 15, 11, 33, 98, DateTimeKind.Utc).AddTicks(9906),
+                            RoleId = new Guid("ef1cc695-887f-4251-95c4-8442350c446a")
+                        },
+                        new
+                        {
+                            Id = new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"),
+                            AllowEntry = true,
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 33, 326, DateTimeKind.Utc).AddTicks(889),
+                            Email = "ivanov@yandex.ru",
+                            IsBlocked = false,
+                            PasswordHash = "EF95E620BE376B8BD9D44BE4A70B7D4B2FEDF46D02C7C04FA618AC99F6AD2EFF019B95F76B2D200567498A1F134672D487947BD57E4915764B55ED702867BB48:C8E3A5BCFD4A2F8C4B6B72E8DEDFDB0B8E8E5158E5118135D439439885D752841A3B1A05005F4A3722EAB67646405C02CC171C68D499617D2051F9830DEA4EC7",
+                            Phone = "+78005553535",
+                            RefreshToken = "a+yoWXt/xd/wOoM9uyXMBCmYsShd4i9lfq7HYzuESbBOVdSGV9Dq3ci8oT83o5Y6txvRk6Wg6YPN2hK5xJliGw==",
+                            RefreshTokenExpires = new DateTime(2026, 4, 17, 15, 11, 33, 326, DateTimeKind.Utc).AddTicks(613),
+                            RoleId = new Guid("392a606f-b149-4027-af24-a5d1637698e3")
+                        },
+                        new
+                        {
+                            Id = new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"),
+                            AllowEntry = true,
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 33, 546, DateTimeKind.Utc).AddTicks(905),
+                            Email = "ivanova@yandex.ru",
+                            IsBlocked = false,
+                            PasswordHash = "6A59529AC42DD3EA05B52ED6892D88F42437692A0A3BA72D672D2129A21D2F67EDCEEB83B6587659DFD84748FA34DCF14B65FCA1750964FF092D7DC9E5672A36:35CEE321F6C7B1F00E4DDEE0FE781431721C72A2730BF68FC4D4FA328D904F66DAFE278F7B042D0B9203F1F0B72053F7CF20E670B0C3A6A0C5E74B0FCBAF2387",
+                            Phone = "+79991001010",
+                            RefreshToken = "6i0Km5d7TwvcusudbSJXODcBjykilqQHisyaK335VHnCAuI26bempdkF7+Qiz9N7KwODZ8Zf+8ck5zhA088LkA==",
+                            RefreshTokenExpires = new DateTime(2026, 4, 17, 15, 11, 33, 546, DateTimeKind.Utc).AddTicks(653),
+                            RoleId = new Guid("392a606f-b149-4027-af24-a5d1637698e3")
+                        });
                 });
 
             modelBuilder.Entity("Management.Domain.Entities.Branch", b =>
@@ -242,14 +296,14 @@ namespace Management.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5664aa8d-4123-4142-82db-6d621946e126"),
-                            CreatedDate = new DateTime(2025, 4, 14, 14, 14, 43, 596, DateTimeKind.Utc).AddTicks(7652),
+                            Id = new Guid("ef1cc695-887f-4251-95c4-8442350c446a"),
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 32, 650, DateTimeKind.Utc).AddTicks(1236),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("fee7a5a4-653b-476b-bdfe-44282cc49f0f"),
-                            CreatedDate = new DateTime(2025, 4, 14, 14, 14, 43, 596, DateTimeKind.Utc).AddTicks(8043),
+                            Id = new Guid("392a606f-b149-4027-af24-a5d1637698e3"),
+                            CreatedDate = new DateTime(2025, 4, 22, 15, 11, 32, 650, DateTimeKind.Utc).AddTicks(2790),
                             Name = "Manager"
                         });
                 });
@@ -311,8 +365,8 @@ namespace Management.Infrastructure.Migrations
                     b.Property<double>("MembershipCost")
                         .HasColumnType("double precision");
 
-                    b.Property<long>("MembershipQuantity")
-                        .HasColumnType("bigint");
+                    b.Property<int>("MembershipQuantity")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -352,36 +406,6 @@ namespace Management.Infrastructure.Migrations
                     b.ToTable("Tariffs", "FClub.Management");
                 });
 
-            modelBuilder.Entity("Management.Domain.Entities.UserLog", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AppUserId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("ServiceName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.ToTable("UserLogs", "FClub.Management");
-                });
-
             modelBuilder.Entity("Management.Domain.Entities.AppUser", b =>
                 {
                     b.HasOne("Management.Domain.Entities.Role", "Role")
@@ -412,6 +436,36 @@ namespace Management.Infrastructure.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("AppUserId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    AppUserId = new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"),
+                                    FirstName = "Евгения",
+                                    Patronymic = "Алексеевна",
+                                    SecondName = "Иолович"
+                                },
+                                new
+                                {
+                                    AppUserId = new Guid("a8085988-e681-4f9d-85f8-e99e2fa4aeec"),
+                                    FirstName = "Курбанаев",
+                                    Patronymic = "Алексеевич",
+                                    SecondName = "Денис"
+                                },
+                                new
+                                {
+                                    AppUserId = new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"),
+                                    FirstName = "Иванов",
+                                    Patronymic = "Иванович",
+                                    SecondName = "Иван"
+                                },
+                                new
+                                {
+                                    AppUserId = new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"),
+                                    FirstName = "Иванова",
+                                    Patronymic = "Ибрагимовна",
+                                    SecondName = "Иванка"
+                                });
                         });
 
                     b.Navigation("FullName")
@@ -500,7 +554,7 @@ namespace Management.Infrastructure.Migrations
                     b.HasOne("Management.Domain.Entities.Branch", "Branch")
                         .WithMany("Memberships")
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("Management.Domain.Entities.Tariff", "Tariff")
@@ -561,17 +615,6 @@ namespace Management.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Branch");
-                });
-
-            modelBuilder.Entity("Management.Domain.Entities.UserLog", b =>
-                {
-                    b.HasOne("Management.Domain.Entities.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Management.Domain.Entities.Branch", b =>

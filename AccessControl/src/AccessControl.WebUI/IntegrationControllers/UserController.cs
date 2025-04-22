@@ -1,4 +1,5 @@
-﻿using AccessControl.Application.IntegrationUseCases.Users;
+﻿using AccessControl.Application.IntegrationUseCases.Clients;
+using AccessControl.Application.IntegrationUseCases.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ namespace AccessControl.WebUI.IntegrationControllers
 {
     [ApiController]
     [Authorize(Policy = "ManagementIssuer")]
-    [Route("api/notifications/internal/users")]
+    [Route("api/access-control/internal/users")]
     public class UserController : ControllerBase
     {
         private readonly ISender _sender;
@@ -30,6 +31,15 @@ namespace AccessControl.WebUI.IntegrationControllers
         public async Task<ActionResult> UnblockUser([FromRoute] Guid userId)
         {
             await _sender.Send(new UnblockUser(userId));
+            return Ok();
+        }
+
+
+        [HttpPost]
+        [Route("register-user")]
+        public async Task<ActionResult> RegisterNewUser([FromBody] RegisterNewUser command)
+        {
+            await _sender.Send(command);
             return Ok();
         }
     }

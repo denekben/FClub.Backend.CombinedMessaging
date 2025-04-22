@@ -7,6 +7,8 @@ namespace AccessControl.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
+        private readonly Seed _seeder;
+
         public DbSet<ServiceBranch> ServiceBranches { get; set; }
         public DbSet<ServiceTariff> ServiceTariffs { get; set; }
         public DbSet<Branch> Branches { get; set; }
@@ -17,10 +19,12 @@ namespace AccessControl.Infrastructure.Data
         public DbSet<StatisticNote> StatisticNotes { get; set; }
         public DbSet<Tariff> Tariffs { get; set; }
         public DbSet<Turnstile> Turnstiles { get; set; }
-        public DbSet<UserLog> UserLogs { get; set; }
         public DbSet<AppUser> Users { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options, Seed seeder) : base(options)
+        {
+            _seeder = seeder;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,10 +41,11 @@ namespace AccessControl.Infrastructure.Data
             modelBuilder.ApplyConfiguration<StatisticNote>(configuration);
             modelBuilder.ApplyConfiguration<Tariff>(configuration);
             modelBuilder.ApplyConfiguration<Turnstile>(configuration);
-            modelBuilder.ApplyConfiguration<UserLog>(configuration);
             modelBuilder.ApplyConfiguration<AppUser>(configuration);
 
             base.OnModelCreating(modelBuilder);
+
+            _seeder.SeedData(modelBuilder);
         }
     }
 }

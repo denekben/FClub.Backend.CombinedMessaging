@@ -56,7 +56,7 @@ namespace Management.Infrastructure.Data
                 .HasOne(m => m.Branch)
                 .WithMany(b => b.Memberships)
                 .HasForeignKey(m => m.BranchId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.ToTable("Memberships");
         }
@@ -83,8 +83,6 @@ namespace Management.Infrastructure.Data
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(r => r.Id);
-
-            builder.HasData(Seed.Roles);
 
             builder.ToTable("Roles");
         }

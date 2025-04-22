@@ -7,6 +7,8 @@ namespace Management.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
+        private readonly Seed _seeder;
+
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<SocialGroup> SocialGroups { get; set; }
@@ -17,10 +19,12 @@ namespace Management.Infrastructure.Data
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<DomainService> Services { get; set; }
-        public DbSet<UserLog> UserLogs { get; set; }
         public DbSet<StatisticNote> StatisticNotes { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options, Seed seeder) : base(options)
+        {
+            _seeder = seeder;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,8 +42,9 @@ namespace Management.Infrastructure.Data
             modelBuilder.ApplyConfiguration<Branch>(configuration);
             modelBuilder.ApplyConfiguration<Client>(configuration);
             modelBuilder.ApplyConfiguration<DomainService>(configuration);
-            modelBuilder.ApplyConfiguration<UserLog>(configuration);
             modelBuilder.ApplyConfiguration<StatisticNote>(configuration);
+
+            _seeder.SeedData(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }
