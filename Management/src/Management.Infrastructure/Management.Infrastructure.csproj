@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Queries\Handlers\Memberships\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

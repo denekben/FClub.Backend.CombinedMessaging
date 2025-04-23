@@ -27,7 +27,10 @@ var app = builder.Build();
 //------------------------// Custom //------------------------//
 app.UseCustomErrorHandling();
 if (app.Environment.IsProduction())
+{
     await PrepDb.ApplyMigrationsAsync<AppDbContext>(app.Services);
+    await PrepDb.ApplyMigrationsAsync<AppLogDbContext>(app.Services);
+}
 //------------------------------------------------------------//
 
 if (app.Environment.IsDevelopment())
