@@ -408,7 +408,7 @@ namespace Management.Infrastructure.Data
 
             var tariff3 = Tariff.Create(
                 Guid.Parse("5973248c-c6b4-4858-8f96-3888db6340bd"),
-                "Standart",
+                "Pro",
                 new Dictionary<int, int>
                 {
                     { 1, 4_500},
@@ -586,6 +586,7 @@ namespace Management.Infrastructure.Data
                 Guid.Parse("1db4505a-02f3-49a5-9837-aec1b0ecca44"),
                 Guid.Parse("097f561c-5ace-4e10-b5c6-53d1e3de4f03")
             );
+            m1.TotalCost = 1_500;
             var m2 = Membership.Create(
                 Guid.Parse("f34285ab-2bfa-47a2-bda8-5ad707e24c8b"),
                 Guid.Parse("880c1cc1-e67a-4fc2-aa02-4066cb54f794"),
@@ -593,6 +594,7 @@ namespace Management.Infrastructure.Data
                 Guid.Parse("287bc96f-469a-4acb-9f83-ca0932c787e2"),
                 Guid.Parse("34a71229-c73a-44a3-ba97-a8f528a4b056")
             );
+            m2.TotalCost = 3_000;
             var m3 = Membership.Create(
                 Guid.Parse("3a1d21d6-3bc4-4f26-ba7e-1ef9bb3b5286"),
                 Guid.Parse("5973248c-c6b4-4858-8f96-3888db6340bd"),
@@ -600,6 +602,7 @@ namespace Management.Infrastructure.Data
                 Guid.Parse("754d703a-f1ea-425a-b3eb-b98829627774"),
                 Guid.Parse("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b")
             );
+            m3.TotalCost = 4_500;
             var m4 = Membership.Create(
                 Guid.Parse("b661a029-3d11-43c2-a652-f233cdc7bc3e"),
                 Guid.Parse("c99c8b78-e28d-4696-87be-70e0e02716ba"),
@@ -607,6 +610,7 @@ namespace Management.Infrastructure.Data
                 Guid.Parse("d789e2e0-13d7-4fdb-9b38-2df0675525fc"),
                 Guid.Parse("0d4c30ca-4ad3-4881-971c-0855de9c63ed")
             );
+            m4.TotalCost = 7_500;
             var m5 = Membership.Create(
                 Guid.Parse("25825c4c-e04f-40c6-a00d-4a9dfbdbb91d"),
                 Guid.Parse("880c1cc1-e67a-4fc2-aa02-4066cb54f794"),
@@ -614,6 +618,7 @@ namespace Management.Infrastructure.Data
                 Guid.Parse("3294e0e3-6409-431b-8ed2-db3819ebc635"),
                 Guid.Parse("097f561c-5ace-4e10-b5c6-53d1e3de4f03")
             );
+            m5.TotalCost = 9_000;
             var m6 = Membership.Create(
                 Guid.Parse("b9e3f831-eb10-414b-93c1-b0888d970c9f"),
                 Guid.Parse("5973248c-c6b4-4858-8f96-3888db6340bd"),
@@ -621,6 +626,7 @@ namespace Management.Infrastructure.Data
                 Guid.Parse("ed8a6578-96f3-4891-a816-ef0559b27ed3"),
                 Guid.Parse("34a71229-c73a-44a3-ba97-a8f528a4b056")
             );
+            m6.TotalCost = 11_250;
             var m7 = Membership.Create(
                 Guid.Parse("7898f7a6-6f24-47e8-bf6d-7766e1638878"),
                 Guid.Parse("880c1cc1-e67a-4fc2-aa02-4066cb54f794"),
@@ -628,6 +634,7 @@ namespace Management.Infrastructure.Data
                 Guid.Parse("a783ccef-eaf0-415d-b72a-6dffeeb247f5"),
                 Guid.Parse("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b")
             );
+            m7.TotalCost = 11_250;
             var m8 = Membership.Create(
                 Guid.Parse("53a621b5-fedc-4fc9-9232-6a62858d8e59"),
                 Guid.Parse("5973248c-c6b4-4858-8f96-3888db6340bd"),
@@ -635,6 +642,7 @@ namespace Management.Infrastructure.Data
                 Guid.Parse("d1cbac4f-29bb-46ad-a6dd-b987523de71a"),
                 Guid.Parse("0d4c30ca-4ad3-4881-971c-0855de9c63ed")
             );
+            m8.TotalCost = 15_000;
 
             Memberships.AddRange([m1, m2, m3, m4, m5, m6, m7, m8]);
 

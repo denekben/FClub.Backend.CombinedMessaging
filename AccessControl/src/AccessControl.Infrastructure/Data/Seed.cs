@@ -159,7 +159,7 @@ namespace AccessControl.Infrastructure.Data
 
             var tariff3 = Tariff.Create(
                 Guid.Parse("5973248c-c6b4-4858-8f96-3888db6340bd"),
-                "Standart",
+                "Pro",
                 true
             );
 

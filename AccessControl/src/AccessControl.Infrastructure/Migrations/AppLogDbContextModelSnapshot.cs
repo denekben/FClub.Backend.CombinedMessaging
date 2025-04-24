@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AccessControl.Infrastructure.Migrations.AppLogDb
+namespace AccessControl.Infrastructure.Migrations
 {
     [DbContext(typeof(AppLogDbContext))]
     partial class AppLogDbContextModelSnapshot : ModelSnapshot

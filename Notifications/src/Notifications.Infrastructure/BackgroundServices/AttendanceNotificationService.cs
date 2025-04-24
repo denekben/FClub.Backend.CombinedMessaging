@@ -45,6 +45,9 @@ namespace Notifications.Infrastructure.BackgroundService
                 var settings = await context.NotificationSettings.FirstOrDefaultAsync()
                     ?? throw new NotFoundException("Cannot find notification settings");
 
+                if (!settings.AllowAttendanceNotifications)
+                    return;
+
                 var clients = await context.Clients
                     .Where(
                         c => c.AllowNotifications &&

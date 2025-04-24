@@ -13,12 +13,10 @@ namespace Notifications.Domain.Entities
         public Guid? AttendanceNotificationId { get; set; }
         public Notification? AttendanceNotification { get; set; }
 
-        public bool AllowTariffNotifications { get; set; }
         public string TariffEmailSubject { get; set; }
         public Guid? TariffNotificationId { get; set; }
         public Notification? TariffNotification { get; set; }
 
-        public bool AllowBranchfNotifications { get; set; }
         public string BranchEmailSubject { get; set; }
         public Guid? BranchNotificationId { get; set; }
         public Notification? BranchNotification { get; set; }
@@ -28,8 +26,8 @@ namespace Notifications.Domain.Entities
         private NotificationSettings(
             bool allowAttendanceNotifications, uint attendanceNotificationPeriod,
             uint attendanceNotificationReSendPeriod, string attendanceEmailSubject, Guid? attendanceNotificationId,
-            bool allowTariffNotifications, string tariffEmailSubject, Guid? tariffNotificationId,
-            bool allowBranchfNotifications, string branchEmailSubject, Guid? branchNotificationId)
+            string tariffEmailSubject, Guid? tariffNotificationId,
+            string branchEmailSubject, Guid? branchNotificationId)
         {
             Id = Guid.NewGuid();
 
@@ -39,11 +37,9 @@ namespace Notifications.Domain.Entities
             AttendanceEmailSubject = attendanceEmailSubject;
             AttendanceNotificationId = attendanceNotificationId;
 
-            AllowTariffNotifications = allowTariffNotifications;
             TariffEmailSubject = tariffEmailSubject;
             TariffNotificationId = tariffNotificationId;
 
-            AllowBranchfNotifications = allowBranchfNotifications;
             BranchEmailSubject = branchEmailSubject;
             BranchNotificationId = branchNotificationId;
         }
@@ -51,15 +47,11 @@ namespace Notifications.Domain.Entities
         public static NotificationSettings Create(
             bool allowAttendanceNotifications, uint attendanceNotificationPeriod,
             uint attendanceNotificationReSendPeriod, string attendanceEmailSubject, Guid? attendanceNotificationId,
-            bool allowTariffNotifications, string tariffEmailSubject, Guid? tariffNotificationId,
-            bool allowBranchfNotifications, string branchEmailSubject, Guid? branchNotificationId)
+            string tariffEmailSubject, Guid? tariffNotificationId,
+            string branchEmailSubject, Guid? branchNotificationId)
         {
             if (allowAttendanceNotifications && attendanceNotificationId == null)
                 throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationId]. Entered value {attendanceNotificationId}");
-            if (allowTariffNotifications && tariffNotificationId == null)
-                throw new DomainException($"Invalid value for NotificationSettings[tariffNotificationId]. Entered value {tariffNotificationId}");
-            if (allowBranchfNotifications && branchNotificationId == null)
-                throw new DomainException($"Invalid value for NotificationSettings[branchNotificationId]. Entered value {branchNotificationId}");
             if (attendanceNotificationPeriod <= 0)
                 throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationPeriod]. Entered value {attendanceNotificationPeriod}");
             if (attendanceNotificationReSendPeriod <= 0)
@@ -74,22 +66,18 @@ namespace Notifications.Domain.Entities
             return new NotificationSettings(
                 allowAttendanceNotifications, attendanceNotificationPeriod,
                 attendanceNotificationReSendPeriod, attendanceEmailSubject, attendanceNotificationId,
-                allowTariffNotifications, tariffEmailSubject, tariffNotificationId,
-                allowBranchfNotifications, branchEmailSubject, branchNotificationId);
+                tariffEmailSubject, tariffNotificationId,
+                branchEmailSubject, branchNotificationId);
         }
 
         public void UpdateDetails(
             bool allowAttendanceNotifications, uint attendanceNotificationPeriod,
             uint attendanceNotificationReSendPeriod, string attendanceEmailSubject, Guid? attendanceNotificationId,
-            bool allowTariffNotifications, string tariffEmailSubject, Guid? tariffNotificationId,
-            bool allowBranchfNotifications, string branchEmailSubject, Guid? branchNotificationId)
+            string tariffEmailSubject, Guid? tariffNotificationId,
+            string branchEmailSubject, Guid? branchNotificationId)
         {
             if (allowAttendanceNotifications && attendanceNotificationId == null)
                 throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationId]. Entered value {attendanceNotificationId}");
-            if (allowTariffNotifications && tariffNotificationId == null)
-                throw new DomainException($"Invalid value for NotificationSettings[tariffNotificationId]. Entered value {tariffNotificationId}");
-            if (allowBranchfNotifications && branchNotificationId == null)
-                throw new DomainException($"Invalid value for NotificationSettings[branchNotificationId]. Entered value {branchNotificationId}");
             if (attendanceNotificationPeriod <= 0)
                 throw new DomainException($"Invalid value for NotificationSettings[attendanceNotificationPeriod]. Entered value {attendanceNotificationPeriod}");
             if (attendanceNotificationReSendPeriod <= 0)
@@ -108,11 +96,9 @@ namespace Notifications.Domain.Entities
             AttendanceEmailSubject = attendanceEmailSubject;
             AttendanceNotificationId = attendanceNotificationId;
 
-            AllowTariffNotifications = allowTariffNotifications;
             TariffEmailSubject = tariffEmailSubject;
             TariffNotificationId = tariffNotificationId;
 
-            AllowBranchfNotifications = allowBranchfNotifications;
             BranchEmailSubject = branchEmailSubject;
             BranchNotificationId = branchNotificationId;
         }

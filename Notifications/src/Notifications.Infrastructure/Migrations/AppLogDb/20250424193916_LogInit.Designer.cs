@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Notifications.Infrastructure.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Notifications.Infrastructure.Migrations
+namespace Notifications.Infrastructure.Migrations.AppLogDb
 {
     [DbContext(typeof(AppLogDbContext))]
-    partial class AppLogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250424193916_LogInit")]
+    partial class LogInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

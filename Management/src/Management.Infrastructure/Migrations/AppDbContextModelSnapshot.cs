@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Management.Infrastructure.Migrations.AppDb
+namespace Management.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -72,40 +72,40 @@ namespace Management.Infrastructure.Migrations.AppDb
                         {
                             Id = new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 408, DateTimeKind.Utc).AddTicks(6385),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 43, 786, DateTimeKind.Utc).AddTicks(8262),
                             Email = "iolovich@yandex.ru",
                             IsBlocked = false,
-                            PasswordHash = "E6A8648DE392B8F03272EBB7ED70C485019F3DCB6627A4D6E316E7518928EE701E62DA28A71FDE5F29238D128D06AEADDCB0243D56D3647FA2DE3F21E9459674:9119ED3BAC6E0F4221A56C512FE530EADD62FA59EA3EC6D3DCE12538404857D6A9A03D6418DFBBD54032E4F150551316F0D87502FA71FB00A561139D9C1B3369",
+                            PasswordHash = "DC1C8982E40E23E7B51C38A6609787C69AAB6D62710E4CF90E7D3FF2848D193EC8C5BBEEC1C4206F54AD2FFC303FE775982335E3899551FF53384827B32B83C6:ED21D0DE1766A9E9B2C7AA8449A63C4297008DE847205E44810878E75180AB35B5E147B67718C0A148B0E8B40F58B57E650E0E0A0856EDDD63AB99A4A4A2DEF8",
                             Phone = "+78005553535",
-                            RefreshToken = "3FMtc6vipIrGE6bsO76oNKQEI2Jq81GFMXOoAcbqAPaNWXw4/WboBXVZCWLSfX07FeGTOTTMoSb3GVHwVSRWqQ==",
-                            RefreshTokenExpires = new DateTime(2026, 4, 17, 20, 45, 24, 406, DateTimeKind.Utc).AddTicks(9510),
-                            RoleId = new Guid("7cf27689-bc05-49e4-a502-a2e86f4f4426")
+                            RefreshToken = "okN812SR7gtV9sJJcguJHx8llavgltda5O17WJ40aK/MaiCZ1qf+vCp/fzSNr/Rcd/AuduYgKxezZk9/Jvrfig==",
+                            RefreshTokenExpires = new DateTime(2026, 4, 19, 19, 38, 43, 785, DateTimeKind.Utc).AddTicks(1317),
+                            RoleId = new Guid("33009074-8ef9-492d-a5a6-d9684f7e9f48")
                         },
                         new
                         {
                             Id = new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 625, DateTimeKind.Utc).AddTicks(2822),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 3, DateTimeKind.Utc).AddTicks(2707),
                             Email = "ivanov@yandex.ru",
                             IsBlocked = false,
-                            PasswordHash = "889EE90E50416A530A7E3C460F274FCF0B43553C9684725040E333754EF9278A2F1E2FCBCE789D1F480E6DC9BA305281A3B516AFE6D44DAF739B20C04003CD59:7167ECEBE4292203962D4C458C27DBCF9655E4D865DBFEA5A1B2710815739EF7017A92C9E4858FAF8E8F3B4F836C98C72172054961A18F766656277062BB5BB8",
+                            PasswordHash = "6899B3B9B5026972C793B6C29F720B30C87057E7D97DBDC09DA8695CE0FF15B80AE59080822A78BC8FA3D88E8FFD9E12EEB2EDE592B1FC15B08AF7FA747A97AA:F622ED2EEAF699B272D6873952EA6D520DFAD7BC63B37CD8D1CF7260B84D1E2D1689E2F4FA70E4EA31F52ABE14E7D0CBEE665B14775DE0D3FC69282880AAD110",
                             Phone = "+78005553535",
-                            RefreshToken = "QKgmYb65KfS54Q/2vr9jJRI1Vtgcbl6zt5X+WjlP/abp5qo+tb5kIN/4FvDaycsDIeqv8H+ESs7b0NzX2BRfTw==",
-                            RefreshTokenExpires = new DateTime(2026, 4, 17, 20, 45, 24, 625, DateTimeKind.Utc).AddTicks(2580),
-                            RoleId = new Guid("87784905-733e-49e6-af4c-82d8a287252f")
+                            RefreshToken = "1DEnUkuwXRKz4gNU6p4RE0T4350Ibqoe0TCW/I4Zxxw5YzmExLWjJBAl0DJyxgSfDVtafCBqXSTPQoAUc+yf3A==",
+                            RefreshTokenExpires = new DateTime(2026, 4, 19, 19, 38, 44, 3, DateTimeKind.Utc).AddTicks(2439),
+                            RoleId = new Guid("8b6e157d-21fe-40df-96eb-4ea506e5fea9")
                         },
                         new
                         {
                             Id = new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 855, DateTimeKind.Utc).AddTicks(2314),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 215, DateTimeKind.Utc).AddTicks(7430),
                             Email = "petrov@yandex.ru",
                             IsBlocked = false,
-                            PasswordHash = "A53E12A970AE9577879EEA32BCF1A003E97B5693F074E7351C0F9C3091908CEC129C34F00C8E75527AE88D9027178974E297F53BF2052D01F8F0E2D5F9BE603C:24943DE08ED577EDCE01D72724ECE042288BDD668D718C5923EF6BF0FC4D4410BEA9F9ABEFDE76A52CFB510E75FF8AFB8AB9B39E2981B3BB3907C174159CD07C",
+                            PasswordHash = "D80AEC8C1A1C598955DD42595E0B661108FDCAFF0F7A8515D0334EC47BA01486D31DB1B66E12E2703D92A78635901A6153232129C4CA061C145F41F7CC25C0D5:207C9B959842831DDF2B03718DADB5C9B4582D8D95926F475E596ABF8195345F85C0C7ABE412E7B56CCA53E16FE132CCA9D42F95A29E475C1FDF9D5AEF817AAB",
                             Phone = "+79991001010",
-                            RefreshToken = "M622SXbIv16CQlBMd4XmUO05HKqjzFT37v5efXJweQGGMXZtEMsjOFiRFOP+u2PZmDFOwdSGC7gBw8KtAp1gXA==",
-                            RefreshTokenExpires = new DateTime(2026, 4, 17, 20, 45, 24, 855, DateTimeKind.Utc).AddTicks(2002),
-                            RoleId = new Guid("87784905-733e-49e6-af4c-82d8a287252f")
+                            RefreshToken = "gEbJHjjI+Fn0F47uKGyIXPHllS711K+EhJ5WvmFjwBbsuvE1UTjuTOSVJHzcK6ZinAsPaAFIvADovnxk9Cjq/w==",
+                            RefreshTokenExpires = new DateTime(2026, 4, 19, 19, 38, 44, 215, DateTimeKind.Utc).AddTicks(7097),
+                            RoleId = new Guid("8b6e157d-21fe-40df-96eb-4ea506e5fea9")
                         });
                 });
 
@@ -135,35 +135,35 @@ namespace Management.Infrastructure.Migrations.AppDb
                         new
                         {
                             Id = new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 859, DateTimeKind.Utc).AddTicks(7455),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6633),
                             MaxOccupancy = 200L,
                             Name = "Филиал на Юго-Западной"
                         },
                         new
                         {
                             Id = new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 859, DateTimeKind.Utc).AddTicks(7634),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6885),
                             MaxOccupancy = 150L,
                             Name = "Филиал на Воронцовской"
                         },
                         new
                         {
                             Id = new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 859, DateTimeKind.Utc).AddTicks(7650),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6901),
                             MaxOccupancy = 150L,
                             Name = "Филиал на Тверской"
                         },
                         new
                         {
                             Id = new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 859, DateTimeKind.Utc).AddTicks(7673),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6931),
                             MaxOccupancy = 300L,
                             Name = "Филиал на Адмиралтейской"
                         },
                         new
                         {
                             Id = new Guid("95a1368b-142b-455b-933c-3ac4f936de69"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 859, DateTimeKind.Utc).AddTicks(7720),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6980),
                             MaxOccupancy = 100L,
                             Name = "Филиал на Плотинке"
                         });
@@ -212,7 +212,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                             Id = new Guid("1db4505a-02f3-49a5-9837-aec1b0ecca44"),
                             AllowEntry = true,
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 867, DateTimeKind.Utc).AddTicks(4505),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9042),
                             Email = "ivanov@example.com",
                             IsStaff = false,
                             Phone = "+79991234567"
@@ -222,7 +222,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                             Id = new Guid("287bc96f-469a-4acb-9f83-ca0932c787e2"),
                             AllowEntry = true,
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 867, DateTimeKind.Utc).AddTicks(4723),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9246),
                             Email = "petrov@example.com",
                             IsStaff = false,
                             Phone = "+79992345678"
@@ -232,7 +232,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                             Id = new Guid("754d703a-f1ea-425a-b3eb-b98829627774"),
                             AllowEntry = true,
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 867, DateTimeKind.Utc).AddTicks(4759),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9283),
                             Email = "sidorova@example.com",
                             IsStaff = false,
                             Phone = "+79993456789"
@@ -242,7 +242,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                             Id = new Guid("d789e2e0-13d7-4fdb-9b38-2df0675525fc"),
                             AllowEntry = true,
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 867, DateTimeKind.Utc).AddTicks(4787),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9312),
                             Email = "kuznetsova@example.com",
                             IsStaff = false,
                             Phone = "+79994567890"
@@ -252,7 +252,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                             Id = new Guid("3294e0e3-6409-431b-8ed2-db3819ebc635"),
                             AllowEntry = true,
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 867, DateTimeKind.Utc).AddTicks(5235),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9731),
                             Email = "smirnov@example.com",
                             IsStaff = false,
                             Phone = "+79995678901",
@@ -263,7 +263,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                             Id = new Guid("ed8a6578-96f3-4891-a816-ef0559b27ed3"),
                             AllowEntry = true,
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 867, DateTimeKind.Utc).AddTicks(5269),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9766),
                             Email = "popova@example.com",
                             IsStaff = false,
                             Phone = "+79996789012",
@@ -274,7 +274,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                             Id = new Guid("a783ccef-eaf0-415d-b72a-6dffeeb247f5"),
                             AllowEntry = true,
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 867, DateTimeKind.Utc).AddTicks(5292),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9788),
                             Email = "vasilev@example.com",
                             IsStaff = false,
                             Phone = "+79997890123",
@@ -285,7 +285,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                             Id = new Guid("d1cbac4f-29bb-46ad-a6dd-b987523de71a"),
                             AllowEntry = true,
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 867, DateTimeKind.Utc).AddTicks(5314),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9809),
                             Email = "novikova@example.com",
                             IsStaff = false,
                             Phone = "+79998901234",
@@ -340,88 +340,88 @@ namespace Management.Infrastructure.Migrations.AppDb
                             Id = new Guid("82347d00-1363-4f40-99de-50b4096d44c8"),
                             BranchId = new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"),
                             ClientId = new Guid("1db4505a-02f3-49a5-9837-aec1b0ecca44"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 869, DateTimeKind.Utc).AddTicks(1034),
-                            ExpiresDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6644),
+                            ExpiresDate = new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MonthQuantity = 1,
                             TariffId = new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"),
-                            TotalCost = 0.0
+                            TotalCost = 1500.0
                         },
                         new
                         {
                             Id = new Guid("f34285ab-2bfa-47a2-bda8-5ad707e24c8b"),
                             BranchId = new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"),
                             ClientId = new Guid("287bc96f-469a-4acb-9f83-ca0932c787e2"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 869, DateTimeKind.Utc).AddTicks(1156),
-                            ExpiresDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6891),
+                            ExpiresDate = new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MonthQuantity = 1,
                             TariffId = new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"),
-                            TotalCost = 0.0
+                            TotalCost = 3000.0
                         },
                         new
                         {
                             Id = new Guid("3a1d21d6-3bc4-4f26-ba7e-1ef9bb3b5286"),
                             BranchId = new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"),
                             ClientId = new Guid("754d703a-f1ea-425a-b3eb-b98829627774"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 869, DateTimeKind.Utc).AddTicks(1161),
-                            ExpiresDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6897),
+                            ExpiresDate = new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MonthQuantity = 1,
                             TariffId = new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"),
-                            TotalCost = 0.0
+                            TotalCost = 4500.0
                         },
                         new
                         {
                             Id = new Guid("b661a029-3d11-43c2-a652-f233cdc7bc3e"),
                             BranchId = new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"),
                             ClientId = new Guid("d789e2e0-13d7-4fdb-9b38-2df0675525fc"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 869, DateTimeKind.Utc).AddTicks(1165),
-                            ExpiresDate = new DateTime(2025, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6900),
+                            ExpiresDate = new DateTime(2025, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MonthQuantity = 6,
                             TariffId = new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"),
-                            TotalCost = 0.0
+                            TotalCost = 7500.0
                         },
                         new
                         {
                             Id = new Guid("25825c4c-e04f-40c6-a00d-4a9dfbdbb91d"),
                             BranchId = new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"),
                             ClientId = new Guid("3294e0e3-6409-431b-8ed2-db3819ebc635"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 869, DateTimeKind.Utc).AddTicks(1168),
-                            ExpiresDate = new DateTime(2025, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6904),
+                            ExpiresDate = new DateTime(2025, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MonthQuantity = 6,
                             TariffId = new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"),
-                            TotalCost = 0.0
+                            TotalCost = 9000.0
                         },
                         new
                         {
                             Id = new Guid("b9e3f831-eb10-414b-93c1-b0888d970c9f"),
                             BranchId = new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"),
                             ClientId = new Guid("ed8a6578-96f3-4891-a816-ef0559b27ed3"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 869, DateTimeKind.Utc).AddTicks(1172),
-                            ExpiresDate = new DateTime(2025, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6907),
+                            ExpiresDate = new DateTime(2025, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MonthQuantity = 6,
                             TariffId = new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"),
-                            TotalCost = 0.0
+                            TotalCost = 11250.0
                         },
                         new
                         {
                             Id = new Guid("7898f7a6-6f24-47e8-bf6d-7766e1638878"),
                             BranchId = new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"),
                             ClientId = new Guid("a783ccef-eaf0-415d-b72a-6dffeeb247f5"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 869, DateTimeKind.Utc).AddTicks(1175),
-                            ExpiresDate = new DateTime(2026, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6911),
+                            ExpiresDate = new DateTime(2026, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MonthQuantity = 12,
                             TariffId = new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"),
-                            TotalCost = 0.0
+                            TotalCost = 11250.0
                         },
                         new
                         {
                             Id = new Guid("53a621b5-fedc-4fc9-9232-6a62858d8e59"),
                             BranchId = new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"),
                             ClientId = new Guid("d1cbac4f-29bb-46ad-a6dd-b987523de71a"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 869, DateTimeKind.Utc).AddTicks(1179),
-                            ExpiresDate = new DateTime(2026, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6915),
+                            ExpiresDate = new DateTime(2026, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MonthQuantity = 12,
                             TariffId = new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"),
-                            TotalCost = 0.0
+                            TotalCost = 15000.0
                         });
                 });
 
@@ -740,14 +740,14 @@ namespace Management.Infrastructure.Migrations.AppDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7cf27689-bc05-49e4-a502-a2e86f4f4426"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 175, DateTimeKind.Utc).AddTicks(2730),
+                            Id = new Guid("33009074-8ef9-492d-a5a6-d9684f7e9f48"),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 43, 555, DateTimeKind.Utc).AddTicks(687),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("87784905-733e-49e6-af4c-82d8a287252f"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 175, DateTimeKind.Utc).AddTicks(3227),
+                            Id = new Guid("8b6e157d-21fe-40df-96eb-4ea506e5fea9"),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 43, 555, DateTimeKind.Utc).AddTicks(1230),
                             Name = "Manager"
                         });
                 });
@@ -776,43 +776,43 @@ namespace Management.Infrastructure.Migrations.AppDb
                         new
                         {
                             Id = new Guid("f42cee3e-3e27-45e9-9a17-bb991a69f2ef"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 858, DateTimeKind.Utc).AddTicks(5177),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3819),
                             Name = "Тренажерный зал"
                         },
                         new
                         {
                             Id = new Guid("81c16014-83ce-4570-bd16-51e9ef4187b5"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 858, DateTimeKind.Utc).AddTicks(5335),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3981),
                             Name = "Хамам"
                         },
                         new
                         {
                             Id = new Guid("8d313217-d403-4368-8744-d44013db63ad"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 858, DateTimeKind.Utc).AddTicks(5337),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3983),
                             Name = "Бассейн"
                         },
                         new
                         {
                             Id = new Guid("23ad6d27-f2ea-4f57-a2e3-6a36e33fad69"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 858, DateTimeKind.Utc).AddTicks(5339),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3985),
                             Name = "Спа зона"
                         },
                         new
                         {
                             Id = new Guid("0c3ed5b6-9ea4-428b-8931-086a41951451"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 858, DateTimeKind.Utc).AddTicks(5340),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3986),
                             Name = "Кроссфит зона"
                         },
                         new
                         {
                             Id = new Guid("20b848e4-13fd-43d3-9452-763b6435e7c2"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 858, DateTimeKind.Utc).AddTicks(5342),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3988),
                             Name = "Боксерская зона"
                         },
                         new
                         {
                             Id = new Guid("06fee5c7-0daf-4c8c-9271-4c14f26d5e2a"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 858, DateTimeKind.Utc).AddTicks(5344),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3990),
                             Name = "Фитнесс бар"
                         });
                 });
@@ -841,13 +841,13 @@ namespace Management.Infrastructure.Migrations.AppDb
                         new
                         {
                             Id = new Guid("5514344f-43cf-407f-aa83-dc5b4b54c172"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 862, DateTimeKind.Utc).AddTicks(195),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 221, DateTimeKind.Utc).AddTicks(8613),
                             Name = "Студенты"
                         },
                         new
                         {
                             Id = new Guid("a2824bfb-2de7-44f2-a175-6ce1f440d5c9"),
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 862, DateTimeKind.Utc).AddTicks(345),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 221, DateTimeKind.Utc).AddTicks(8760),
                             Name = "Пенсионеры"
                         });
                 });
@@ -912,7 +912,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                         {
                             Id = new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"),
                             AllowMultiBranches = false,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 865, DateTimeKind.Utc).AddTicks(500),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 224, DateTimeKind.Utc).AddTicks(5824),
                             DiscountForSocialGroup = "{\"5514344f-43cf-407f-aa83-dc5b4b54c172\":10,\"a2824bfb-2de7-44f2-a175-6ce1f440d5c9\":25}",
                             Name = "Ligth",
                             PriceForNMonths = "{\"1\":1500,\"6\":7500,\"12\":12500}"
@@ -921,7 +921,7 @@ namespace Management.Infrastructure.Migrations.AppDb
                         {
                             Id = new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"),
                             AllowMultiBranches = true,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 865, DateTimeKind.Utc).AddTicks(1250),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 224, DateTimeKind.Utc).AddTicks(6440),
                             DiscountForSocialGroup = "{\"5514344f-43cf-407f-aa83-dc5b4b54c172\":10,\"a2824bfb-2de7-44f2-a175-6ce1f440d5c9\":25}",
                             Name = "Standart",
                             PriceForNMonths = "{\"1\":3000,\"6\":10000,\"12\":15000}"
@@ -930,9 +930,9 @@ namespace Management.Infrastructure.Migrations.AppDb
                         {
                             Id = new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"),
                             AllowMultiBranches = true,
-                            CreatedDate = new DateTime(2025, 4, 22, 20, 45, 24, 865, DateTimeKind.Utc).AddTicks(1267),
+                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 44, 224, DateTimeKind.Utc).AddTicks(6456),
                             DiscountForSocialGroup = "{\"5514344f-43cf-407f-aa83-dc5b4b54c172\":10,\"a2824bfb-2de7-44f2-a175-6ce1f440d5c9\":25}",
-                            Name = "Standart",
+                            Name = "Pro",
                             PriceForNMonths = "{\"1\":4500,\"6\":12500,\"12\":20000}"
                         });
                 });

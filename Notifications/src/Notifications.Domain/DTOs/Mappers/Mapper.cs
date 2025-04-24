@@ -27,10 +27,8 @@ namespace Notifications.Domain.DTOs.Mappers
                 settings.AttendanceNotificationReSendPeriod,
                 settings.AttendanceEmailSubject,
                 attendanceNotification?.AsDto(),
-                settings.AllowTariffNotifications,
                 settings.TariffEmailSubject,
                 tariffNotification?.AsDto(),
-                settings.AllowBranchfNotifications,
                 settings.BranchEmailSubject,
                 branchNotification?.AsDto()
             );

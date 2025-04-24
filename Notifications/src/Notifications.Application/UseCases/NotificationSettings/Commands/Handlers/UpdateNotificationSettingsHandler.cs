@@ -30,10 +30,8 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands.Handl
                 attendanceNotificationReSendPeriod,
                 attendanceEmailSubject,
                 attendanceNotificationId,
-                allowTariffNotifications,
                 tariffEmailSubject,
                 tariffNotificationId,
-                allowBranchfNotifications,
                 branchEmailSubject,
                 branchNotificationId
             ) = command;
@@ -68,10 +66,8 @@ namespace Notifications.Application.UseCases.NotificationSettings.Commands.Handl
                 attendanceNotificationReSendPeriod,
                 attendanceEmailSubject,
                 attendanceNotificationId,
-                allowTariffNotifications,
                 tariffEmailSubject,
                 tariffNotificationId,
-                allowBranchfNotifications,
                 branchEmailSubject,
                 branchNotificationId
             );

@@ -181,8 +181,8 @@ namespace Notifications.Infrastructure.Data
 
             NotificationSettings = NotificationSettings.Create(
                 true, 7, 7, "Вас давно с нами не было!", attendanceNotification.Id,
-                true, "У нас новинки!", tariffNotification.Id,
-                true, "Мы расширяемся!", branchNotification.Id);
+                "У нас новинки!", tariffNotification.Id,
+                "Мы расширяемся!", branchNotification.Id);
 
             Notifications.AddRange([AttendanceNotification, TariffNotification, BranchNotification]);
             modelBuilder.Entity<Notification>().HasData(Notifications);
