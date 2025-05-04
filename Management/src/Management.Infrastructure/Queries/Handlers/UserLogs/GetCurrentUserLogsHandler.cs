@@ -1,4 +1,5 @@
 ﻿using FClub.Backend.Common.Exceptions;
+using FClub.Backend.Common.Logging;
 using FClub.Backend.Common.Services;
 using Management.Application.UseCases.UserLogs.Queries;
 using Management.Domain.DTOs;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Management.Infrastructure.Queries.Handlers.UserLogs
 {
+    [SkipLogging]
     public sealed class GetCurrentUserLogsHandler : IRequestHandler<GetCurrentUserLogs, List<UserLogDto>?>
     {
         private readonly AppLogDbContext _context;

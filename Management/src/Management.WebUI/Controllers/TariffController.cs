@@ -21,7 +21,7 @@ namespace Management.WebUI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<TariffDto?>> CreateTariff([FromBody] CreateTariff command)
+        public async Task<ActionResult<TariffWithGroupsDto?>> CreateTariff([FromBody] CreateTariff command)
         {
             var result = await _sender.Send(command);
             if (result == null)
@@ -40,7 +40,7 @@ namespace Management.WebUI.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<TariffDto?>> UpdateTariff([FromBody] UpdateTariff command)
+        public async Task<ActionResult<TariffWithGroupsDto?>> UpdateTariff([FromBody] UpdateTariff command)
         {
             var result = await _sender.Send(command);
             if (result == null)
@@ -50,7 +50,7 @@ namespace Management.WebUI.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Manager,Admin")]
-        public async Task<ActionResult<List<TariffDto>?>> GetTariffs([FromQuery] GetTariffs query)
+        public async Task<ActionResult<List<TariffWithGroupsDto>?>> GetTariffs([FromQuery] GetTariffs query)
         {
             var result = await _sender.Send(query);
             if (result == null)

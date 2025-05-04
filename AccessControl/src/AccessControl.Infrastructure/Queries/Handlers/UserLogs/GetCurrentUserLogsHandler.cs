@@ -3,12 +3,14 @@ using AccessControl.Domain.DTOs;
 using AccessControl.Domain.DTOs.Mappers;
 using AccessControl.Infrastructure.Data;
 using FClub.Backend.Common.Exceptions;
+using FClub.Backend.Common.Logging;
 using FClub.Backend.Common.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Queries.Handlers.UserLogs
 {
+    [SkipLogging]
     public sealed class GetCurrentUserLogsHandler : IRequestHandler<GetCurrentUserLogs, List<UserLogDto>?>
     {
         private readonly AppLogDbContext _context;

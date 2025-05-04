@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FClub.Backend.Common" Version="1.2.4" />
+    <PackageReference Include="FClub.Backend.Common" Version="1.2.5" />
   </ItemGroup>
 
 </Project>

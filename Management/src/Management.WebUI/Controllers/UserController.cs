@@ -30,7 +30,7 @@ namespace Management.WebUI.Controllers
 
         [HttpGet]
         [Route("access-token")]
-        public async Task<ActionResult<string?>> RefreshExpiredToken([FromBody] RefreshExpiredToken command)
+        public async Task<ActionResult<string?>> RefreshExpiredToken([FromQuery] RefreshExpiredToken command)
         {
             var result = await _sender.Send(command);
             if (result == null)

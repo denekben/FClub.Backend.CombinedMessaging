@@ -12,10 +12,10 @@ using System.Text.Json;
 namespace Notifications.Infrastructure.Logging
 {
     public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+            where TRequest : IRequest<TResponse>
     {
-        private static readonly ConcurrentDictionary<Type, bool> _skipLoggingCache = new();
         private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
+        private static readonly ConcurrentDictionary<Type, bool> _skipLoggingCache = new();
         private readonly IHttpContextService _contextService;
         private readonly IUserLogRepository _userLogRepository;
         private readonly IRepository _repository;
@@ -39,13 +39,12 @@ namespace Notifications.Infrastructure.Logging
         {
             var shouldSkip = _skipLoggingCache.GetOrAdd(typeof(TRequest), type =>
             {
-                var handlerType = typeof(IRequestHandler<TRequest, TResponse>);
-                var handlerAssembly = handlerType.Assembly;
-                var handlerTypes = handlerAssembly.GetTypes()
-                    .Where(t => t.GetInterfaces().Any(i =>
-                        i.IsGenericType &&
-                        i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>) &&
-                        i.GetGenericArguments()[0] == type));
+                var expectedHandlerInterface = typeof(IRequestHandler<,>)
+                    .MakeGenericType(type, typeof(TResponse));
+
+                var handlerTypes = AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(a => a.GetTypes())
+                    .Where(t => expectedHandlerInterface.IsAssignableFrom(t));
 
                 return handlerTypes.Any(t => t.GetCustomAttribute<SkipLoggingAttribute>() != null);
             });

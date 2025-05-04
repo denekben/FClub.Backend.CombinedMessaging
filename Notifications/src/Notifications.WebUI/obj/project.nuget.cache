@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "2Tept9TCRZ4=",
+  "dgSpecHash": "NvVh8KXJtxs=",
   "success": true,
   "projectFilePath": "C:\\Users\\Kurbanaev\\Desktop\\FClub\\FClub\\Notifications\\src\\Notifications.WebUI\\Notifications.WebUI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kurbanaev\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
-    "C:\\Users\\Kurbanaev\\.nuget\\packages\\fclub.backend.common\\1.2.4\\fclub.backend.common.1.2.4.nupkg.sha512",
+    "C:\\Users\\Kurbanaev\\.nuget\\packages\\fclub.backend.common\\1.2.5\\fclub.backend.common.1.2.5.nupkg.sha512",
     "C:\\Users\\Kurbanaev\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\Kurbanaev\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Kurbanaev\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",

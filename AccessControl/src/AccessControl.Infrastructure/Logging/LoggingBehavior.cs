@@ -14,8 +14,8 @@ namespace AccessControl.Application.UseCases.UserLogs
     public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
-        private static readonly ConcurrentDictionary<Type, bool> _skipLoggingCache = new();
         private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
+        private static readonly ConcurrentDictionary<Type, bool> _skipLoggingCache = new();
         private readonly IHttpContextService _contextService;
         private readonly IUserLogRepository _userLogRepository;
         private readonly IRepository _repository;
@@ -23,13 +23,13 @@ namespace AccessControl.Application.UseCases.UserLogs
         public LoggingBehavior(
             ILogger<LoggingBehavior<TRequest, TResponse>> logger,
             IHttpContextService currentUserService,
-            IUserLogRepository userLogRepository,
-            IRepository repository)
+            IRepository repository,
+            IUserLogRepository userLogRepository)
         {
             _logger = logger;
             _contextService = currentUserService;
-            _userLogRepository = userLogRepository;
             _repository = repository;
+            _userLogRepository = userLogRepository;
         }
 
         public async Task<TResponse> Handle(
@@ -37,16 +37,14 @@ namespace AccessControl.Application.UseCases.UserLogs
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
-
             var shouldSkip = _skipLoggingCache.GetOrAdd(typeof(TRequest), type =>
             {
-                var handlerType = typeof(IRequestHandler<TRequest, TResponse>);
-                var handlerAssembly = handlerType.Assembly;
-                var handlerTypes = handlerAssembly.GetTypes()
-                    .Where(t => t.GetInterfaces().Any(i =>
-                        i.IsGenericType &&
-                        i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>) &&
-                        i.GetGenericArguments()[0] == type));
+                var expectedHandlerInterface = typeof(IRequestHandler<,>)
+                    .MakeGenericType(type, typeof(TResponse));
+
+                var handlerTypes = AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(a => a.GetTypes())
+                    .Where(t => expectedHandlerInterface.IsAssignableFrom(t));
 
                 return handlerTypes.Any(t => t.GetCustomAttribute<SkipLoggingAttribute>() != null);
             });
@@ -55,7 +53,6 @@ namespace AccessControl.Application.UseCases.UserLogs
             {
                 return await next();
             }
-
 
             var requestName = typeof(TRequest).Name;
             Guid? userId = null;

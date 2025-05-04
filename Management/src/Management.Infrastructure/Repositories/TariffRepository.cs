@@ -29,6 +29,11 @@ namespace Management.Infrastructure.Repositories
             return await _context.Tariffs.AnyAsync(t => t.Id == id);
         }
 
+        public async Task<List<Tariff>?> GetAllAsync()
+        {
+            return await _context.Tariffs.ToListAsync();
+        }
+
         public async Task<Tariff?> GetAsync(Guid id)
         {
             return await _context.Tariffs.FirstOrDefaultAsync(t => t.Id == id);
@@ -46,6 +51,11 @@ namespace Management.Infrastructure.Repositories
                     .ThenInclude(st => st.Service);
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        public void UpdateAsync(Tariff tariff)
+        {
+            _context.Tariffs.Update(tariff);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Management.Application.Services;
+﻿using FClub.Backend.Common.Exceptions;
+using Management.Application.Services;
 using Management.Domain.DTOs;
 using Management.Domain.DTOs.Mappers;
 using Management.Domain.Entities;
@@ -10,28 +11,38 @@ using AccessControlServiceTariffDto = Management.Shared.IntegrationUseCases.Acce
 
 namespace Management.Application.UseCases.Tariffs.Commands.Handlers
 {
-    public sealed class CreateTariffHandler : IRequestHandler<CreateTariff, TariffDto?>
+    public sealed class CreateTariffHandler : IRequestHandler<CreateTariff, TariffWithGroupsDto?>
     {
         private readonly IHttpAccessControlClient _accessControlClient;
         private readonly IHttpNotificationsClient _notificationsClient;
+        private readonly ISocialGroupRepository _socialGroupRepository;
         private readonly ITariffRepository _tariffRepository;
         private readonly IServiceRepository _serviceRepository;
         private readonly IRepository _repository;
 
         public CreateTariffHandler(ITariffRepository tariffRepository, IRepository repository,
             IHttpAccessControlClient accessControlClient, IServiceRepository serviceRepository,
-            IHttpNotificationsClient notificationsClient)
+            IHttpNotificationsClient notificationsClient, ISocialGroupRepository socialGroupRepository)
         {
             _tariffRepository = tariffRepository;
             _repository = repository;
             _accessControlClient = accessControlClient;
             _serviceRepository = serviceRepository;
             _notificationsClient = notificationsClient;
+            _socialGroupRepository = socialGroupRepository;
         }
 
-        public async Task<TariffDto?> Handle(CreateTariff command, CancellationToken cancellationToken)
+        public async Task<TariffWithGroupsDto?> Handle(CreateTariff command, CancellationToken cancellationToken)
         {
             var (sendNotification, name, priceForNMonths, discountForSocialGroup, allowMultiBranches, serviceNames) = command;
+
+            var discs = new Dictionary<SocialGroup, int>();
+            foreach (var disc in (discountForSocialGroup ?? []))
+            {
+                var group = await _socialGroupRepository.GetAsync(disc.Key) ??
+                    throw new NotFoundException($"Cannot find social group {disc.Key}");
+                discs.Add(group, disc.Value);
+            }
 
             var tariff = Tariff.Create(name, priceForNMonths, discountForSocialGroup, allowMultiBranches);
 
@@ -68,7 +79,7 @@ namespace Management.Application.UseCases.Tariffs.Commands.Handlers
 
             await _repository.SaveChangesAsync();
 
-            return tariff.AsDto(services);
+            return tariff.AsDto(services, discs);
         }
     }
 }

@@ -10,5 +10,5 @@ namespace Management.Application.UseCases.Tariffs.Commands
         Dictionary<Guid, int>? DiscountForSocialGroup,
         bool AllowMultiBranches,
         List<string> serviceNames
-    ) : IRequest<TariffDto?>;
+    ) : IRequest<TariffWithGroupsDto?>;
 }

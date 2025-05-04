@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Management.Application.UseCases.Clients.Commands.Handlers
 {
-    public sealed class DeleteClientHandler : IRequestHandler<DeleteClient>
+    public sealed class DeleteClientHandler : IRequestHandler<DeleteClient, Unit>
     {
         private readonly IHttpAccessControlClient _accessControlClient;
         private readonly IHttpNotificationsClient _notificationsClient;
@@ -30,7 +30,7 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
             _notificationsClient = notificationsClient;
         }
 
-        public async Task Handle(DeleteClient command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteClient command, CancellationToken cancellationToken)
         {
             var userId = _contextService.GetCurrentUserId()
                 ?? throw new BadRequestException("Invalid authorization header");
@@ -53,6 +53,8 @@ namespace Management.Application.UseCases.Clients.Commands.Handlers
             );
 
             await _repository.SaveChangesAsync();
+
+            return Unit.Value;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FClub.Backend.Common.Logging;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Notifications.Application.UseCases.UserLogs.Queries;
 using Notifications.Domain.DTOs;
@@ -7,6 +8,7 @@ using Notifications.Infrastructure.Data;
 
 namespace Notifications.Infrastructure.Queries.Handlers.UserLog
 {
+    [SkipLogging]
     public sealed class GetUserLogsHandler : IRequestHandler<GetUserLogs, List<UserLogDto>?>
     {
         private readonly AppLogDbContext _context;

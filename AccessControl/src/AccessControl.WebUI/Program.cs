@@ -21,6 +21,17 @@ builder.Services.AddCustomSwagger(options =>
 {
     builder.Configuration.GetSection("Swagger").Bind(options);
 });
+var allowedOrigins = builder.Configuration.GetSection("CORS").Get<string[]>();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policyBuilder =>
+    {
+        policyBuilder.WithOrigins(allowedOrigins)
+                     .AllowAnyHeader()
+                     .AllowAnyMethod()
+                     .AllowCredentials();
+    });
+});
 //------------------------------------------------------------//
 
 var app = builder.Build();
@@ -40,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 

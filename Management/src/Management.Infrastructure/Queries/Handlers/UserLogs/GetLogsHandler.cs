@@ -1,4 +1,5 @@
-﻿using Management.Application.UseCases.UserLogs.Queries;
+﻿using FClub.Backend.Common.Logging;
+using Management.Application.UseCases.UserLogs.Queries;
 using Management.Domain.DTOs;
 using Management.Domain.DTOs.Mappers;
 using Management.Infrastructure.Data;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Management.Infrastructure.Queries.Handlers.UserLogs
 {
+    [SkipLogging]
     public sealed class GetLogsHandler : IRequestHandler<GetLogs, List<UserLogDto>?>
     {
         private readonly AppLogDbContext _context;

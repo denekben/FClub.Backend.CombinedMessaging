@@ -8,5 +8,5 @@ namespace Management.Application.UseCases.Tariffs.Queries
         bool? SortByCreatedDate,
         int PageNumber = 1,
         int PageSize = 20
-    ) : IRequest<List<TariffDto>?>;
+    ) : IRequest<List<TariffWithGroupsDto>?>;
 }

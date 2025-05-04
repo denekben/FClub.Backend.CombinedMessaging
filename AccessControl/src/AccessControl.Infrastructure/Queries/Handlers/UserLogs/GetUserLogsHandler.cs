@@ -2,11 +2,13 @@
 using AccessControl.Domain.DTOs;
 using AccessControl.Domain.DTOs.Mappers;
 using AccessControl.Infrastructure.Data;
+using FClub.Backend.Common.Logging;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Queries.Handlers.UserLogs
 {
+    [SkipLogging]
     public sealed class GetUserLogsHandler : IRequestHandler<GetUserLogs, List<UserLogDto>?>
     {
         private readonly AppLogDbContext _context;

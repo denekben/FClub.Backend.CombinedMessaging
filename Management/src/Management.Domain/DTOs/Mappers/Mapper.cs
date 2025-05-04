@@ -122,6 +122,28 @@ namespace Management.Domain.DTOs.Mappers
             );
         }
 
+        public static TariffWithGroupsDto AsDto(this Tariff tariff, List<Service>? services, Dictionary<SocialGroup, int>? discounts)
+        {
+            var serviceDtos = services?.Select(s => s.AsDto()).ToList();
+            List<DiscountForSocialGroupDto>? discountsDto = [];
+            foreach (var discount in (discounts ?? []))
+            {
+                discountsDto.Add(new(discount.Key.AsDto(), discount.Value));
+            }
+
+
+            return new(
+                tariff.Id,
+                tariff.Name,
+                tariff.PriceForNMonths,
+                discountsDto,
+                tariff.AllowMultiBranches,
+                serviceDtos ?? [],
+                tariff.CreatedDate,
+                tariff.UpdatedDate
+            );
+        }
+
         public static SocialGroupDto AsDto(this SocialGroup socialGroup)
         {
             return new(

@@ -9,6 +9,8 @@ namespace Management.Domain.Repositories
         Task AddAsync(Tariff tariff);
         Task DeleteAsync(Guid id);
         Task<bool> ExistsAsync(Guid id);
+        Task<List<Tariff>?> GetAllAsync();
+        void UpdateAsync(Tariff tariff);
     }
 
     [Flags]
