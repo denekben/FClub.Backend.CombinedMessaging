@@ -5,7 +5,7 @@
         string? Name,
         bool IsMain,
         Guid BranchId,
-        Guid? ServiceId,
+        ServiceDto? Service,
         DateTime CreatedDate,
         DateTime? UpdatedDate
     );

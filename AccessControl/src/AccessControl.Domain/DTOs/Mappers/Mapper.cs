@@ -1,11 +1,15 @@
 ﻿using AccessControl.Domain.Entities;
-using AccessControl.Domain.Entities;
 using FClub.Backend.Common.ValueObjects.DTOs.Mappers;
 
 namespace AccessControl.Domain.DTOs.Mappers
 {
     public static class Mapper
     {
+        public static ServiceDto AsDto(this Service service)
+        {
+            return new(service.Id, service.Name);
+        }
+
         public static TurnstileDto AsDto(this Turnstile turnstile)
         {
             return new(
@@ -13,7 +17,7 @@ namespace AccessControl.Domain.DTOs.Mappers
                 turnstile.Name,
                 turnstile.IsMain,
                 turnstile.BranchId,
-                turnstile.ServiceId,
+                turnstile.Service?.AsDto(),
                 turnstile.CreatedDate,
                 turnstile.UpdatedDate
             );

@@ -1,5 +1,4 @@
 ﻿using AccessControl.Domain.Repositories;
-using AccessControl.Domain.Entities;
 using FClub.Backend.Common.Exceptions;
 using FClub.Backend.Common.Logging;
 using MediatR;
@@ -21,9 +20,9 @@ namespace AccessControl.Application.IntegrationUseCases.Services.Handlers
         public async Task Handle(UpdateService command, CancellationToken cancellationToken)
         {
             var (id, name) = command;
-            if (!await _serviceRepository.ExistsAsync(id))
+            var service = await _serviceRepository.GetAsync(id) ??
                 throw new NotFoundException($"Cannot find service {id}");
-            await _serviceRepository.AddAsync(Service.Create(id, name));
+            service.UpdateDetails(name);
             await _repository.SaveChangesAsync();
         }
     }

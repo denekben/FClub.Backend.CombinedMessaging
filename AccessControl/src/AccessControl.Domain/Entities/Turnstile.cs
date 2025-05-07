@@ -1,5 +1,4 @@
-﻿using AccessControl.Domain.Entities;
-using FClub.Backend.Common.Exceptions;
+﻿using FClub.Backend.Common.Exceptions;
 
 namespace AccessControl.Domain.Entities
 {
@@ -11,7 +10,7 @@ namespace AccessControl.Domain.Entities
         public Guid BranchId { get; set; }
         public Branch Branch { get; set; }
         public Guid? ServiceId { get; set; }
-        public Service Service { get; set; }
+        public Service? Service { get; set; }
         public List<EntryLog> Logs { get; set; } = [];
 
         public DateTime CreatedDate { get; init; }

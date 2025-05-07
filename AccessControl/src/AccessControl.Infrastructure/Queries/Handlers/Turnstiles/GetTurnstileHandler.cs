@@ -18,7 +18,7 @@ namespace AccessControl.Infrastructure.Queries.Handlers.Turnstiles
 
         public async Task<TurnstileDto?> Handle(GetTurnstile query, CancellationToken cancellationToken)
         {
-            return (await _context.Turnstiles.FirstOrDefaultAsync(t => t.Id == query.TurnstileId))?.AsDto();
+            return (await _context.Turnstiles.Include(t => t.Service).FirstOrDefaultAsync(t => t.Id == query.TurnstileId))?.AsDto();
         }
     }
 }

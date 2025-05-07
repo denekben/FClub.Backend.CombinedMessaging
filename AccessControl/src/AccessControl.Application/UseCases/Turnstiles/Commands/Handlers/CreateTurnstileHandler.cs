@@ -28,21 +28,28 @@ namespace AccessControl.Application.UseCases.Turnstiles.Commands.Handlers
         {
             var (name, isMain, branchId, serviceId) = command;
 
-            var branch = await _branchRepository.GetAsync(branchId, BranchIncludes.ServicesBranches);
-            if (branch == null)
-                throw new NotFoundException($"Cannot find branch {branchId}");
+            var branch = await _branchRepository.GetAsync(branchId, BranchIncludes.ServicesBranches)
+                ?? throw new NotFoundException($"Cannot find branch {branchId}");
+            Service? service = null;
+            if (serviceId != null)
+            {
+                service = await _serviceRepository.GetAsync((Guid)serviceId)
+                    ?? throw new NotFoundException($"Cannot find service {serviceId}");
+            }
+            if (isMain && serviceId != null)
+                throw new BadRequestException($"Main turnstile cannot have service");
             if (!isMain && !branch.ServiceBranches.Any(sb => sb.ServiceId == serviceId))
                 throw new NotFoundException($"Cannot find service {serviceId}");
-            if (!isMain && serviceId == null)
+            if (!isMain && service == null)
                 throw new BadRequestException($"Service cannot be null for not main turnstiles");
-            if (!isMain && !await _serviceRepository.ExistsAsync((Guid)serviceId))
-                throw new NotFoundException($"Cannot find service {serviceId}");
 
             var turnstile = Turnstile.Create(name, branchId, serviceId, isMain);
             await _turnstileRepository.AddAsync(turnstile);
             await _repository.SaveChangesAsync();
 
+            turnstile.Service = service;
             return turnstile.AsDto();
+
         }
     }
 }

@@ -49,7 +49,7 @@ namespace AccessControl.Infrastructure.Queries.Handlers.Turnstiles
 
             turnstiles = turnstiles.Skip(skipNumber).Take(pageSize);
 
-            return await turnstiles.Select(t => t.AsDto()).ToListAsync();
+            return await turnstiles.Include(t => t.Service).Select(t => t.AsDto()).ToListAsync();
         }
     }
 }

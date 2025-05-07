@@ -4,6 +4,7 @@
         Guid Id,
         double TotalCost,
         int MonthQuantity,
+        Guid BranchId,
         TariffDto Tariff,
         DateTime ExpiresDate,
         DateTime CreatedDate,

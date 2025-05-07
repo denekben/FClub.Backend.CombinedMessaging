@@ -32,5 +32,13 @@ namespace AccessControl.Domain.Entities
 
             return new(id, name);
         }
+
+        public void UpdateDetails(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new DomainException($"Invalid argument for Service[name]. Entered value: {name}");
+
+            Name = name;
+        }
     }
 }

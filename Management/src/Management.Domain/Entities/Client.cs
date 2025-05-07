@@ -102,7 +102,7 @@ namespace Management.Domain.Entities
             IsStaff = isStaff;
             AllowEntry = allowEntry;
             AllowNotifications = allowNotifications;
-            SocialGroupId = SocialGroupId;
+            SocialGroupId = socialGroupId;
         }
     }
 }
