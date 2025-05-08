@@ -19,8 +19,6 @@ namespace Notifications.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("FClub.Notifications");
-
             var configuration = new NotificationsConfiguration();
 
             modelBuilder.ApplyConfiguration<Client>(configuration);

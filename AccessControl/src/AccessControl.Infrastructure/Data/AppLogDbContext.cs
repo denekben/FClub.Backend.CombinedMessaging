@@ -11,8 +11,6 @@ namespace AccessControl.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("FClub.AccessControl");
-
             var configuration = new AccessControlConfiguration();
 
             modelBuilder.ApplyConfiguration<UserLog>(configuration);

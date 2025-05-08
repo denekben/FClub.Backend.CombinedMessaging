@@ -17,7 +17,6 @@ namespace Management.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("FClub.Management")
                 .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -48,7 +47,7 @@ namespace Management.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserLogs", "FClub.Management");
+                    b.ToTable("UserLogs", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -13,12 +13,8 @@ namespace Management.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "FClub.Management");
-
             migrationBuilder.CreateTable(
                 name: "Branches",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -38,7 +34,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Roles",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -53,7 +48,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Services",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -68,7 +62,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "SocialGroups",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -83,7 +76,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Tariffs",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -101,7 +93,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "StatisticNotes",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -116,7 +107,6 @@ namespace Management.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_StatisticNotes_Branches_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "FClub.Management",
                         principalTable: "Branches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -124,7 +114,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AppUsers",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -148,7 +137,6 @@ namespace Management.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_AppUsers_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "FClub.Management",
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
@@ -156,7 +144,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ServiceBranches",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -169,14 +156,12 @@ namespace Management.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_ServiceBranches_Branches_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "FClub.Management",
                         principalTable: "Branches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ServiceBranches_Services_ServiceId",
                         column: x => x.ServiceId,
-                        principalSchema: "FClub.Management",
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -184,7 +169,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Clients",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -206,7 +190,6 @@ namespace Management.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Clients_SocialGroups_SocialGroupId",
                         column: x => x.SocialGroupId,
-                        principalSchema: "FClub.Management",
                         principalTable: "SocialGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
@@ -214,7 +197,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ServiceTariffs",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -227,14 +209,12 @@ namespace Management.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_ServiceTariffs_Services_ServiceId",
                         column: x => x.ServiceId,
-                        principalSchema: "FClub.Management",
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ServiceTariffs_Tariffs_TariffId",
                         column: x => x.TariffId,
-                        principalSchema: "FClub.Management",
                         principalTable: "Tariffs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -242,7 +222,6 @@ namespace Management.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Memberships",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -261,134 +240,121 @@ namespace Management.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Memberships_Branches_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "FClub.Management",
                         principalTable: "Branches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Memberships_Clients_ClientId",
                         column: x => x.ClientId,
-                        principalSchema: "FClub.Management",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Memberships_Tariffs_TariffId",
                         column: x => x.TariffId,
-                        principalSchema: "FClub.Management",
                         principalTable: "Tariffs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "Branches",
                 columns: new[] { "Id", "Address_City", "Address_Country", "Address_HouseNumber", "Address_Street", "CreatedDate", "MaxOccupancy", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"), "Москва", "Россия", "2к1", "ул. Покрышкина", new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6633), 200L, "Филиал на Юго-Западной", null },
-                    { new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"), "Санкт-Петербург", "Россия", "11/2", "Невский пр.", new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6931), 300L, "Филиал на Адмиралтейской", null },
-                    { new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"), "Москва", "Россия", "17", "ул. Тверская", new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6901), 150L, "Филиал на Тверской", null },
-                    { new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"), "Москва", "Россия", "59", "ул. Профсоюзная", new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6885), 150L, "Филиал на Воронцовской", null },
-                    { new Guid("95a1368b-142b-455b-933c-3ac4f936de69"), "Екатеринбург", "Россия", "32", "пр. Ленина", new DateTime(2025, 4, 24, 19, 38, 44, 219, DateTimeKind.Utc).AddTicks(6980), 100L, "Филиал на Плотинке", null }
+                    { new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"), "Москва", "Россия", "2к1", "ул. Покрышкина", new DateTime(2025, 5, 8, 0, 28, 33, 928, DateTimeKind.Utc).AddTicks(5466), 200L, "Филиал на Юго-Западной", null },
+                    { new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"), "Санкт-Петербург", "Россия", "11/2", "Невский пр.", new DateTime(2025, 5, 8, 0, 28, 33, 928, DateTimeKind.Utc).AddTicks(5901), 300L, "Филиал на Адмиралтейской", null },
+                    { new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"), "Москва", "Россия", "17", "ул. Тверская", new DateTime(2025, 5, 8, 0, 28, 33, 928, DateTimeKind.Utc).AddTicks(5837), 150L, "Филиал на Тверской", null },
+                    { new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"), "Москва", "Россия", "59", "ул. Профсоюзная", new DateTime(2025, 5, 8, 0, 28, 33, 928, DateTimeKind.Utc).AddTicks(5821), 150L, "Филиал на Воронцовской", null },
+                    { new Guid("95a1368b-142b-455b-933c-3ac4f936de69"), "Екатеринбург", "Россия", "32", "пр. Ленина", new DateTime(2025, 5, 8, 0, 28, 33, 928, DateTimeKind.Utc).AddTicks(5917), 100L, "Филиал на Плотинке", null }
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "Clients",
                 columns: new[] { "Id", "AllowEntry", "AllowNotifications", "CreatedDate", "Email", "IsStaff", "Phone", "SocialGroupId", "UpdatedDate", "FullName_FirstName", "FullName_Patronymic", "FullName_SecondName" },
                 values: new object[,]
                 {
-                    { new Guid("1db4505a-02f3-49a5-9837-aec1b0ecca44"), true, false, new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9042), "ivanov@example.com", false, "+79991234567", null, null, "Иван", "Иванович", "Иванов" },
-                    { new Guid("287bc96f-469a-4acb-9f83-ca0932c787e2"), true, false, new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9246), "petrov@example.com", false, "+79992345678", null, null, "Петр", "Петрович", "Петров" },
-                    { new Guid("754d703a-f1ea-425a-b3eb-b98829627774"), true, false, new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9283), "sidorova@example.com", false, "+79993456789", null, null, "Анна", "Сергеевна", "Сидорова" },
-                    { new Guid("d789e2e0-13d7-4fdb-9b38-2df0675525fc"), true, false, new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9312), "kuznetsova@example.com", false, "+79994567890", null, null, "Мария", "Алексеевна", "Кузнецова" }
+                    { new Guid("1db4505a-02f3-49a5-9837-aec1b0ecca44"), true, false, new DateTime(2025, 5, 8, 0, 28, 33, 937, DateTimeKind.Utc).AddTicks(4475), "ivanov@example.com", false, "+79991234567", null, null, "Иван", "Иванович", "Иванов" },
+                    { new Guid("287bc96f-469a-4acb-9f83-ca0932c787e2"), true, false, new DateTime(2025, 5, 8, 0, 28, 33, 937, DateTimeKind.Utc).AddTicks(4674), "petrov@example.com", false, "+79992345678", null, null, "Петр", "Петрович", "Петров" },
+                    { new Guid("754d703a-f1ea-425a-b3eb-b98829627774"), true, false, new DateTime(2025, 5, 8, 0, 28, 33, 937, DateTimeKind.Utc).AddTicks(4721), "sidorova@example.com", false, "+79993456789", null, null, "Анна", "Сергеевна", "Сидорова" },
+                    { new Guid("d789e2e0-13d7-4fdb-9b38-2df0675525fc"), true, false, new DateTime(2025, 5, 8, 0, 28, 33, 937, DateTimeKind.Utc).AddTicks(4755), "kuznetsova@example.com", false, "+79994567890", null, null, "Мария", "Алексеевна", "Кузнецова" }
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "Roles",
                 columns: new[] { "Id", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("33009074-8ef9-492d-a5a6-d9684f7e9f48"), new DateTime(2025, 4, 24, 19, 38, 43, 555, DateTimeKind.Utc).AddTicks(687), "Admin", null },
-                    { new Guid("8b6e157d-21fe-40df-96eb-4ea506e5fea9"), new DateTime(2025, 4, 24, 19, 38, 43, 555, DateTimeKind.Utc).AddTicks(1230), "Manager", null }
+                    { new Guid("336f2f90-6185-4895-8e00-cac003e260ed"), new DateTime(2025, 5, 8, 0, 28, 33, 211, DateTimeKind.Utc).AddTicks(7932), "Manager", null },
+                    { new Guid("fdd661e4-838f-4b1d-9329-796d8841a7f3"), new DateTime(2025, 5, 8, 0, 28, 33, 211, DateTimeKind.Utc).AddTicks(7307), "Admin", null }
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "Services",
                 columns: new[] { "Id", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("06fee5c7-0daf-4c8c-9271-4c14f26d5e2a"), new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3990), "Фитнесс бар", null },
-                    { new Guid("0c3ed5b6-9ea4-428b-8931-086a41951451"), new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3986), "Кроссфит зона", null },
-                    { new Guid("20b848e4-13fd-43d3-9452-763b6435e7c2"), new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3988), "Боксерская зона", null },
-                    { new Guid("23ad6d27-f2ea-4f57-a2e3-6a36e33fad69"), new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3985), "Спа зона", null },
-                    { new Guid("81c16014-83ce-4570-bd16-51e9ef4187b5"), new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3981), "Хамам", null },
-                    { new Guid("8d313217-d403-4368-8744-d44013db63ad"), new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3983), "Бассейн", null },
-                    { new Guid("f42cee3e-3e27-45e9-9a17-bb991a69f2ef"), new DateTime(2025, 4, 24, 19, 38, 44, 218, DateTimeKind.Utc).AddTicks(3819), "Тренажерный зал", null }
+                    { new Guid("06fee5c7-0daf-4c8c-9271-4c14f26d5e2a"), new DateTime(2025, 5, 8, 0, 28, 33, 927, DateTimeKind.Utc).AddTicks(1552), "Фитнесс бар", null },
+                    { new Guid("0c3ed5b6-9ea4-428b-8931-086a41951451"), new DateTime(2025, 5, 8, 0, 28, 33, 927, DateTimeKind.Utc).AddTicks(1549), "Кроссфит зона", null },
+                    { new Guid("20b848e4-13fd-43d3-9452-763b6435e7c2"), new DateTime(2025, 5, 8, 0, 28, 33, 927, DateTimeKind.Utc).AddTicks(1550), "Боксерская зона", null },
+                    { new Guid("23ad6d27-f2ea-4f57-a2e3-6a36e33fad69"), new DateTime(2025, 5, 8, 0, 28, 33, 927, DateTimeKind.Utc).AddTicks(1547), "Спа зона", null },
+                    { new Guid("81c16014-83ce-4570-bd16-51e9ef4187b5"), new DateTime(2025, 5, 8, 0, 28, 33, 927, DateTimeKind.Utc).AddTicks(1543), "Хамам", null },
+                    { new Guid("8d313217-d403-4368-8744-d44013db63ad"), new DateTime(2025, 5, 8, 0, 28, 33, 927, DateTimeKind.Utc).AddTicks(1545), "Бассейн", null },
+                    { new Guid("f42cee3e-3e27-45e9-9a17-bb991a69f2ef"), new DateTime(2025, 5, 8, 0, 28, 33, 927, DateTimeKind.Utc).AddTicks(1367), "Тренажерный зал", null }
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "SocialGroups",
                 columns: new[] { "Id", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("5514344f-43cf-407f-aa83-dc5b4b54c172"), new DateTime(2025, 4, 24, 19, 38, 44, 221, DateTimeKind.Utc).AddTicks(8613), "Студенты", null },
-                    { new Guid("a2824bfb-2de7-44f2-a175-6ce1f440d5c9"), new DateTime(2025, 4, 24, 19, 38, 44, 221, DateTimeKind.Utc).AddTicks(8760), "Пенсионеры", null }
+                    { new Guid("5514344f-43cf-407f-aa83-dc5b4b54c172"), new DateTime(2025, 5, 8, 0, 28, 33, 930, DateTimeKind.Utc).AddTicks(8956), "Студенты", null },
+                    { new Guid("a2824bfb-2de7-44f2-a175-6ce1f440d5c9"), new DateTime(2025, 5, 8, 0, 28, 33, 930, DateTimeKind.Utc).AddTicks(9113), "Пенсионеры", null }
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "Tariffs",
                 columns: new[] { "Id", "AllowMultiBranches", "CreatedDate", "DiscountForSocialGroup", "Name", "PriceForNMonths", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"), true, new DateTime(2025, 4, 24, 19, 38, 44, 224, DateTimeKind.Utc).AddTicks(6456), "{\"5514344f-43cf-407f-aa83-dc5b4b54c172\":10,\"a2824bfb-2de7-44f2-a175-6ce1f440d5c9\":25}", "Pro", "{\"1\":4500,\"6\":12500,\"12\":20000}", null },
-                    { new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"), true, new DateTime(2025, 4, 24, 19, 38, 44, 224, DateTimeKind.Utc).AddTicks(6440), "{\"5514344f-43cf-407f-aa83-dc5b4b54c172\":10,\"a2824bfb-2de7-44f2-a175-6ce1f440d5c9\":25}", "Standart", "{\"1\":3000,\"6\":10000,\"12\":15000}", null },
-                    { new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"), false, new DateTime(2025, 4, 24, 19, 38, 44, 224, DateTimeKind.Utc).AddTicks(5824), "{\"5514344f-43cf-407f-aa83-dc5b4b54c172\":10,\"a2824bfb-2de7-44f2-a175-6ce1f440d5c9\":25}", "Ligth", "{\"1\":1500,\"6\":7500,\"12\":12500}", null }
+                    { new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"), true, new DateTime(2025, 5, 8, 0, 28, 33, 934, DateTimeKind.Utc).AddTicks(9125), "{\"5514344f-43cf-407f-aa83-dc5b4b54c172\":10,\"a2824bfb-2de7-44f2-a175-6ce1f440d5c9\":25}", "Pro", "{\"1\":4500,\"6\":12500,\"12\":20000}", null },
+                    { new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"), true, new DateTime(2025, 5, 8, 0, 28, 33, 934, DateTimeKind.Utc).AddTicks(9100), "{\"5514344f-43cf-407f-aa83-dc5b4b54c172\":10,\"a2824bfb-2de7-44f2-a175-6ce1f440d5c9\":25}", "Standart", "{\"1\":3000,\"6\":10000,\"12\":15000}", null },
+                    { new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"), false, new DateTime(2025, 5, 8, 0, 28, 33, 934, DateTimeKind.Utc).AddTicks(8319), "{\"5514344f-43cf-407f-aa83-dc5b4b54c172\":10,\"a2824bfb-2de7-44f2-a175-6ce1f440d5c9\":25}", "Ligth", "{\"1\":1500,\"6\":7500,\"12\":12500}", null }
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "AppUsers",
                 columns: new[] { "Id", "AllowEntry", "CreatedDate", "Email", "IsBlocked", "PasswordHash", "Phone", "RefreshToken", "RefreshTokenExpires", "RoleId", "UpdatedDate", "FullName_FirstName", "FullName_Patronymic", "FullName_SecondName" },
                 values: new object[,]
                 {
-                    { new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"), true, new DateTime(2025, 4, 24, 19, 38, 44, 3, DateTimeKind.Utc).AddTicks(2707), "ivanov@yandex.ru", false, "6899B3B9B5026972C793B6C29F720B30C87057E7D97DBDC09DA8695CE0FF15B80AE59080822A78BC8FA3D88E8FFD9E12EEB2EDE592B1FC15B08AF7FA747A97AA:F622ED2EEAF699B272D6873952EA6D520DFAD7BC63B37CD8D1CF7260B84D1E2D1689E2F4FA70E4EA31F52ABE14E7D0CBEE665B14775DE0D3FC69282880AAD110", "+78005553535", "1DEnUkuwXRKz4gNU6p4RE0T4350Ibqoe0TCW/I4Zxxw5YzmExLWjJBAl0DJyxgSfDVtafCBqXSTPQoAUc+yf3A==", new DateTime(2026, 4, 19, 19, 38, 44, 3, DateTimeKind.Utc).AddTicks(2439), new Guid("8b6e157d-21fe-40df-96eb-4ea506e5fea9"), null, "Иванов", "Иванович", "Иван" },
-                    { new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"), true, new DateTime(2025, 4, 24, 19, 38, 43, 786, DateTimeKind.Utc).AddTicks(8262), "iolovich@yandex.ru", false, "DC1C8982E40E23E7B51C38A6609787C69AAB6D62710E4CF90E7D3FF2848D193EC8C5BBEEC1C4206F54AD2FFC303FE775982335E3899551FF53384827B32B83C6:ED21D0DE1766A9E9B2C7AA8449A63C4297008DE847205E44810878E75180AB35B5E147B67718C0A148B0E8B40F58B57E650E0E0A0856EDDD63AB99A4A4A2DEF8", "+78005553535", "okN812SR7gtV9sJJcguJHx8llavgltda5O17WJ40aK/MaiCZ1qf+vCp/fzSNr/Rcd/AuduYgKxezZk9/Jvrfig==", new DateTime(2026, 4, 19, 19, 38, 43, 785, DateTimeKind.Utc).AddTicks(1317), new Guid("33009074-8ef9-492d-a5a6-d9684f7e9f48"), null, "Евгения", "Алексеевна", "Иолович" },
-                    { new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"), true, new DateTime(2025, 4, 24, 19, 38, 44, 215, DateTimeKind.Utc).AddTicks(7430), "petrov@yandex.ru", false, "D80AEC8C1A1C598955DD42595E0B661108FDCAFF0F7A8515D0334EC47BA01486D31DB1B66E12E2703D92A78635901A6153232129C4CA061C145F41F7CC25C0D5:207C9B959842831DDF2B03718DADB5C9B4582D8D95926F475E596ABF8195345F85C0C7ABE412E7B56CCA53E16FE132CCA9D42F95A29E475C1FDF9D5AEF817AAB", "+79991001010", "gEbJHjjI+Fn0F47uKGyIXPHllS711K+EhJ5WvmFjwBbsuvE1UTjuTOSVJHzcK6ZinAsPaAFIvADovnxk9Cjq/w==", new DateTime(2026, 4, 19, 19, 38, 44, 215, DateTimeKind.Utc).AddTicks(7097), new Guid("8b6e157d-21fe-40df-96eb-4ea506e5fea9"), null, "Петров", "Петрович", "Петр" }
+                    { new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"), true, new DateTime(2025, 5, 8, 0, 28, 33, 704, DateTimeKind.Utc).AddTicks(9974), "ivanov@yandex.ru", false, "8221AF643232AC2268F2D311188B765C9D28ED1A84878330B023B3911625D7FD06891D02A38995F5E556A658EA71DE6B7211BBE226D48FBEB8B9F5A5748E46EA:699E9C83765810595CBB212809F6A22B9A06842563391B5E342BF68320C1EC5946DE2DEB83E08B2C224307704BEE26E0CF3734FF914761093E56A010B0886C62", "+78005553535", "9MSv/9gDcLKQFb2Mlfj/79xcaK2xzEe1wxSLSDx7z6eXbnFqDy5VhWQweKpor8m7XsyxFs5a+/8WT3yR0WYhQA==", new DateTime(2026, 5, 3, 0, 28, 33, 704, DateTimeKind.Utc).AddTicks(9756), new Guid("336f2f90-6185-4895-8e00-cac003e260ed"), null, "Иванов", "Иванович", "Иван" },
+                    { new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"), true, new DateTime(2025, 5, 8, 0, 28, 33, 463, DateTimeKind.Utc).AddTicks(4568), "iolovich@yandex.ru", false, "F0ABE813F5560D9AF7F01CE18373030CFB87914E3780B7674E42743DACC2D90E0FA8A2BD22766472E19AE081C194D13ED7464E31B316FC86E6F87622B954C596:C6B5AFA68199BBCA333C43B9163E1F8370EC61B6695E61849F144432C17822A1C8F4E76602EE9AB0D0AA67D048B3FFEE0576D1444D02ED47BF7054B72EF8E785", "+78005553535", "n1+pCLeiWmiD3ut1MVVyjRhIxD3T5gTbbpPcdkAMJEUi4ApXkEQB8uuXu+F1habhZNEvRD6q7cSIXHRahoRZjw==", new DateTime(2026, 5, 3, 0, 28, 33, 460, DateTimeKind.Utc).AddTicks(7987), new Guid("fdd661e4-838f-4b1d-9329-796d8841a7f3"), null, "Евгения", "Алексеевна", "Иолович" },
+                    { new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"), true, new DateTime(2025, 5, 8, 0, 28, 33, 923, DateTimeKind.Utc).AddTicks(7577), "petrov@yandex.ru", false, "01A69B2238D2FD2EDFACD402AE786544E659CC97B8C9391ED30AAEAB9A2130ADA867F33CE1C1157BB534E351F3D119E08BB1D14F8317D4F53492A67B386898B4:9A0BFC7DFB6D7122DADEDC85A2F189FE3B4A1D68DCD2A710BCE7C0744630DEDE43E4D2EC6B993924437FBB3817A5D62035E904A647ED467ADE38AAF2A820AEFD", "+79991001010", "zfUWP74pmxuaJTdVYEhQ+MDoO45hviCcgUjblYyovC88QqfPm1ReGEjz9sLD54m7Z9tNJJuU06WEqUHDcOgMMQ==", new DateTime(2026, 5, 3, 0, 28, 33, 923, DateTimeKind.Utc).AddTicks(7320), new Guid("336f2f90-6185-4895-8e00-cac003e260ed"), null, "Петров", "Петрович", "Петр" }
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "Clients",
                 columns: new[] { "Id", "AllowEntry", "AllowNotifications", "CreatedDate", "Email", "IsStaff", "Phone", "SocialGroupId", "UpdatedDate", "FullName_FirstName", "FullName_Patronymic", "FullName_SecondName" },
                 values: new object[,]
                 {
-                    { new Guid("3294e0e3-6409-431b-8ed2-db3819ebc635"), true, false, new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9731), "smirnov@example.com", false, "+79995678901", new Guid("5514344f-43cf-407f-aa83-dc5b4b54c172"), null, "Алексей", "Дмитриевич", "Смирнов" },
-                    { new Guid("a783ccef-eaf0-415d-b72a-6dffeeb247f5"), true, false, new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9788), "vasilev@example.com", false, "+79997890123", new Guid("a2824bfb-2de7-44f2-a175-6ce1f440d5c9"), null, "Дмитрий", "Олегович", "Васильев" },
-                    { new Guid("d1cbac4f-29bb-46ad-a6dd-b987523de71a"), true, false, new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9809), "novikova@example.com", false, "+79998901234", new Guid("a2824bfb-2de7-44f2-a175-6ce1f440d5c9"), null, "Ольга", "Игоревна", "Новикова" },
-                    { new Guid("ed8a6578-96f3-4891-a816-ef0559b27ed3"), true, false, new DateTime(2025, 4, 24, 19, 38, 44, 226, DateTimeKind.Utc).AddTicks(9766), "popova@example.com", false, "+79996789012", new Guid("5514344f-43cf-407f-aa83-dc5b4b54c172"), null, "Елена", "Викторовна", "Попова" }
+                    { new Guid("3294e0e3-6409-431b-8ed2-db3819ebc635"), true, false, new DateTime(2025, 5, 8, 0, 28, 33, 937, DateTimeKind.Utc).AddTicks(5179), "smirnov@example.com", false, "+79995678901", new Guid("5514344f-43cf-407f-aa83-dc5b4b54c172"), null, "Алексей", "Дмитриевич", "Смирнов" },
+                    { new Guid("a783ccef-eaf0-415d-b72a-6dffeeb247f5"), true, false, new DateTime(2025, 5, 8, 0, 28, 33, 937, DateTimeKind.Utc).AddTicks(5229), "vasilev@example.com", false, "+79997890123", new Guid("a2824bfb-2de7-44f2-a175-6ce1f440d5c9"), null, "Дмитрий", "Олегович", "Васильев" },
+                    { new Guid("d1cbac4f-29bb-46ad-a6dd-b987523de71a"), true, false, new DateTime(2025, 5, 8, 0, 28, 33, 937, DateTimeKind.Utc).AddTicks(5248), "novikova@example.com", false, "+79998901234", new Guid("a2824bfb-2de7-44f2-a175-6ce1f440d5c9"), null, "Ольга", "Игоревна", "Новикова" },
+                    { new Guid("ed8a6578-96f3-4891-a816-ef0559b27ed3"), true, false, new DateTime(2025, 5, 8, 0, 28, 33, 937, DateTimeKind.Utc).AddTicks(5206), "popova@example.com", false, "+79996789012", new Guid("5514344f-43cf-407f-aa83-dc5b4b54c172"), null, "Елена", "Викторовна", "Попова" }
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "Memberships",
                 columns: new[] { "Id", "BranchId", "ClientId", "CreatedDate", "ExpiresDate", "MonthQuantity", "TariffId", "TotalCost", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("3a1d21d6-3bc4-4f26-ba7e-1ef9bb3b5286"), new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"), new Guid("754d703a-f1ea-425a-b3eb-b98829627774"), new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6897), new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"), 4500.0, null },
-                    { new Guid("82347d00-1363-4f40-99de-50b4096d44c8"), new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"), new Guid("1db4505a-02f3-49a5-9837-aec1b0ecca44"), new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6644), new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"), 1500.0, null },
-                    { new Guid("b661a029-3d11-43c2-a652-f233cdc7bc3e"), new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"), new Guid("d789e2e0-13d7-4fdb-9b38-2df0675525fc"), new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6900), new DateTime(2025, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"), 7500.0, null },
-                    { new Guid("f34285ab-2bfa-47a2-bda8-5ad707e24c8b"), new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"), new Guid("287bc96f-469a-4acb-9f83-ca0932c787e2"), new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6891), new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"), 3000.0, null }
+                    { new Guid("3a1d21d6-3bc4-4f26-ba7e-1ef9bb3b5286"), new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"), new Guid("754d703a-f1ea-425a-b3eb-b98829627774"), new DateTime(2025, 5, 8, 0, 28, 33, 939, DateTimeKind.Utc).AddTicks(3956), new DateTime(2025, 6, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"), 4500.0, null },
+                    { new Guid("82347d00-1363-4f40-99de-50b4096d44c8"), new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"), new Guid("1db4505a-02f3-49a5-9837-aec1b0ecca44"), new DateTime(2025, 5, 8, 0, 28, 33, 939, DateTimeKind.Utc).AddTicks(3627), new DateTime(2025, 6, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"), 1500.0, null },
+                    { new Guid("b661a029-3d11-43c2-a652-f233cdc7bc3e"), new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"), new Guid("d789e2e0-13d7-4fdb-9b38-2df0675525fc"), new DateTime(2025, 5, 8, 0, 28, 33, 939, DateTimeKind.Utc).AddTicks(3960), new DateTime(2025, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"), 7500.0, null },
+                    { new Guid("f34285ab-2bfa-47a2-bda8-5ad707e24c8b"), new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"), new Guid("287bc96f-469a-4acb-9f83-ca0932c787e2"), new DateTime(2025, 5, 8, 0, 28, 33, 939, DateTimeKind.Utc).AddTicks(3951), new DateTime(2025, 6, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"), 3000.0, null }
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "ServiceBranches",
                 columns: new[] { "Id", "BranchId", "ServiceId" },
                 values: new object[,]
@@ -421,7 +387,6 @@ namespace Management.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "ServiceTariffs",
                 columns: new[] { "Id", "ServiceId", "TariffId" },
                 values: new object[,]
@@ -445,75 +410,64 @@ namespace Management.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "FClub.Management",
                 table: "Memberships",
                 columns: new[] { "Id", "BranchId", "ClientId", "CreatedDate", "ExpiresDate", "MonthQuantity", "TariffId", "TotalCost", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("25825c4c-e04f-40c6-a00d-4a9dfbdbb91d"), new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"), new Guid("3294e0e3-6409-431b-8ed2-db3819ebc635"), new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6904), new DateTime(2025, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"), 9000.0, null },
-                    { new Guid("53a621b5-fedc-4fc9-9232-6a62858d8e59"), new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"), new Guid("d1cbac4f-29bb-46ad-a6dd-b987523de71a"), new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6915), new DateTime(2026, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 12, new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"), 15000.0, null },
-                    { new Guid("7898f7a6-6f24-47e8-bf6d-7766e1638878"), new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"), new Guid("a783ccef-eaf0-415d-b72a-6dffeeb247f5"), new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6911), new DateTime(2026, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 12, new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"), 11250.0, null },
-                    { new Guid("b9e3f831-eb10-414b-93c1-b0888d970c9f"), new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"), new Guid("ed8a6578-96f3-4891-a816-ef0559b27ed3"), new DateTime(2025, 4, 24, 19, 38, 44, 228, DateTimeKind.Utc).AddTicks(6907), new DateTime(2025, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"), 11250.0, null }
+                    { new Guid("25825c4c-e04f-40c6-a00d-4a9dfbdbb91d"), new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"), new Guid("3294e0e3-6409-431b-8ed2-db3819ebc635"), new DateTime(2025, 5, 8, 0, 28, 33, 939, DateTimeKind.Utc).AddTicks(3963), new DateTime(2025, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"), 9000.0, null },
+                    { new Guid("53a621b5-fedc-4fc9-9232-6a62858d8e59"), new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"), new Guid("d1cbac4f-29bb-46ad-a6dd-b987523de71a"), new DateTime(2025, 5, 8, 0, 28, 33, 939, DateTimeKind.Utc).AddTicks(3975), new DateTime(2026, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 12, new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"), 15000.0, null },
+                    { new Guid("7898f7a6-6f24-47e8-bf6d-7766e1638878"), new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"), new Guid("a783ccef-eaf0-415d-b72a-6dffeeb247f5"), new DateTime(2025, 5, 8, 0, 28, 33, 939, DateTimeKind.Utc).AddTicks(3970), new DateTime(2026, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 12, new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"), 11250.0, null },
+                    { new Guid("b9e3f831-eb10-414b-93c1-b0888d970c9f"), new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"), new Guid("ed8a6578-96f3-4891-a816-ef0559b27ed3"), new DateTime(2025, 5, 8, 0, 28, 33, 939, DateTimeKind.Utc).AddTicks(3967), new DateTime(2025, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"), 11250.0, null }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AppUsers_RoleId",
-                schema: "FClub.Management",
                 table: "AppUsers",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_SocialGroupId",
-                schema: "FClub.Management",
                 table: "Clients",
                 column: "SocialGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Memberships_BranchId",
-                schema: "FClub.Management",
                 table: "Memberships",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Memberships_ClientId",
-                schema: "FClub.Management",
                 table: "Memberships",
                 column: "ClientId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Memberships_TariffId",
-                schema: "FClub.Management",
                 table: "Memberships",
                 column: "TariffId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceBranches_BranchId",
-                schema: "FClub.Management",
                 table: "ServiceBranches",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceBranches_ServiceId",
-                schema: "FClub.Management",
                 table: "ServiceBranches",
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceTariffs_ServiceId",
-                schema: "FClub.Management",
                 table: "ServiceTariffs",
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceTariffs_TariffId",
-                schema: "FClub.Management",
                 table: "ServiceTariffs",
                 column: "TariffId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StatisticNotes_BranchId",
-                schema: "FClub.Management",
                 table: "StatisticNotes",
                 column: "BranchId");
         }
@@ -522,48 +476,37 @@ namespace Management.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppUsers",
-                schema: "FClub.Management");
+                name: "AppUsers");
 
             migrationBuilder.DropTable(
-                name: "Memberships",
-                schema: "FClub.Management");
+                name: "Memberships");
 
             migrationBuilder.DropTable(
-                name: "ServiceBranches",
-                schema: "FClub.Management");
+                name: "ServiceBranches");
 
             migrationBuilder.DropTable(
-                name: "ServiceTariffs",
-                schema: "FClub.Management");
+                name: "ServiceTariffs");
 
             migrationBuilder.DropTable(
-                name: "StatisticNotes",
-                schema: "FClub.Management");
+                name: "StatisticNotes");
 
             migrationBuilder.DropTable(
-                name: "Roles",
-                schema: "FClub.Management");
+                name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Clients",
-                schema: "FClub.Management");
+                name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "Services",
-                schema: "FClub.Management");
+                name: "Services");
 
             migrationBuilder.DropTable(
-                name: "Tariffs",
-                schema: "FClub.Management");
+                name: "Tariffs");
 
             migrationBuilder.DropTable(
-                name: "Branches",
-                schema: "FClub.Management");
+                name: "Branches");
 
             migrationBuilder.DropTable(
-                name: "SocialGroups",
-                schema: "FClub.Management");
+                name: "SocialGroups");
         }
     }
 }

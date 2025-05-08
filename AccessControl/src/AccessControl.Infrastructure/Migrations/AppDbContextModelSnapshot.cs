@@ -17,7 +17,6 @@ namespace AccessControl.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("FClub.AccessControl")
                 .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -34,7 +33,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUsers", "FClub.AccessControl");
+                    b.ToTable("AppUsers", (string)null);
 
                     b.HasData(
                         new
@@ -77,13 +76,13 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Branches", "FClub.AccessControl");
+                    b.ToTable("Branches", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 19, DateTimeKind.Utc).AddTicks(1688),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 418, DateTimeKind.Utc).AddTicks(987),
                             CurrentClientQuantity = 0L,
                             MaxOccupancy = 200L,
                             Name = "Филиал на Юго-Западной"
@@ -91,7 +90,7 @@ namespace AccessControl.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 19, DateTimeKind.Utc).AddTicks(1885),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 418, DateTimeKind.Utc).AddTicks(1160),
                             CurrentClientQuantity = 0L,
                             MaxOccupancy = 150L,
                             Name = "Филиал на Воронцовской"
@@ -99,7 +98,7 @@ namespace AccessControl.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 19, DateTimeKind.Utc).AddTicks(1899),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 418, DateTimeKind.Utc).AddTicks(1173),
                             CurrentClientQuantity = 0L,
                             MaxOccupancy = 150L,
                             Name = "Филиал на Тверской"
@@ -107,7 +106,7 @@ namespace AccessControl.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 19, DateTimeKind.Utc).AddTicks(1917),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 418, DateTimeKind.Utc).AddTicks(1191),
                             CurrentClientQuantity = 0L,
                             MaxOccupancy = 300L,
                             Name = "Филиал на Адмиралтейской"
@@ -115,7 +114,7 @@ namespace AccessControl.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("95a1368b-142b-455b-933c-3ac4f936de69"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 19, DateTimeKind.Utc).AddTicks(1930),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 418, DateTimeKind.Utc).AddTicks(1206),
                             CurrentClientQuantity = 0L,
                             MaxOccupancy = 100L,
                             Name = "Филиал на Плотинке"
@@ -149,14 +148,14 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients", "FClub.AccessControl");
+                    b.ToTable("Clients", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("58be07ff-8668-4d38-9c76-c0f3b805fe57"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7054),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7083),
                             Email = "iolovich@yandex.ru",
                             IsStaff = true,
                             Phone = "+78005553535"
@@ -165,7 +164,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("40416adb-dfe7-4533-ae73-80c7dd6f2e6e"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7250),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7612),
                             Email = "ivanov@yandex.ru",
                             IsStaff = true,
                             Phone = "+78005553535"
@@ -174,7 +173,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("6d9ffd62-5bd7-451e-a1f2-548ea313effb"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7285),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7764),
                             Email = "petrov@yandex.ru",
                             IsStaff = true,
                             Phone = "+79991001010"
@@ -183,7 +182,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("1db4505a-02f3-49a5-9837-aec1b0ecca44"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7310),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7793),
                             Email = "ivanov@example.com",
                             IsStaff = false,
                             Phone = "+79991234567"
@@ -192,7 +191,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("287bc96f-469a-4acb-9f83-ca0932c787e2"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7328),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7811),
                             Email = "petrov@example.com",
                             IsStaff = false,
                             Phone = "+79992345678"
@@ -201,7 +200,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("754d703a-f1ea-425a-b3eb-b98829627774"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7349),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7831),
                             Email = "sidorova@example.com",
                             IsStaff = false,
                             Phone = "+79993456789"
@@ -210,7 +209,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("d789e2e0-13d7-4fdb-9b38-2df0675525fc"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7369),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7850),
                             Email = "kuznetsova@example.com",
                             IsStaff = false,
                             Phone = "+79994567890"
@@ -219,7 +218,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("3294e0e3-6409-431b-8ed2-db3819ebc635"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7387),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7867),
                             Email = "smirnov@example.com",
                             IsStaff = false,
                             Phone = "+79995678901"
@@ -228,7 +227,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("ed8a6578-96f3-4891-a816-ef0559b27ed3"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7403),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7884),
                             Email = "popova@example.com",
                             IsStaff = false,
                             Phone = "+79996789012"
@@ -237,7 +236,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("a783ccef-eaf0-415d-b72a-6dffeeb247f5"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7419),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7899),
                             Email = "vasilev@example.com",
                             IsStaff = false,
                             Phone = "+79997890123"
@@ -246,7 +245,7 @@ namespace AccessControl.Infrastructure.Migrations
                         {
                             Id = new Guid("d1cbac4f-29bb-46ad-a6dd-b987523de71a"),
                             AllowEntry = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 25, DateTimeKind.Utc).AddTicks(7435),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 432, DateTimeKind.Utc).AddTicks(7916),
                             Email = "novikova@example.com",
                             IsStaff = false,
                             Phone = "+79998901234"
@@ -290,7 +289,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasIndex("TurnstileId");
 
-                    b.ToTable("EntryLogs", "FClub.AccessControl");
+                    b.ToTable("EntryLogs", (string)null);
                 });
 
             modelBuilder.Entity("AccessControl.Domain.Entities.Membership", b =>
@@ -326,7 +325,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasIndex("TariffId");
 
-                    b.ToTable("Memberships", "FClub.AccessControl");
+                    b.ToTable("Memberships", (string)null);
 
                     b.HasData(
                         new
@@ -334,8 +333,8 @@ namespace AccessControl.Infrastructure.Migrations
                             Id = new Guid("82347d00-1363-4f40-99de-50b4096d44c8"),
                             BranchId = new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"),
                             ClientId = new Guid("1db4505a-02f3-49a5-9837-aec1b0ecca44"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 27, DateTimeKind.Utc).AddTicks(2161),
-                            ExpiresDate = new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 435, DateTimeKind.Utc).AddTicks(2195),
+                            ExpiresDate = new DateTime(2025, 6, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TariffId = new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba")
                         },
                         new
@@ -343,8 +342,8 @@ namespace AccessControl.Infrastructure.Migrations
                             Id = new Guid("f34285ab-2bfa-47a2-bda8-5ad707e24c8b"),
                             BranchId = new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"),
                             ClientId = new Guid("287bc96f-469a-4acb-9f83-ca0932c787e2"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 27, DateTimeKind.Utc).AddTicks(2286),
-                            ExpiresDate = new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 435, DateTimeKind.Utc).AddTicks(2357),
+                            ExpiresDate = new DateTime(2025, 6, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TariffId = new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794")
                         },
                         new
@@ -352,8 +351,8 @@ namespace AccessControl.Infrastructure.Migrations
                             Id = new Guid("3a1d21d6-3bc4-4f26-ba7e-1ef9bb3b5286"),
                             BranchId = new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"),
                             ClientId = new Guid("754d703a-f1ea-425a-b3eb-b98829627774"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 27, DateTimeKind.Utc).AddTicks(2290),
-                            ExpiresDate = new DateTime(2025, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 435, DateTimeKind.Utc).AddTicks(2361),
+                            ExpiresDate = new DateTime(2025, 6, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TariffId = new Guid("5973248c-c6b4-4858-8f96-3888db6340bd")
                         },
                         new
@@ -361,8 +360,8 @@ namespace AccessControl.Infrastructure.Migrations
                             Id = new Guid("b661a029-3d11-43c2-a652-f233cdc7bc3e"),
                             BranchId = new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"),
                             ClientId = new Guid("d789e2e0-13d7-4fdb-9b38-2df0675525fc"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 27, DateTimeKind.Utc).AddTicks(2293),
-                            ExpiresDate = new DateTime(2025, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 435, DateTimeKind.Utc).AddTicks(2364),
+                            ExpiresDate = new DateTime(2025, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TariffId = new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba")
                         },
                         new
@@ -370,8 +369,8 @@ namespace AccessControl.Infrastructure.Migrations
                             Id = new Guid("25825c4c-e04f-40c6-a00d-4a9dfbdbb91d"),
                             BranchId = new Guid("097f561c-5ace-4e10-b5c6-53d1e3de4f03"),
                             ClientId = new Guid("3294e0e3-6409-431b-8ed2-db3819ebc635"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 27, DateTimeKind.Utc).AddTicks(2296),
-                            ExpiresDate = new DateTime(2025, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 435, DateTimeKind.Utc).AddTicks(2369),
+                            ExpiresDate = new DateTime(2025, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TariffId = new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794")
                         },
                         new
@@ -379,8 +378,8 @@ namespace AccessControl.Infrastructure.Migrations
                             Id = new Guid("b9e3f831-eb10-414b-93c1-b0888d970c9f"),
                             BranchId = new Guid("34a71229-c73a-44a3-ba97-a8f528a4b056"),
                             ClientId = new Guid("ed8a6578-96f3-4891-a816-ef0559b27ed3"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 27, DateTimeKind.Utc).AddTicks(2300),
-                            ExpiresDate = new DateTime(2025, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 435, DateTimeKind.Utc).AddTicks(2372),
+                            ExpiresDate = new DateTime(2025, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TariffId = new Guid("5973248c-c6b4-4858-8f96-3888db6340bd")
                         },
                         new
@@ -388,8 +387,8 @@ namespace AccessControl.Infrastructure.Migrations
                             Id = new Guid("7898f7a6-6f24-47e8-bf6d-7766e1638878"),
                             BranchId = new Guid("2a74ff8d-d12a-4dd7-9b2a-0ff744603b5b"),
                             ClientId = new Guid("a783ccef-eaf0-415d-b72a-6dffeeb247f5"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 27, DateTimeKind.Utc).AddTicks(2304),
-                            ExpiresDate = new DateTime(2026, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 435, DateTimeKind.Utc).AddTicks(2375),
+                            ExpiresDate = new DateTime(2026, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TariffId = new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794")
                         },
                         new
@@ -397,8 +396,8 @@ namespace AccessControl.Infrastructure.Migrations
                             Id = new Guid("53a621b5-fedc-4fc9-9232-6a62858d8e59"),
                             BranchId = new Guid("0d4c30ca-4ad3-4881-971c-0855de9c63ed"),
                             ClientId = new Guid("d1cbac4f-29bb-46ad-a6dd-b987523de71a"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 27, DateTimeKind.Utc).AddTicks(2307),
-                            ExpiresDate = new DateTime(2026, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 435, DateTimeKind.Utc).AddTicks(2378),
+                            ExpiresDate = new DateTime(2026, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TariffId = new Guid("5973248c-c6b4-4858-8f96-3888db6340bd")
                         });
                 });
@@ -421,7 +420,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServiceBranches", "FClub.AccessControl");
+                    b.ToTable("ServiceBranches", (string)null);
 
                     b.HasData(
                         new
@@ -594,7 +593,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasIndex("TariffId");
 
-                    b.ToTable("ServiceTariffs", "FClub.AccessControl");
+                    b.ToTable("ServiceTariffs", (string)null);
 
                     b.HasData(
                         new
@@ -713,49 +712,49 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services", "FClub.AccessControl");
+                    b.ToTable("Services", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("f42cee3e-3e27-45e9-9a17-bb991a69f2ef"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 16, DateTimeKind.Utc).AddTicks(3930),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 414, DateTimeKind.Utc).AddTicks(9810),
                             Name = "Тренажерный зал"
                         },
                         new
                         {
                             Id = new Guid("81c16014-83ce-4570-bd16-51e9ef4187b5"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 16, DateTimeKind.Utc).AddTicks(4098),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 414, DateTimeKind.Utc).AddTicks(9996),
                             Name = "Хамам"
                         },
                         new
                         {
                             Id = new Guid("8d313217-d403-4368-8744-d44013db63ad"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 16, DateTimeKind.Utc).AddTicks(4101),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 414, DateTimeKind.Utc).AddTicks(9999),
                             Name = "Бассейн"
                         },
                         new
                         {
                             Id = new Guid("23ad6d27-f2ea-4f57-a2e3-6a36e33fad69"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 16, DateTimeKind.Utc).AddTicks(4103),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 415, DateTimeKind.Utc).AddTicks(1),
                             Name = "Спа зона"
                         },
                         new
                         {
                             Id = new Guid("0c3ed5b6-9ea4-428b-8931-086a41951451"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 16, DateTimeKind.Utc).AddTicks(4105),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 415, DateTimeKind.Utc).AddTicks(3),
                             Name = "Кроссфит зона"
                         },
                         new
                         {
                             Id = new Guid("20b848e4-13fd-43d3-9452-763b6435e7c2"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 16, DateTimeKind.Utc).AddTicks(4106),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 415, DateTimeKind.Utc).AddTicks(90),
                             Name = "Боксерская зона"
                         },
                         new
                         {
                             Id = new Guid("06fee5c7-0daf-4c8c-9271-4c14f26d5e2a"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 16, DateTimeKind.Utc).AddTicks(4108),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 415, DateTimeKind.Utc).AddTicks(92),
                             Name = "Фитнесс бар"
                         });
                 });
@@ -779,7 +778,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasIndex("BranchId");
 
-                    b.ToTable("StatisticNotes", "FClub.AccessControl");
+                    b.ToTable("StatisticNotes", (string)null);
                 });
 
             modelBuilder.Entity("AccessControl.Domain.Entities.Tariff", b =>
@@ -803,28 +802,28 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tariffs", "FClub.AccessControl");
+                    b.ToTable("Tariffs", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("c99c8b78-e28d-4696-87be-70e0e02716ba"),
                             AllowMultiBranches = false,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 20, DateTimeKind.Utc).AddTicks(8809),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 419, DateTimeKind.Utc).AddTicks(9447),
                             Name = "Ligth"
                         },
                         new
                         {
                             Id = new Guid("880c1cc1-e67a-4fc2-aa02-4066cb54f794"),
                             AllowMultiBranches = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 20, DateTimeKind.Utc).AddTicks(9115),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 419, DateTimeKind.Utc).AddTicks(9771),
                             Name = "Standart"
                         },
                         new
                         {
                             Id = new Guid("5973248c-c6b4-4858-8f96-3888db6340bd"),
                             AllowMultiBranches = true,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 38, 19, 20, DateTimeKind.Utc).AddTicks(9118),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 28, 5, 419, DateTimeKind.Utc).AddTicks(9774),
                             Name = "Pro"
                         });
                 });
@@ -859,7 +858,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("Turnstiles", "FClub.AccessControl");
+                    b.ToTable("Turnstiles", (string)null);
                 });
 
             modelBuilder.Entity("AccessControl.Domain.Entities.Branch", b =>
@@ -883,7 +882,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                             b1.HasKey("BranchId");
 
-                            b1.ToTable("Branches", "FClub.AccessControl");
+                            b1.ToTable("Branches");
 
                             b1.WithOwner()
                                 .HasForeignKey("BranchId");
@@ -955,7 +954,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                             b1.HasKey("ClientId");
 
-                            b1.ToTable("Clients", "FClub.AccessControl");
+                            b1.ToTable("Clients");
 
                             b1.WithOwner()
                                 .HasForeignKey("ClientId");

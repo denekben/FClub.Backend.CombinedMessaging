@@ -11,8 +11,6 @@ namespace Management.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("FClub.Management");
-
             var configuration = new ManagementConfiguration();
 
             modelBuilder.ApplyConfiguration<UserLog>(configuration);

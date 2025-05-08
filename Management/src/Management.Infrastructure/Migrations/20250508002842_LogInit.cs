@@ -11,12 +11,8 @@ namespace Management.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "FClub.Management");
-
             migrationBuilder.CreateTable(
                 name: "UserLogs",
-                schema: "FClub.Management",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -36,8 +32,7 @@ namespace Management.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserLogs",
-                schema: "FClub.Management");
+                name: "UserLogs");
         }
     }
 }

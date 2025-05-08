@@ -1,6 +1,5 @@
 ﻿using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Pivots;
-using AccessControl.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Data
@@ -28,8 +27,6 @@ namespace AccessControl.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("FClub.AccessControl");
-
             var configuration = new AccessControlConfiguration();
             modelBuilder.ApplyConfiguration<ServiceBranch>(configuration);
             modelBuilder.ApplyConfiguration<ServiceTariff>(configuration);

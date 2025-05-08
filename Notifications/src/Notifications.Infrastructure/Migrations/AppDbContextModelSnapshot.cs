@@ -17,7 +17,6 @@ namespace Notifications.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("FClub.Notifications")
                 .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -34,7 +33,7 @@ namespace Notifications.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUsers", "FClub.Notifications");
+                    b.ToTable("AppUsers", (string)null);
 
                     b.HasData(
                         new
@@ -84,14 +83,14 @@ namespace Notifications.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients", "FClub.Notifications");
+                    b.ToTable("Clients", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("1db4505a-02f3-49a5-9837-aec1b0ecca44"),
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 770, DateTimeKind.Utc).AddTicks(6810),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 995, DateTimeKind.Utc).AddTicks(4432),
                             Email = "ivanov@example.com",
                             LastEntry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastNotification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -101,7 +100,7 @@ namespace Notifications.Infrastructure.Migrations
                         {
                             Id = new Guid("287bc96f-469a-4acb-9f83-ca0932c787e2"),
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 770, DateTimeKind.Utc).AddTicks(7283),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 995, DateTimeKind.Utc).AddTicks(4699),
                             Email = "petrov@example.com",
                             LastEntry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastNotification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -111,7 +110,7 @@ namespace Notifications.Infrastructure.Migrations
                         {
                             Id = new Guid("754d703a-f1ea-425a-b3eb-b98829627774"),
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 770, DateTimeKind.Utc).AddTicks(7316),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 995, DateTimeKind.Utc).AddTicks(4727),
                             Email = "sidorova@example.com",
                             LastEntry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastNotification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -121,7 +120,7 @@ namespace Notifications.Infrastructure.Migrations
                         {
                             Id = new Guid("d789e2e0-13d7-4fdb-9b38-2df0675525fc"),
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 770, DateTimeKind.Utc).AddTicks(7440),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 995, DateTimeKind.Utc).AddTicks(4748),
                             Email = "kuznetsova@example.com",
                             LastEntry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastNotification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -131,7 +130,7 @@ namespace Notifications.Infrastructure.Migrations
                         {
                             Id = new Guid("3294e0e3-6409-431b-8ed2-db3819ebc635"),
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 770, DateTimeKind.Utc).AddTicks(7460),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 995, DateTimeKind.Utc).AddTicks(4764),
                             Email = "smirnov@example.com",
                             LastEntry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastNotification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -141,7 +140,7 @@ namespace Notifications.Infrastructure.Migrations
                         {
                             Id = new Guid("ed8a6578-96f3-4891-a816-ef0559b27ed3"),
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 770, DateTimeKind.Utc).AddTicks(7478),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 995, DateTimeKind.Utc).AddTicks(4780),
                             Email = "popova@example.com",
                             LastEntry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastNotification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -151,7 +150,7 @@ namespace Notifications.Infrastructure.Migrations
                         {
                             Id = new Guid("a783ccef-eaf0-415d-b72a-6dffeeb247f5"),
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 770, DateTimeKind.Utc).AddTicks(7494),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 995, DateTimeKind.Utc).AddTicks(4796),
                             Email = "vasilev@example.com",
                             LastEntry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastNotification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -161,7 +160,7 @@ namespace Notifications.Infrastructure.Migrations
                         {
                             Id = new Guid("d1cbac4f-29bb-46ad-a6dd-b987523de71a"),
                             AllowNotifications = false,
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 770, DateTimeKind.Utc).AddTicks(7509),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 995, DateTimeKind.Utc).AddTicks(4813),
                             Email = "novikova@example.com",
                             LastEntry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastNotification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -191,27 +190,27 @@ namespace Notifications.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notifications", "FClub.Notifications");
+                    b.ToTable("Notifications", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1971ec6e-27c8-49fe-9339-bd6518ddb500"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 762, DateTimeKind.Utc).AddTicks(5950),
+                            Id = new Guid("89031cd3-f724-4225-a6a3-7e99bd6e412d"),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 989, DateTimeKind.Utc).AddTicks(5981),
                             Text = "\r\n            <!DOCTYPE html>\r\n            <html>\r\n            <head>\r\n                <meta charset=\"UTF-8\">\r\n                <title>Мы скучаем по вам!</title>\r\n                <style>\r\n                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\r\n                    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\r\n                    .header { background-color: #f0ad4e; color: white; padding: 20px; text-align: center; }\r\n                    .content { padding: 20px; background-color: #f9f9f9; }\r\n                    .footer { padding: 20px; text-align: center; font-size: 12px; color: #777; }\r\n                    .button { display: inline-block; padding: 10px 20px; background-color: #f0ad4e; color: white; text-decoration: none; border-radius: 4px; }\r\n                    .discount { font-size: 24px; color: #d9534f; font-weight: bold; }\r\n                </style>\r\n            </head>\r\n            <body>\r\n                <div class=\"container\">\r\n                    <div class=\"header\">\r\n                        <h1>{client.Name}, мы скучаем по вам!</h1>\r\n                    </div>\r\n                    <div class=\"content\">\r\n                        <p>Дорогой {client.Name},</p>\r\n                        <p>Мы заметили, что вы давно не посещали наши филиалы, и очень по вам скучаем!</p>\r\n            \r\n                        <p>Хотим напомнить, что у нас есть много интересных предложений и новых услуг, которые могут вас заинтересовать.</p>\r\n            \r\n                        <p class=\"discount\">Специально для вас - скидка 15% на первую услугу при посещении в этом месяце!</p>\r\n            \r\n                        <p>Просто покажите это письмо при посещении, чтобы получить скидку.</p>\r\n            \r\n                        <p style=\"text-align: center;\">\r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\" class=\"button\">Посмотреть акции</a>\r\n                        </p>\r\n                    </div>\r\n                    <div class=\"footer\">\r\n                        <p>© 2025 FClub. Все права защищены.</p>\r\n                        <p>\r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Сайт</a> | \r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Контакты</a> | \r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Отписаться</a>\r\n                        </p>\r\n                    </div>\r\n                </div>\r\n            </body>\r\n            </html>\r\n        ",
                             Title = "Оповещение о посещаемости"
                         },
                         new
                         {
-                            Id = new Guid("99026757-99ec-4735-aaf3-86259ab7b6ab"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 762, DateTimeKind.Utc).AddTicks(6379),
+                            Id = new Guid("90decebd-8963-43a3-93fc-8ec8fdd49583"),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 989, DateTimeKind.Utc).AddTicks(6330),
                             Text = "\r\n            <!DOCTYPE html>\r\n            <html>\r\n            <head>\r\n                <meta charset=\"UTF-8\">\r\n                <title>Новый тариф</title>\r\n                <style>\r\n                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\r\n                    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\r\n                    .header { background-color: #5cb85c; color: white; padding: 20px; text-align: center; }\r\n                    .content { padding: 20px; background-color: #f9f9f9; }\r\n                    .footer { padding: 20px; text-align: center; font-size: 12px; color: #777; }\r\n                    .button { display: inline-block; padding: 10px 20px; background-color: #5cb85c; color: white; text-decoration: none; border-radius: 4px; }\r\n                    .price { font-size: 24px; color: #5cb85c; font-weight: bold; }\r\n                    ul { padding-left: 20px; }\r\n                </style>\r\n            </head>\r\n            <body>\r\n                <div class=\"container\">\r\n                    <div class=\"header\">\r\n                        <h1>Новый тариф \"{tariff.Name}\"</h1>\r\n                    </div>\r\n                    <div class=\"content\">\r\n                        <p>Уважаемый клиент,</p>\r\n                        <p>Мы рады представить вам наш новый тарифный план, который создан специально для вас!</p>\r\n            \r\n                        <h3>Доступные услуги:</h3>\r\n                        <ul>{tariff.ServicesList}</ul>\r\n            \r\n                        <p class=\"price\">{tariff.Price}</p>\r\n            \r\n                        <p>{tariff.AllowMultiBranches}</p>\r\n            \r\n                        <p style=\"text-align: center;\">\r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\" class=\"button\">Подробнее о тарифе</a>\r\n                        </p>\r\n                    </div>\r\n                    <div class=\"footer\">\r\n                        <p>© 2025 FClub. Все права защищены.</p>\r\n                        <p>\r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Сайт</a> | \r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Контакты</a> | \r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Отписаться</a>\r\n                        </p>\r\n                    </div>\r\n                </div>\r\n            </body>\r\n            </html>\r\n        ",
                             Title = "Оповещение о тарифе"
                         },
                         new
                         {
-                            Id = new Guid("3c5b7a46-c5b7-4694-9510-f6b4da2e0f07"),
-                            CreatedDate = new DateTime(2025, 4, 24, 19, 39, 9, 762, DateTimeKind.Utc).AddTicks(6530),
+                            Id = new Guid("7401cef2-390f-4885-8597-afe26579b929"),
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 29, 1, 989, DateTimeKind.Utc).AddTicks(6447),
                             Text = "\r\n            <!DOCTYPE html>\r\n            <html>\r\n            <head>\r\n                <meta charset=\"UTF-8\">\r\n                <title>Открытие нового филиала</title>\r\n                <style>\r\n                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\r\n                    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\r\n                    .header { background-color: #4a6fa5; color: white; padding: 20px; text-align: center; }\r\n                    .content { padding: 20px; background-color: #f9f9f9; }\r\n                    .footer { padding: 20px; text-align: center; font-size: 12px; color: #777; }\r\n                    .button { display: inline-block; padding: 10px 20px; background-color: #4a6fa5; color: white; text-decoration: none; border-radius: 4px; }\r\n                    ul { padding-left: 20px; }\r\n                </style>\r\n            </head>\r\n            <body>\r\n                <div class=\"container\">\r\n                    <div class=\"header\">\r\n                        <h1>Открытие нового филиала!</h1>\r\n                    </div>\r\n                    <div class=\"content\">\r\n                        <p>Уважаемый клиент,</p>\r\n                        <p>Мы рады сообщить вам об открытии нового филиала <strong>{branch.Name}</strong> по адресу: <strong>{branch.Address}</strong>.</p>\r\n            \r\n                        <h3>В новом филиале доступны услуги:</h3>\r\n                        <ul>{branch.ServicesList}</ul>\r\n            \r\n                        <p>Приглашаем вас посетить наш новый филиал и воспользоваться нашими услугами.</p>\r\n            \r\n                        <p style=\"text-align: center;\">\r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\" class=\"button\">Посмотреть на карте</a>\r\n                        </p>\r\n                    </div>\r\n                    <div class=\"footer\">\r\n                        <p>© 2025 FClub. Все права защищены.</p>\r\n                        <p>\r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Сайт</a> | \r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Контакты</a> | \r\n                            <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Отписаться</a>\r\n                        </p>\r\n                    </div>\r\n                </div>\r\n            </body>\r\n            </html>\r\n        ",
                             Title = "Оповещение о филиале"
                         });
@@ -264,21 +263,21 @@ namespace Notifications.Infrastructure.Migrations
                     b.HasIndex("TariffNotificationId")
                         .IsUnique();
 
-                    b.ToTable("NotificationSettings", "FClub.Notifications");
+                    b.ToTable("NotificationSettings", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b7dfdb20-e6eb-401d-b6f5-aa9f9fb0b5d0"),
+                            Id = new Guid("04b2913c-f561-45d4-8122-58373a3fa643"),
                             AllowAttendanceNotifications = true,
                             AttendanceEmailSubject = "Вас давно с нами не было!",
-                            AttendanceNotificationId = new Guid("1971ec6e-27c8-49fe-9339-bd6518ddb500"),
+                            AttendanceNotificationId = new Guid("89031cd3-f724-4225-a6a3-7e99bd6e412d"),
                             AttendanceNotificationPeriod = 7L,
                             AttendanceNotificationReSendPeriod = 7L,
                             BranchEmailSubject = "Мы расширяемся!",
-                            BranchNotificationId = new Guid("3c5b7a46-c5b7-4694-9510-f6b4da2e0f07"),
+                            BranchNotificationId = new Guid("7401cef2-390f-4885-8597-afe26579b929"),
                             TariffEmailSubject = "У нас новинки!",
-                            TariffNotificationId = new Guid("99026757-99ec-4735-aaf3-86259ab7b6ab")
+                            TariffNotificationId = new Guid("90decebd-8963-43a3-93fc-8ec8fdd49583")
                         });
                 });
 
@@ -302,7 +301,7 @@ namespace Notifications.Infrastructure.Migrations
 
                             b1.HasKey("ClientId");
 
-                            b1.ToTable("Clients", "FClub.Notifications");
+                            b1.ToTable("Clients");
 
                             b1.WithOwner()
                                 .HasForeignKey("ClientId");

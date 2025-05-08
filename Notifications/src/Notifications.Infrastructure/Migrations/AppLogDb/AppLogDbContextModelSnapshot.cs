@@ -17,7 +17,6 @@ namespace Notifications.Infrastructure.Migrations.AppLogDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("FClub.Notifications")
                 .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -48,7 +47,7 @@ namespace Notifications.Infrastructure.Migrations.AppLogDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserLogs", "FClub.Notifications");
+                    b.ToTable("UserLogs", (string)null);
                 });
 #pragma warning restore 612, 618
         }
