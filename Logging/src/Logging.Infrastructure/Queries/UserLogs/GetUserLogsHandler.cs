@@ -28,7 +28,7 @@ namespace Logging.Infrastructure.Queries.UserLogs
             var (userId, serviceNameSearchPhrase, textSearchPhrase, sortByCreatedDate, pageNumber, pageSize) = query;
 
             var cacheKey = $"logs:{userId}:{serviceNameSearchPhrase}:{textSearchPhrase}:{sortByCreatedDate}:{pageNumber}:{pageSize}";
-
+            Console.WriteLine(cacheKey);
             var cachedData = await _cache.GetStringAsync(cacheKey, cancellationToken);
             if (cachedData != null)
             {
