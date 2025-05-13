@@ -5,6 +5,7 @@ namespace Logging.Application.UseCases.UserLogs
 {
     public sealed record GetUserLogs(
         Guid UserId,
+        string? ServiceNameSearchPhrase,
         string? TextSearchPhrase,
         bool? SortByCreatedDate,
         int PageNumber = 1,

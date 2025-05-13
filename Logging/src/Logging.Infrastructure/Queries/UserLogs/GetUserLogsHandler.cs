@@ -25,9 +25,9 @@ namespace Logging.Infrastructure.Queries.UserLogs
 
         public async Task<List<UserLogDto>?> Handle(GetUserLogs query, CancellationToken cancellationToken)
         {
-            var (userId, textSearchPhrase, sortByCreatedDate, pageNumber, pageSize) = query;
+            var (userId, serviceNameSearchPhrase, textSearchPhrase, sortByCreatedDate, pageNumber, pageSize) = query;
 
-            var cacheKey = $"logs:{userId}:{textSearchPhrase}:{sortByCreatedDate}:{pageNumber}:{pageSize}";
+            var cacheKey = $"logs:{userId}:{serviceNameSearchPhrase}:{textSearchPhrase}:{sortByCreatedDate}:{pageNumber}:{pageSize}";
 
             var cachedData = await _cache.GetStringAsync(cacheKey, cancellationToken);
             if (cachedData != null)
@@ -38,6 +38,9 @@ namespace Logging.Infrastructure.Queries.UserLogs
             var logs = _context.UserLogs.AsQueryable();
 
             logs = logs.Where(l => l.AppUserId == userId);
+
+            if (!string.IsNullOrWhiteSpace(serviceNameSearchPhrase))
+                logs = logs.Where(l => EF.Functions.ILike(l.ServiceName, $"%{serviceNameSearchPhrase.Trim()}%"));
 
             if (!string.IsNullOrWhiteSpace(textSearchPhrase))
                 logs = logs.Where(l => EF.Functions.ILike(l.Text, $"%{textSearchPhrase.Trim()}%"));

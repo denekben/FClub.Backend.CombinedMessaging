@@ -4,6 +4,7 @@ using MediatR;
 namespace Logging.Application.UseCases.UserLogs
 {
     public sealed record GetCurrentUserLogs(
+        string? ServiceNameSearchPhrase,
         string? TextSearchPhrase,
         bool? SortByCreatedDate,
         int PageNumber = 1,
