@@ -12,8 +12,7 @@ namespace Management.Infrastructure.Data
         IEntityTypeConfiguration<ServiceTariff>, IEntityTypeConfiguration<Role>,
         IEntityTypeConfiguration<Tariff>, IEntityTypeConfiguration<ServiceBranch>,
         IEntityTypeConfiguration<Branch>, IEntityTypeConfiguration<Client>,
-        IEntityTypeConfiguration<DomainService>, IEntityTypeConfiguration<UserLog>,
-        IEntityTypeConfiguration<StatisticNote>
+        IEntityTypeConfiguration<DomainService>, IEntityTypeConfiguration<StatisticNote>
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
@@ -182,13 +181,6 @@ namespace Management.Infrastructure.Data
             builder.HasKey(s => s.Id);
 
             builder.ToTable("Services");
-        }
-
-        public void Configure(EntityTypeBuilder<UserLog> builder)
-        {
-            builder.HasKey(ul => ul.Id);
-
-            builder.ToTable("UserLogs");
         }
 
         public void Configure(EntityTypeBuilder<StatisticNote> builder)

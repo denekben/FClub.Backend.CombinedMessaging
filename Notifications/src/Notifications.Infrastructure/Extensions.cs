@@ -1,4 +1,5 @@
-﻿using FClub.Backend.Common.Services;
+﻿using FClub.Backend.Common.RabbitMQMessaging;
+using FClub.Backend.Common.Services;
 using FClub.Backend.Common.Services.EmailSender;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -17,10 +18,6 @@ namespace Notifications.Infrastructure
     {
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppLogDbContext>(
-                options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
-                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
-            );
             services.AddDbContext<AppDbContext>(
                 options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
                 .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
@@ -42,7 +39,6 @@ namespace Notifications.Infrastructure
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<INotificationSettingsRepository, NotificationSettingsRepository>();
             services.AddScoped<IRepository, Repository>();
-            services.AddScoped<IUserLogRepository, UserLogRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddCustomEmailSender(options =>
@@ -51,6 +47,19 @@ namespace Notifications.Infrastructure
                 options.SmtpPort = Convert.ToInt32(configuration["Smtp:Port"]);
                 options.ServiceMail = configuration["Smtp:ServiceMail"];
                 options.MailPassword = configuration["Smtp:Password"];
+            });
+
+            services.AddCustomRabbitMq(options =>
+            {
+                options.HostName = configuration["RabbitMq:HostName"];
+                options.Port = Convert.ToInt32(configuration["RabbitMq:Port"]);
+            });
+            services.AddCustomRabbitMqPublisher(options =>
+            {
+                options.ExchangeName = configuration["RabbitMq:PublisherOptions:ExchangeName"];
+                options.ExchangeType = configuration["RabbitMq:PublisherOptions:ExchangeType"];
+                options.RoutingKey = configuration["RabbitMq:PublisherOptions:RoutingKey"];
+                options.Mandatory = Convert.ToBoolean(configuration["RabbitMq:PublisherOptions:Mandatory"]);
             });
 
             services.AddTransient<Seed>();

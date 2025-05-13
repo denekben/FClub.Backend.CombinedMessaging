@@ -1,6 +1,5 @@
 ﻿using Management.Application.UseCases.AppUsers.Commands;
 using Management.Application.UseCases.AppUsers.Queries;
-using Management.Application.UseCases.UserLogs.Queries;
 using Management.Domain.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -84,28 +83,6 @@ namespace Management.WebUI.Controllers
         [HttpGet]
         [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
         public async Task<ActionResult<List<UserDto>?>> GetUsers([FromQuery] GetUsers query)
-        {
-            var result = await _sender.Send(query);
-            if (result == null)
-                return NotFound();
-            return Ok(result);
-        }
-
-        [HttpGet]
-        [Route("current/logs")]
-        [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
-        public async Task<ActionResult<List<UserLogDto>?>> GetCurrentUserLogs([FromQuery] GetCurrentUserLogs query)
-        {
-            var result = await _sender.Send(query);
-            if (result == null)
-                return NotFound();
-            return Ok(result);
-        }
-
-        [HttpGet]
-        [Route("logs")]
-        [Authorize(Policy = "IsNotBlocked", Roles = "Manager,Admin")]
-        public async Task<ActionResult<List<UserLogDto>?>> GetUserLogs([FromQuery] GetLogs query)
         {
             var result = await _sender.Send(query);
             if (result == null)

@@ -3,6 +3,5 @@
     public interface IRepository
     {
         Task SaveChangesAsync();
-        Task SaveLogsAsync();
     }
 }

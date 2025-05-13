@@ -11,7 +11,7 @@ namespace AccessControl.Infrastructure.Data
         IEntityTypeConfiguration<EntryLog>, IEntityTypeConfiguration<Membership>,
         IEntityTypeConfiguration<Service>, IEntityTypeConfiguration<Tariff>,
         IEntityTypeConfiguration<Turnstile>, IEntityTypeConfiguration<StatisticNote>,
-        IEntityTypeConfiguration<UserLog>, IEntityTypeConfiguration<AppUser>
+        IEntityTypeConfiguration<AppUser>
     {
         public void Configure(EntityTypeBuilder<Membership> builder)
         {
@@ -172,13 +172,6 @@ namespace AccessControl.Infrastructure.Data
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.ToTable("StatisticNotes");
-        }
-
-        public void Configure(EntityTypeBuilder<UserLog> builder)
-        {
-            builder.HasKey(ul => ul.Id);
-
-            builder.ToTable("UserLogs");
         }
 
         public void Configure(EntityTypeBuilder<AppUser> builder)

@@ -11,15 +11,18 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
         private readonly IUserRepository _userRepository;
         private readonly IHttpNotificationsClient _notificationClient;
         private readonly IHttpAccessControlClient _accessControlClient;
+        private readonly IHttpLoggingClient _loggingClient;
         private readonly IRepository _repository;
 
         public BlockUserHandler(IUserRepository userRepository, IRepository repository,
-            IHttpNotificationsClient notificationClient, IHttpAccessControlClient accessControlClient)
+            IHttpNotificationsClient notificationClient, IHttpAccessControlClient accessControlClient,
+            IHttpLoggingClient loggingClient)
         {
             _userRepository = userRepository;
             _repository = repository;
             _notificationClient = notificationClient;
             _accessControlClient = accessControlClient;
+            _loggingClient = loggingClient;
         }
 
         public async Task Handle(BlockUser command, CancellationToken cancellationToken)
@@ -32,6 +35,7 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
 
             await _notificationClient.BlockUser(new(user.Id));
             await _accessControlClient.BlockUser(new(user.Id));
+            await _loggingClient.BlockUser(new(user.Id));
 
             await _repository.SaveChangesAsync();
         }

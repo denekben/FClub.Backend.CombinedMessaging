@@ -1,4 +1,5 @@
 ﻿using FClub.Backend.Common.HttpMessaging;
+using FClub.Backend.Common.RabbitMQMessaging;
 using FClub.Backend.Common.Services;
 using Management.Application.Services;
 using Management.Domain.Repositories;
@@ -19,10 +20,6 @@ namespace Management.Infrastructure
     {
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppLogDbContext>(
-                options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
-                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
-            );
             services.AddDbContext<AppDbContext>(
                 options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
                 .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
@@ -47,10 +44,32 @@ namespace Management.Infrastructure
                 });
             services.AddScoped<IHttpAccessControlClient, HttpAccessControlClient>();
 
+            services.AddCustomHttpClientService(
+                configuration["LoggingService:Name"],
+                options =>
+                {
+                    options.HostName = configuration["LoggingService:Hostname"];
+                    options.ServiceName = configuration["LoggingService:Name"];
+                });
+            services.AddScoped<IHttpLoggingClient, HttpLoggingClient>();
+
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+            });
+
+            services.AddCustomRabbitMq(options =>
+            {
+                options.HostName = configuration["RabbitMq:HostName"];
+                options.Port = Convert.ToInt32(configuration["RabbitMq:Port"]);
+            });
+            services.AddCustomRabbitMqPublisher(options =>
+            {
+                options.ExchangeName = configuration["RabbitMq:PublisherOptions:ExchangeName"];
+                options.ExchangeType = configuration["RabbitMq:PublisherOptions:ExchangeType"];
+                options.RoutingKey = configuration["RabbitMq:PublisherOptions:RoutingKey"];
+                options.Mandatory = Convert.ToBoolean(configuration["RabbitMq:PublisherOptions:Mandatory"]);
             });
 
             services.AddCustomTokenService(options =>
@@ -77,7 +96,6 @@ namespace Management.Infrastructure
             services.AddScoped<ISocialGroupRepository, SocialGroupRepository>();
             services.AddScoped<IStatisticRepository, StatisticRepository>();
             services.AddScoped<ITariffRepository, TariffRepository>();
-            services.AddScoped<IUserLogRepository, UserLogRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IServiceBranchRepository, ServiceBranchRepository>();
             services.AddScoped<IServiceTariffRepository, ServiceTariffRepository>();

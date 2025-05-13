@@ -46,18 +46,6 @@ namespace AccessControl.Domain.DTOs.Mappers
             );
         }
 
-        public static UserLogDto AsDto(this UserLog log)
-        {
-            return new(
-                log.Id,
-                log.AppUserId,
-                log.ServiceName,
-                log.Text,
-                log.CreatedDate,
-                log.UpdatedDate
-            );
-        }
-
         public static BranchDto AsDto(this Branch branch)
         {
             return new(

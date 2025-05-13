@@ -1,7 +1,7 @@
 ﻿using FClub.Backend.Common.Logging;
+using FClub.Backend.Common.RabbitMQMessaging.Publisher;
 using FClub.Backend.Common.Services;
 using Management.Domain.Entities;
-using Management.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
@@ -17,19 +17,16 @@ namespace Management.Infrastructure.Logging
         private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
         private static readonly ConcurrentDictionary<Type, bool> _skipLoggingCache = new();
         private readonly IHttpContextService _contextService;
-        private readonly IUserLogRepository _userLogRepository;
-        private readonly IRepository _repository;
+        private readonly IMessageBusPublisher _publisher;
 
         public LoggingBehavior(
             ILogger<LoggingBehavior<TRequest, TResponse>> logger,
             IHttpContextService currentUserService,
-            IRepository repository,
-            IUserLogRepository userLogRepository)
+            IMessageBusPublisher publisher)
         {
             _logger = logger;
             _contextService = currentUserService;
-            _repository = repository;
-            _userLogRepository = userLogRepository;
+            _publisher = publisher;
         }
 
         public async Task<TResponse> Handle(
@@ -37,6 +34,8 @@ namespace Management.Infrastructure.Logging
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
+            await _publisher.InitializeAsync();
+
             var shouldSkip = _skipLoggingCache.GetOrAdd(typeof(TRequest), type =>
             {
                 var expectedHandlerInterface = typeof(IRequestHandler<,>)
@@ -64,9 +63,15 @@ namespace Management.Infrastructure.Logging
             {
             }
 
+            if (userId == null || userId == Guid.Empty)
+            {
+                return await next();
+            }
+
             var logText = $"[MediatR] Handling {requestName}. Request data: {JsonSerializer.Serialize(request)}.";
             _logger.LogInformation(logText);
-            await _userLogRepository.AddAsync(UserLog.Create(userId, logText));
+            var log = UserLog.Create((Guid)userId, logText);
+            await _publisher.PublishAsync(new UserLogAdded(log.Id, log.AppUserId, log.ServiceName, log.Text, log.CreatedDate));
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -78,8 +83,8 @@ namespace Management.Infrastructure.Logging
 
                 logText = $"[MediatR] Handled {requestName} in {stopwatch.ElapsedMilliseconds}ms.";
                 _logger.LogInformation(logText);
-                await _userLogRepository.AddAsync(UserLog.Create(userId, logText));
-                await _repository.SaveLogsAsync();
+                log = UserLog.Create((Guid)userId, logText);
+                await _publisher.PublishAsync(new UserLogAdded(log.Id, log.AppUserId, log.ServiceName, log.Text, log.CreatedDate));
 
                 return response;
             }
@@ -89,11 +94,19 @@ namespace Management.Infrastructure.Logging
 
                 logText = $"[MediatR] Error handling {requestName} after {stopwatch.ElapsedMilliseconds}ms. Error message: {ex.Message}.";
                 _logger.LogError(logText);
-                await _userLogRepository.AddAsync(UserLog.Create(userId, logText));
-                await _repository.SaveLogsAsync();
+                log = UserLog.Create((Guid)userId, logText);
+                await _publisher.PublishAsync(new UserLogAdded(log.Id, log.AppUserId, log.ServiceName, log.Text, log.CreatedDate));
 
                 throw;
             }
         }
     }
+
+    public sealed record UserLogAdded(
+        Guid Id,
+        Guid AppUserId,
+        string ServiceName,
+        string Text,
+        DateTime CreatedDate
+    ) : IMessage;
 }

@@ -6,6 +6,7 @@ using AccessControl.Infrastructure.Hubs;
 using AccessControl.Infrastructure.Repositories;
 using AccessControl.Infrastructure.Services;
 using FClub.Backend.Common.HttpMessaging;
+using FClub.Backend.Common.RabbitMQMessaging;
 using FClub.Backend.Common.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +21,6 @@ namespace AccessControl.Infrastructure
     {
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppLogDbContext>(
-                options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
-                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
-            );
             services.AddDbContext<AppDbContext>(
                 options => options.UseNpgsql(configuration["ConnectionString:DefaultConnection"])
                 .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
@@ -62,6 +59,19 @@ namespace AccessControl.Infrastructure
             services.AddHttpContextAccessor();
             services.AddScoped<IHttpContextService, HttpContextService>();
 
+            services.AddCustomRabbitMq(options =>
+            {
+                options.HostName = configuration["RabbitMq:HostName"];
+                options.Port = Convert.ToInt32(configuration["RabbitMq:Port"]);
+            });
+            services.AddCustomRabbitMqPublisher(options =>
+            {
+                options.ExchangeName = configuration["RabbitMq:PublisherOptions:ExchangeName"];
+                options.ExchangeType = configuration["RabbitMq:PublisherOptions:ExchangeType"];
+                options.RoutingKey = configuration["RabbitMq:PublisherOptions:RoutingKey"];
+                options.Mandatory = Convert.ToBoolean(configuration["RabbitMq:PublisherOptions:Mandatory"]);
+            });
+
             services.AddScoped<IBranchRepository, BranchRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IEntryLogRepository, EntryLogRepository>();
@@ -71,7 +81,6 @@ namespace AccessControl.Infrastructure
             services.AddScoped<IStatisticNoteRepository, StatisticNoteRepository>();
             services.AddScoped<ITariffRepository, TariffRepository>();
             services.AddScoped<ITurnstileRepository, TurnstileRepository>();
-            services.AddScoped<IUserLogRepository, UserLogRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IServiceBranchRepository, ServiceBranchRepository>();
             services.AddScoped<IServiceTariffRepository, ServiceTariffRepository>();

@@ -10,15 +10,18 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
         private readonly IUserRepository _userRepository;
         private readonly IHttpNotificationsClient _notificationClient;
         private readonly IHttpAccessControlClient _accessControlClient;
+        private readonly IHttpLoggingClient _loggingClient;
         private readonly IRepository _repository;
 
         public UnblockUserHandler(IUserRepository userRepository, IRepository repository,
-            IHttpNotificationsClient notificationClient, IHttpAccessControlClient accessControlClient)
+            IHttpNotificationsClient notificationClient, IHttpAccessControlClient accessControlClient,
+            IHttpLoggingClient loggingClient)
         {
             _userRepository = userRepository;
             _repository = repository;
             _notificationClient = notificationClient;
             _accessControlClient = accessControlClient;
+            _loggingClient = loggingClient;
         }
 
         public async Task Handle(UnblockUser command, CancellationToken cancellationToken)
@@ -29,6 +32,7 @@ namespace Management.Application.UseCases.AppUsers.Commands.Handlers
 
             await _notificationClient.UnblockUser(new(user.Id));
             await _accessControlClient.UnblockUser(new(user.Id));
+            await _loggingClient.UnblockUser(new(user.Id));
 
             await _repository.SaveChangesAsync();
         }
