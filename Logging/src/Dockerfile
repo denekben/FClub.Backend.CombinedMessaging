@@ -4,7 +4,6 @@ COPY ["Logging.WebUI/Logging.WebUI.csproj", "Logging.WebUI/"]
 COPY ["Logging.Infrastructure/Logging.Infrastructure.csproj", "Logging.Infrastructure/"]
 COPY ["Logging.Application/Logging.Application.csproj", "Logging.Application/"]
 COPY ["Logging.Domain/Logging.Domain.csproj", "Logging.Domain/"]
-COPY ["Logging.Shared/Logging.Shared.csproj", "Logging.Shared/"]
 RUN dotnet restore "Logging.WebUI/Logging.WebUI.csproj"
 COPY . ./
 RUN dotnet publish "Logging.WebUI/Logging.WebUI.csproj" -c Release -o out
